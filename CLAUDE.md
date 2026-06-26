@@ -63,12 +63,15 @@ src/hooks/ | src/store/ | src/services/ | src/lib/ | src/schemas/
 src/types/index.ts | src/data/mockProducts.ts | src/constants/tokens.ts
 
 ## Every screen must have
-1. Skeleton state (isLoading) with shimmer
+1. Skeleton state (isPending) with shimmer  ← TanStack v5: isPending not isLoading
 2. Error state (isError) with EmptyState + refetch button
 3. Empty state (data=[]) with EmptyState + CTA
 
 ## Build system
 - Trigger: say "start the GBTL build" to invoke the orchestrator agent
-- Orchestrator reads tasks/status.md → dispatches builders in parallel per wave → reviewer → tester → next wave
-- Primary spec: GBTL_Prompt_v4.md | Hard rules: CLAUDE.md | Task checklists: tasks/waveN/*.md
-- Agents: orchestrator (opus, Agent+Read+Write+Bash), builder (sonnet, Read+Write+Bash+Glob), reviewer (sonnet, Read+Grep+Glob), tester (sonnet, Read+Grep+Glob+Bash)
+- Orchestrator reads sdd/tasks/status.md → dispatches builders in parallel per wave → reviewer → tester → linker → next wave
+- After wave 1: MANDATORY npm install --legacy-peer-deps before wave 2
+- After wave 5: MANDATORY npx tsc --noEmit before marking complete
+- SDD folder: sdd/specs/ (design docs) | sdd/tasks/ (wave tasks + contracts + agent tools) | sdd/meta/ (reference prompt)
+- Support files: sdd/tasks/shared-imports.md | sdd/tasks/reviewer-checklist.md | sdd/tasks/tester-commands.md
+- Agents: orchestrator (Agent+Read+Write+Bash), builder (Read+Write+Bash+Glob), reviewer (Read+Grep+Glob+Bash), tester (Read+Grep+Glob+Bash), linker (Read+Grep+Glob+Bash)

@@ -8,7 +8,7 @@ model: sonnet
 You coordinate the GBTL React Native app build. You do not write app code.
 
 ## On every invocation
-1. Read `tasks/status.md` — find current wave, accumulated file manifest, and retry count
+1. Read `sdd/tasks/status.md` — find current wave, accumulated file manifest, and retry count
 2. Read `CLAUDE.md` once (keep in memory for the full run — do NOT re-read it each wave)
 3. Determine `stop_after`: parse from user message ("run waves 1 and 2" → 2). Default: 5.
 4. Execute the wave protocol
@@ -16,18 +16,18 @@ You coordinate the GBTL React Native app build. You do not write app code.
 ## Wave protocol
 
 ### Step 1 — Dispatch all builders in parallel
-List every `.md` file in `tasks/waveN/`. Dispatch ONE `Agent` call per file, ALL in a single message:
+List every `.md` file in `sdd/tasks/waveN/`. Dispatch ONE `Agent` call per file, ALL in a single message:
 
 ```
 Agent(
   subagent_type="builder",
   description="Wave N — <task-filename>",
   prompt="""
-Task: tasks/waveN/<task-file>.md
+Task: sdd/tasks/waveN/<task-file>.md
 
-Read that file first — it tells you what to build and which GBTL_Prompt_v4.md sections to read.
+Read that file first — it lists the files to build and which sdd/specs/ file to read.
 Also read CLAUDE.md for hard rules and v5 API patterns.
-Do NOT read GBTL_Prompt_v4.md in full — use only the sections indicated in the task file.
+Also read sdd/tasks/shared-imports.md for all available import paths.
 
 Generate every file completely. Write to disk. Output BUILT:/DONE: lines.
 """
@@ -95,7 +95,7 @@ All generated files so far: <manifest from status.md>
 
 1. Read the failing file
 2. Read CLAUDE.md
-3. Read relevant GBTL_Prompt_v4.md section (see section map in builder.md)
+3. Read the relevant spec file (see sdd/specs/ — section map in builder.md)
 4. Rewrite completely to fix the issue
 
 Output BUILT: <path> then DONE: fix
@@ -111,13 +111,13 @@ If retries == 2 (max reached):
 **All 5 waves pass** → write `Status: COMPLETE` to status.md
 
 ## Wave map (for dynamic task discovery)
-- Wave 1: tasks/wave1/ (3 tasks — configs, types, lib)
-- Wave 2: tasks/wave2/ (2 tasks — stores, hooks)
-- Wave 3: tasks/wave3/ (4 tasks — ui-text-button, ui-atoms, ui-skeleton, layout)
-- Wave 4: tasks/wave4/ (3 tasks — product-card, product-detail, cart-forms)
-- Wave 5: tasks/wave5/ (3 tasks — screens-auth, screens-tabs, screens-product)
+- Wave 1: sdd/tasks/wave1/ (3 tasks — configs, types, lib)
+- Wave 2: sdd/tasks/wave2/ (2 tasks — stores, hooks)
+- Wave 3: sdd/tasks/wave3/ (4 tasks — ui-text-button, ui-atoms, ui-skeleton, layout)
+- Wave 4: sdd/tasks/wave4/ (3 tasks — product-card, product-detail, cart-forms)
+- Wave 5: sdd/tasks/wave5/ (3 tasks — screens-auth, screens-tabs, screens-product)
 
-## tasks/status.md format
+## sdd/tasks/status.md format
 ```
 # GBTL Build Status
 Current wave: N
@@ -132,4 +132,4 @@ Wave N retries: 0
 ```
 
 ## Start
-Read tasks/status.md. Find current wave. Begin immediately.
+Read sdd/tasks/status.md. Find current wave. Begin immediately.

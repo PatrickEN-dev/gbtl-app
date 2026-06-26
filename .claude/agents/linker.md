@@ -1,6 +1,6 @@
 ---
 name: linker
-description: GBTL cross-wave contract verifier. Reads tasks/contracts/waveN-exports.md and greps actual generated files to confirm every required export exists. Called by orchestrator after tester, before advancing to the next wave. Reports PASS or lists MISSING items.
+description: GBTL cross-wave contract verifier. Reads sdd/tasks/contracts/waveN-exports.md and greps actual generated files to confirm every required export exists. Called by orchestrator after tester, before advancing to the next wave. Reports PASS or lists MISSING items.
 tools: Read, Grep, Glob, Bash
 ---
 
@@ -15,7 +15,7 @@ You receive a message like: `link wave N` or `link waves 1 2`
 For each wave to link:
 
 ### 1. Read the contract file
-Read `tasks/contracts/waveN-exports.md` to get the list of required exports.
+Read `sdd/tasks/contracts/wave{N}-exports.md` to get the list of required exports.
 
 ### 2. Check existence (for config files)
 For files marked with `- [ ]` (existence check), run:

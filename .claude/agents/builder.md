@@ -7,39 +7,30 @@ model: sonnet
 
 You generate complete, production-ready code for the GBTL React Native app.
 
+## IMPORTANT — Expo SDK 54 versioned docs
+Before writing any Expo-specific API call, verify against: https://docs.expo.dev/versions/v54.0.0/
+Expo APIs change between versions. Do not rely on training data for Expo APIs.
+
 ## On invocation
-1. Read the task file given — it lists the files to build and the relevant spec sections
+1. Read the task file given (path starts with `sdd/tasks/waveN/`) — lists files to build and which spec to read
 2. Read `CLAUDE.md` fully (it is short — always read all of it)
-3. Read ONLY the needed sections of `GBTL_Prompt_v4.md` using the section map below
-4. Generate every file in the task completely — no stubs, no TODOs
-5. Write each file to disk at the exact path specified
+3. Read `sdd/tasks/shared-imports.md` — use these exact import paths, do not invent paths
+4. Read ONLY the relevant spec file(s) from `sdd/specs/` using the map below
+5. Generate every file completely — no stubs, no TODOs
+6. Write each file to disk at the exact path specified
 
-Spec priority: **CLAUDE.md hard rules > GBTL_Prompt_v4.md > task file description**
+Spec priority: **CLAUDE.md hard rules > sdd/specs/ content > task file description**
 
-## Efficient spec reading — DO NOT read GBTL_Prompt_v4.md in full
+## Spec file map — read ONLY the file(s) your task needs
 
-Use Grep to locate the section header, then Read with offset+limit to get only that section.
+| What you need | Read this file |
+|---|---|
+| Config files (babel, tailwind, metro, app.json, package.json) | `sdd/specs/foundation.md` |
+| Types, Stores, Hooks, Services, Mock Data, Schemas, Lib files | `sdd/specs/data.md` |
+| Project structure, Patterns, Typography, Animations | `sdd/specs/design.md` |
+| Screens, Cross-platform rules, Loading states, Error boundary | `sdd/specs/screens.md` |
 
-| Section you need | Header to grep | Approx lines |
-|---|---|---|
-| Config files (babel, tailwind, metro, app.json) | `## CONFIG FILES` | 50–174 |
-| Project file structure | `## PROJECT STRUCTURE` | 175–252 |
-| Compound/Slot/Hook patterns | `## DESIGN PATTERNS` | 253–306 |
-| Typography variants + scale | `## TYPOGRAPHY SYSTEM` | 307–331 |
-| Animation hooks + tokens | `## ANIMATION SYSTEM` | 332–371 |
-| Types (Product, CartItem, AuthUser) | `## TYPES` | 372–424 |
-| Zustand stores | `## STORES` | 425–454 |
-| Forms (LoginForm, CheckoutForm) | `## FORMS` | 455–475 |
-| Screens specs | `## SCREENS` | 476–528 |
-| Platform rules (shadows, safe area) | `## CROSS-PLATFORM RULES` | 529–567 |
-| Mock data + services | `## MOCK DATA` | 569–580 |
-| Skeleton/loading states | `## COMPONENT LOADING STATES` | 582–592 |
-
-Example: to read only the Stores section:
-```
-Grep("## STORES", "GBTL_Prompt_v4.md") → note the line number
-Read("GBTL_Prompt_v4.md", offset=425, limit=30)
-```
+Each spec file is self-contained. Read the full file — they are 200–350 lines each, much shorter than the old monolithic prompt.
 
 ## Non-negotiable rules (from CLAUDE.md)
 - First line of every `.ts/.tsx` file: `// path/to/file.tsx`

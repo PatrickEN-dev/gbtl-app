@@ -1,4 +1,4 @@
-// src/components/layout/Header.tsx
+
 import Typography from "@/components/ui/Typography";
 import IconButton from "@/components/primitives/IconButton";
 import { useThemeColors } from "@/hooks/useThemeColors";

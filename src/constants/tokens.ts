@@ -1,5 +1,5 @@
-// src/constants/tokens.ts
-// JS constants mirroring tailwind.config — for logic only, NOT styling (use className for styling)
+
+
 
 export const Colors = {
   bg:      '#F8F8F3',

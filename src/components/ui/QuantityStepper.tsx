@@ -1,4 +1,4 @@
-// src/components/ui/QuantityStepper.tsx
+
 import React from 'react'
 import { View, Pressable } from 'react-native'
 import Animated from 'react-native-reanimated'
@@ -7,7 +7,6 @@ import Typography from '@/components/ui/Typography'
 import { useThemeColors } from '@/hooks/useThemeColors'
 import { usePressScale } from '@/lib/animations'
 
-// ─── Types ───────────────────────────────────────────────────────────────────
 
 interface QuantityStepperProps {
   value: number
@@ -16,7 +15,6 @@ interface QuantityStepperProps {
   max?: number
 }
 
-// ─── Sub-component: StepButton ───────────────────────────────────────────────
 
 interface StepButtonProps {
   onPress: () => void
@@ -55,7 +53,6 @@ function StepButton({ onPress, disabled, variant }: StepButtonProps) {
   )
 }
 
-// ─── Main Component ───────────────────────────────────────────────────────────
 
 export default function QuantityStepper({
   value,

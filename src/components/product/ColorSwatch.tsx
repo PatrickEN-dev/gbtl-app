@@ -1,4 +1,4 @@
-// src/components/product/ColorSwatch.tsx
+
 import Typography from "@/components/ui/Typography";
 import { usePressScale } from "@/lib/animations";
 import type { ProductColor } from "@/types";
@@ -32,7 +32,7 @@ function SwatchItem({ color, isSelected, onSelect }: SwatchItemProps) {
         accessibilityLabel={color.name}
         accessibilityState={{ selected: isSelected }}
       >
-        {/* Outer ring — accent border when selected, transparent otherwise for stable sizing */}
+
         <View
           className={[
             "rounded-full p-0.5",

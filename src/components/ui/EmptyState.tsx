@@ -1,4 +1,4 @@
-// src/components/ui/EmptyState.tsx
+
 import React from 'react'
 import { View } from 'react-native'
 import Animated from 'react-native-reanimated'

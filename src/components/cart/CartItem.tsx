@@ -1,4 +1,4 @@
-// src/components/cart/CartItem.tsx
+
 import React, { useRef } from 'react'
 import { View, Pressable } from 'react-native'
 import Animated from 'react-native-reanimated'
@@ -14,14 +14,12 @@ import Pill from '@/components/primitives/Pill'
 import IconButton from '@/components/primitives/IconButton'
 import type { CartItem as CartItemType } from '@/types'
 
-// ─── Types ────────────────────────────────────────────────────────────────────
 
 interface Props {
   item: CartItemType
   onRemove: () => void
 }
 
-// ─── Delete action revealed on right swipe ────────────────────────────────────
 
 function DeleteAction({ onPress }: { onPress: () => void }) {
   const colors = useThemeColors()
@@ -40,7 +38,6 @@ function DeleteAction({ onPress }: { onPress: () => void }) {
   )
 }
 
-// ─── Quantity control button ──────────────────────────────────────────────────
 
 function QtyButton({
   onPress,
@@ -64,7 +61,6 @@ function QtyButton({
   )
 }
 
-// ─── CartItem ─────────────────────────────────────────────────────────────────
 
 export default function CartItem({ item, onRemove }: Props) {
   const { updateQuantity } = useCart()
@@ -101,7 +97,7 @@ export default function CartItem({ item, onRemove }: Props) {
         friction={2}
       >
         <Card.Root variant="elevated" padding="sm" className="flex-row mb-3 relative">
-          {/* Close (X) button — absolute top-right */}
+
           <View className="absolute top-2 right-2" style={{ zIndex: 1 }}>
             <IconButton
               icon={<X size={14} color={colors.muted} />}
@@ -112,7 +108,7 @@ export default function CartItem({ item, onRemove }: Props) {
             />
           </View>
 
-          {/* Thumbnail */}
+
           <Image
             source={{ uri: product.images[0] }}
             style={{ width: 60, height: 80, borderRadius: 10 }}
@@ -120,7 +116,7 @@ export default function CartItem({ item, onRemove }: Props) {
             accessibilityLabel={product.name}
           />
 
-          {/* Product info + quantity */}
+
           <View className="flex-1 ml-3 justify-between">
             <View>
               <Typography
@@ -138,7 +134,7 @@ export default function CartItem({ item, onRemove }: Props) {
               </Typography>
             </View>
 
-            {/* Quantity controls */}
+
             <View className="flex-row items-center mt-2">
               <QtyButton
                 onPress={handleDecrement}
@@ -156,7 +152,7 @@ export default function CartItem({ item, onRemove }: Props) {
             </View>
           </View>
 
-          {/* Price pill */}
+
           <View className="ml-3 items-end justify-end pb-1">
             <Pill variant="solid" tone="primary" size="sm">
               ${product.price.toFixed(2)}

@@ -1,4 +1,4 @@
-// src/components/product/ImageCarousel/index.tsx
+
 import { Spacing } from "@/constants/tokens";
 import { Duration, Spring, useSlideInRight } from "@/lib/animations";
 import { Image } from "expo-image";
@@ -17,7 +17,6 @@ import Animated, {
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
 const SWIPE_THRESHOLD = SCREEN_WIDTH / 3;
 
-// ─── Context ──────────────────────────────────────────────────────────────────
 
 type CarouselContextType = {
   activeIndex: number;
@@ -34,7 +33,6 @@ function useCarouselContext(): CarouselContextType {
   return ctx;
 }
 
-// ─── Root ─────────────────────────────────────────────────────────────────────
 
 type RootProps = {
   images: string[];
@@ -78,7 +76,6 @@ function Root({ images, children }: RootProps) {
   );
 }
 
-// ─── Slide ────────────────────────────────────────────────────────────────────
 
 type SlideProps = { aspectRatio?: number };
 
@@ -103,7 +100,6 @@ function Slide({ aspectRatio }: SlideProps) {
   );
 }
 
-// ─── Thumbnails ───────────────────────────────────────────────────────────────
 
 function Thumbnails() {
   const { images, activeIndex, setActiveIndex } = useCarouselContext();
@@ -130,7 +126,6 @@ function Thumbnails() {
   );
 }
 
-// ─── SideThumbnails ───────────────────────────────────────────────────────────
 
 function SideThumbnails() {
   const { images, activeIndex, setActiveIndex } = useCarouselContext();
@@ -151,7 +146,6 @@ function SideThumbnails() {
   )
 }
 
-// ─── Dots ─────────────────────────────────────────────────────────────────────
 
 type DotItemProps = { index: number };
 
@@ -188,6 +182,5 @@ function Dots() {
   );
 }
 
-// ─── Export ───────────────────────────────────────────────────────────────────
 
 export const ImageCarousel = { Root, Slide, Thumbnails, SideThumbnails, Dots };

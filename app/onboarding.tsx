@@ -1,4 +1,4 @@
-// app/onboarding.tsx
+
 import React, { useRef, useState } from 'react'
 import { View, Dimensions, FlatList, Pressable } from 'react-native'
 import { useRouter } from 'expo-router'
@@ -40,19 +40,19 @@ export default function OnboardingScreen() {
 
   return (
     <View className="flex-1 bg-bg" style={{ paddingTop: insets.top, paddingBottom: insets.bottom }}>
-      {/* Skip */}
+
       <View className="flex-row justify-end px-5 pt-2">
         <Pressable onPress={handleFinish} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
           <Typography variant="body-sm" color="muted">{t('onboarding.skip')}</Typography>
         </Pressable>
       </View>
 
-      {/* Brand mark */}
+
       <View className="items-center mt-8">
         <Plus size={48} color={colors.primary} strokeWidth={2.5} />
       </View>
 
-      {/* Slides */}
+
       <FlatList
         ref={listRef}
         data={slides}
@@ -74,7 +74,7 @@ export default function OnboardingScreen() {
         className="flex-1"
       />
 
-      {/* Dots */}
+
       <View className="flex-row items-center justify-center gap-2 mb-6">
         {slides.map((_, i) => (
           <View
@@ -85,7 +85,7 @@ export default function OnboardingScreen() {
         ))}
       </View>
 
-      {/* CTA */}
+
       <View className="px-6 pb-4">
         <Button variant="primary" fullWidth rounded="pill" onPress={handleNext}>
           {isLast ? t('onboarding.getStarted') : t('onboarding.next')}

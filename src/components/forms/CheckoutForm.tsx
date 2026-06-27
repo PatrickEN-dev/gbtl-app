@@ -1,4 +1,4 @@
-// src/components/forms/CheckoutForm.tsx
+
 import React from 'react'
 import { View } from 'react-native'
 import { useForm } from 'react-hook-form'
@@ -38,7 +38,7 @@ export default function CheckoutForm() {
 
   return (
     <BottomSheetScrollView contentContainerStyle={{ paddingHorizontal: Spacing.lg, paddingBottom: Spacing.xl }}>
-      {/* Header */}
+
       <View className="mb-6 pt-4">
         <Typography variant="heading2" weight="bold">
           Checkout
@@ -48,7 +48,7 @@ export default function CheckoutForm() {
         </Typography>
       </View>
 
-      {/* Personal Information Section */}
+
       <View className="mb-2">
         <Typography variant="heading3" weight="semibold" className="mb-4">
           Personal Information
@@ -85,7 +85,7 @@ export default function CheckoutForm() {
         </Field.Root>
       </View>
 
-      {/* Payment Section */}
+
       <View className="mb-6">
         <Typography variant="heading3" weight="semibold" className="mb-4">
           Payment
@@ -133,7 +133,7 @@ export default function CheckoutForm() {
         </View>
       </View>
 
-      {/* Submit button */}
+
       <Button
         variant="primary"
         size="lg"

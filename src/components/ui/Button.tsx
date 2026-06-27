@@ -1,4 +1,4 @@
-// src/components/ui/Button.tsx
+
 import React from 'react'
 import { Pressable, ActivityIndicator, View } from 'react-native'
 import Animated from 'react-native-reanimated'
@@ -6,7 +6,6 @@ import { usePressScale } from '@/lib/animations'
 import { useThemeColors } from '@/hooks/useThemeColors'
 import Typography from './Typography'
 
-// ─── Types ────────────────────────────────────────────────────────────────────
 
 type Variant = 'primary' | 'outline' | 'ghost'
 type Size = 'sm' | 'md' | 'lg'
@@ -24,41 +23,34 @@ export interface ButtonProps {
   children: React.ReactNode
 }
 
-// ─── Style maps ──────────────────────────────────────────────────────────────
 
-/** NativeWind classNames for each variant container */
 const CONTAINER_VARIANT: Record<Variant, string> = {
   primary: 'bg-accent shadow-btn',
   outline: 'border border-primary bg-transparent',
   ghost:   'bg-transparent',
 }
 
-/** Height + horizontal padding per size (radius applied separately via rounded prop) */
+
 const CONTAINER_SIZE: Record<Size, string> = {
   sm: 'h-9 px-3',
   md: 'h-12 px-5',
   lg: 'h-14 px-6',
 }
 
-/** Typography color for each variant */
+
 const TEXT_COLOR: Record<Variant, 'white' | 'primary'> = {
   primary: 'white',
   outline: 'primary',
   ghost:   'primary',
 }
 
-/** Typography variant for each button size */
+
 const TEXT_VARIANT: Record<Size, 'body-sm' | 'body' | 'heading3'> = {
   sm: 'body-sm',
   md: 'body',
   lg: 'heading3',
 }
 
-// ─── Shadow (iOS + Android) ──────────────────────────────────────────────────
-// NativeWind's custom boxShadow token doesn't translate to RN shadow props,
-// so we provide explicit RN shadow for primary variant per CLAUDE.md rules.
-
-// ─── Component ───────────────────────────────────────────────────────────────
 
 export default function Button({
   variant = 'primary',
@@ -90,10 +82,10 @@ export default function Button({
     .join(' ')
 
   const colors = useThemeColors()
-  // ActivityIndicator color must be a string value (not a className)
+
   const spinnerColor = variant === 'primary' ? colors.surface : colors.primary
 
-  // Apply iOS/Android shadow via RN style for primary variant
+
   const shadowStyle = variant === 'primary'
     ? {
         shadowColor: colors.accent,

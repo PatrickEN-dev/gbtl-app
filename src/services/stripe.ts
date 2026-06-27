@@ -1,17 +1,14 @@
-// src/services/stripe.ts
-// Native Stripe Payment Sheet (no UI of ours — Stripe owns the checkout view).
-//
-// Requires a tiny backend endpoint (5 lines of code in Vercel/Firebase Functions)
-// that creates a PaymentIntent with your Stripe SECRET key and returns the clientSecret.
-// See SETUP.md for the template.
+
+
+
 import { useStripe } from '@stripe/stripe-react-native'
 import Constants from 'expo-constants'
 
 const extra = (Constants.expoConfig?.extra ?? {}) as Record<string, string>
 
 export interface CheckoutParams {
-  amount: number          // in dollars (e.g. 215.0)
-  currency?: string       // default 'usd'
+  amount: number
+  currency?: string
   customerEmail?: string
   description?: string
 }
@@ -35,7 +32,7 @@ export function useStripeCheckout() {
       return { ok: false, error: 'Stripe endpoint not configured. See SETUP.md.' }
     }
 
-    // 1. Ask backend to create a PaymentIntent
+
     let clientSecret: string
     let ephemeralKey: string | undefined
     let customer: string | undefined
@@ -44,7 +41,7 @@ export function useStripeCheckout() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          amount: Math.round(amount * 100), // Stripe uses cents
+          amount: Math.round(amount * 100),
           currency,
           email: customerEmail,
           description,
@@ -66,16 +63,16 @@ export function useStripeCheckout() {
       return { ok: false, error: (e as Error).message }
     }
 
-    // 2. Initialize the Payment Sheet with the clientSecret
+
     const initResult = await initPaymentSheet({
       merchantDisplayName: 'GBTL',
       paymentIntentClientSecret: clientSecret,
       customerEphemeralKeySecret: ephemeralKey,
       customerId: customer,
       defaultBillingDetails: customerEmail ? { email: customerEmail } : undefined,
-      // Apple Pay
+
       applePay: { merchantCountryCode: 'US' },
-      // Google Pay
+
       googlePay: {
         merchantCountryCode: 'US',
         currencyCode: currency.toUpperCase(),
@@ -86,10 +83,10 @@ export function useStripeCheckout() {
       return { ok: false, error: initResult.error.message }
     }
 
-    // 3. Present the Stripe-hosted sheet
+
     const presentResult = await presentPaymentSheet()
     if (presentResult.error) {
-      // user-cancelled is not an error worth surfacing
+
       if (presentResult.error.code === 'Canceled') return { ok: false }
       return { ok: false, error: presentResult.error.message }
     }

@@ -1,10 +1,9 @@
-// src/components/ui/Skeleton.tsx
+
 import React from 'react'
 import { View, type DimensionValue } from 'react-native'
 import Animated from 'react-native-reanimated'
 import { useShimmer } from '@/lib/animations'
 
-// ─── Skeleton ────────────────────────────────────────────────────────────────
 
 interface SkeletonProps {
   width: DimensionValue
@@ -28,7 +27,6 @@ export function Skeleton({ width, height, borderRadius = 8 }: SkeletonProps) {
   )
 }
 
-// ─── SkeletonGroup ────────────────────────────────────────────────────────────
 
 interface SkeletonGroupProps {
   children: React.ReactNode
@@ -43,7 +41,6 @@ export function SkeletonGroup({ children, gap = 8 }: SkeletonGroupProps) {
   )
 }
 
-// ─── ProductCardSkeleton ──────────────────────────────────────────────────────
 
 export function ProductCardSkeleton() {
   return (
@@ -57,7 +54,6 @@ export function ProductCardSkeleton() {
   )
 }
 
-// ─── ProductDetailSkeleton ────────────────────────────────────────────────────
 
 export function ProductDetailSkeleton() {
   return (

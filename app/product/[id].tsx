@@ -1,4 +1,4 @@
-// app/product/[id].tsx
+
 import React, { useState, useEffect } from 'react'
 import { ScrollView, View, Pressable } from 'react-native'
 import Animated, { useSharedValue, useAnimatedStyle, withTiming, withSpring, withSequence } from 'react-native-reanimated'
@@ -79,7 +79,7 @@ export default function ProductDetailScreen() {
       <Header showBack roundedIcons title="Details" rightElement={wishlistHeart} />
 
       <ScrollView showsVerticalScrollIndicator={false} className="flex-1" contentContainerStyle={{ paddingBottom: 140 }}>
-        {/* Image + side thumbnails — no surrounding card, clean white */}
+
         <View className="px-4 pt-2">
           <ImageCarousel.Root images={product.images}>
             <View className="flex-row">
@@ -89,7 +89,7 @@ export default function ProductDetailScreen() {
           </ImageCarousel.Root>
         </View>
 
-        {/* Info — flat, no card */}
+
         <View className="px-4 mt-6">
           <View className="flex-row items-center">
             <Typography variant="heading2" className="flex-1 mr-3">{product.name}</Typography>
@@ -106,13 +106,13 @@ export default function ProductDetailScreen() {
           </View>
         </View>
 
-        {/* Size */}
+
         <View className="px-4 mt-6">
           <Typography variant="heading3" className="mb-3">Select Size</Typography>
           <SizeSelector sizes={product.sizes} selected={selectedSize} onSelect={setSelectedSize} />
         </View>
 
-        {/* Description */}
+
         <View className="px-4 mt-6">
           <Typography variant="heading3" className="mb-2">Description</Typography>
           <Animated.View style={descStyle}>
@@ -124,7 +124,7 @@ export default function ProductDetailScreen() {
         </View>
       </ScrollView>
 
-      {/* Footer */}
+
       <View
         className="absolute bottom-0 left-0 right-0 bg-surface px-4 pt-3 border-t border-border"
         style={{ paddingBottom: insets.bottom + 12 }}

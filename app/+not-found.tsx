@@ -1,4 +1,4 @@
-// app/+not-found.tsx
+
 import { router } from 'expo-router'
 import { AlertCircle } from 'lucide-react-native'
 import ScreenWrapper from '@/components/layout/ScreenWrapper'

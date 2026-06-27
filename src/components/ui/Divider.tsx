@@ -1,4 +1,4 @@
-// src/components/ui/Divider.tsx
+
 import React from 'react'
 import { View } from 'react-native'
 

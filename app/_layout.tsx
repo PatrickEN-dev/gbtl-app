@@ -1,5 +1,5 @@
 import "react-native-gesture-handler";
-// app/_layout.tsx
+
 import ErrorBoundary from "@/components/layout/ErrorBoundary";
 import { useAuth } from "@/hooks/useAuth";
 import "@/lib/i18n";
@@ -20,8 +20,7 @@ const extra = (Constants.expoConfig?.extra ?? {}) as Record<string, string>;
 
 SplashScreen.preventAutoHideAsync();
 
-// Separate component so it lives inside QueryClientProvider
-// (useAuth → useQueryClient requires the provider to be mounted first)
+
 function AppInitializer() {
   const { restoreSession } = useAuth();
 
@@ -29,8 +28,8 @@ function AppInitializer() {
     async function prepare() {
       try {
         await restoreSession();
-        // Push registration is disabled in Expo Go until we switch to a development build.
-        // registerForPushNotificationsAsync().catch(() => {})
+
+
       } finally {
         await SplashScreen.hideAsync();
       }

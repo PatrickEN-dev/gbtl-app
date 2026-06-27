@@ -1,4 +1,4 @@
-// app/(tabs)/collection.tsx
+
 import React, { useState } from 'react'
 import { View, FlatList, Pressable } from 'react-native'
 import { useRouter } from 'expo-router'

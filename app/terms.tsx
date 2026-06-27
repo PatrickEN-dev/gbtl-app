@@ -1,4 +1,4 @@
-// app/terms.tsx
+
 import React from 'react'
 import { ScrollView, View } from 'react-native'
 import ScreenWrapper from '@/components/layout/ScreenWrapper'

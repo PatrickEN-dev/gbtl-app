@@ -1,6 +1,6 @@
-// app/delete-account.tsx
-// Required by Google Play for any app with auth (since 2024).
-// Provides an in-app account deletion flow.
+
+
+
 import React, { useState } from 'react'
 import { View, Alert } from 'react-native'
 import { useRouter } from 'expo-router'
@@ -30,10 +30,8 @@ export default function DeleteAccountScreen() {
         onPress: async () => {
           setBusy(true)
           try {
-            // 1. Tell backend to delete the account (placeholder — wire to your endpoint)
-            // await fetch('https://api.gbtl.app/account', { method: 'DELETE', headers: { Authorization: `Bearer ${token}` } })
 
-            // 2. Clear local state
+
             clearCart()
             clearWishlist()
             await logout()

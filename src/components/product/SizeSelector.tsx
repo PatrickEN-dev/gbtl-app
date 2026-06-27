@@ -1,4 +1,4 @@
-// src/components/product/SizeSelector.tsx
+
 import Typography from "@/components/ui/Typography";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { Duration } from "@/lib/animations";
@@ -32,7 +32,7 @@ function SizeChip({ size, isSelected, onSelect }: SizeChipProps) {
     progress.value = withTiming(isSelected ? 1 : 0, { duration: Duration.base });
   }, [isSelected]);
 
-  // Background animates between surface (unselected) and primary (selected)
+
   const animatedBgStyle = useAnimatedStyle(() => ({
     backgroundColor: interpolateColor(progress.value, [0, 1], [colors.surface, colors.primary]),
   }));

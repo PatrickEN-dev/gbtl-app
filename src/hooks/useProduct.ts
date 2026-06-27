@@ -1,4 +1,4 @@
-// src/hooks/useProduct.ts
+
 import { useQuery } from '@tanstack/react-query'
 import { fetchProduct } from '@/services/products'
 

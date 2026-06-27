@@ -1,4 +1,4 @@
-// app/(tabs)/cart.tsx
+
 import React, { useState } from 'react'
 import { View, FlatList, Alert, Pressable } from 'react-native'
 import { useRouter } from 'expo-router'
@@ -67,7 +67,7 @@ export default function CartScreen() {
         />
       ) : (
         <View className="flex-1">
-          {/* "My Cart" + Add to Checkout row */}
+
           <View className="px-4 pt-4 pb-3 flex-row items-center justify-between">
             <Typography variant="heading3" weight="semibold">{t('cart.myCart')}</Typography>
             <Pill
@@ -97,7 +97,7 @@ export default function CartScreen() {
               />
             )}
           />
-          {/* Bottom block — paddingBottom 96 clears the floating tab pill */}
+
           <View className="px-4 pt-2 gap-4" style={{ paddingBottom: 96 }}>
             <CartSummary />
             <Button
@@ -109,7 +109,7 @@ export default function CartScreen() {
             >
               {t('cart.checkout')}
             </Button>
-            {/* Footer legal links + account management */}
+
             <View className="flex-row items-center justify-center gap-3 mt-1">
               <FooterLink label={t('auth.termsLink')} onPress={() => router.push('/terms')} />
               <Typography variant="caption" color="muted">·</Typography>

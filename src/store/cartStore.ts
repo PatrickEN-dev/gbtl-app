@@ -1,4 +1,4 @@
-// src/store/cartStore.ts
+
 import { create } from 'zustand'
 import type { Product, CartItem, ProductColor } from '@/types'
 

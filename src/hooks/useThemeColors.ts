@@ -1,4 +1,4 @@
-// src/hooks/useThemeColors.ts
+
 import { useColorScheme } from 'nativewind'
 import { Colors, DarkColors } from '@/constants/tokens'
 

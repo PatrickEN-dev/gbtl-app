@@ -1,4 +1,4 @@
-// src/lib/animations.ts
+
 import { useEffect } from 'react'
 import Animated, {
   useSharedValue,
@@ -11,7 +11,7 @@ import Animated, {
   SharedValue,
 } from 'react-native-reanimated'
 
-// ─── Duration tokens ─────────────────────────────────────────────────────────
+
 export const Duration = {
   fast: 150,
   base: 250,
@@ -19,20 +19,20 @@ export const Duration = {
   lazy: 600,
 } as const
 
-// ─── Easing tokens ───────────────────────────────────────────────────────────
+
 export const Easing = {
   standard:   ReanimatedEasing.bezier(0.4, 0.0, 0.2, 1),
   decelerate: ReanimatedEasing.bezier(0.0, 0.0, 0.2, 1),
   accelerate: ReanimatedEasing.bezier(0.4, 0.0, 1.0, 1),
 } as const
 
-// ─── Spring tokens ───────────────────────────────────────────────────────────
+
 export const Spring = {
   gentle: { damping: 15, stiffness: 150 },
   snappy: { damping: 12, stiffness: 200 },
 } as const
 
-// ─── useFadeInUp ─────────────────────────────────────────────────────────────
+
 export function useFadeInUp(delay = 0) {
   const opacity    = useSharedValue(0)
   const translateY = useSharedValue(20)
@@ -61,7 +61,7 @@ export function useFadeInUp(delay = 0) {
   return { animatedStyle }
 }
 
-// ─── useScaleIn ──────────────────────────────────────────────────────────────
+
 export function useScaleIn(delay = 0) {
   const scale   = useSharedValue(0.92)
   const opacity = useSharedValue(0)
@@ -88,7 +88,7 @@ export function useScaleIn(delay = 0) {
   return { animatedStyle }
 }
 
-// ─── useSlideInRight ─────────────────────────────────────────────────────────
+
 export function useSlideInRight() {
   const translateX = useSharedValue(40)
   const opacity    = useSharedValue(0)
@@ -107,18 +107,16 @@ export function useSlideInRight() {
   return { animatedStyle }
 }
 
-// ─── useStagger ──────────────────────────────────────────────────────────────
-// Max 10 staggered items. Hooks are declared unconditionally at the top level
-// (React rules of hooks: no hooks inside loops/callbacks).
+
 export function useStagger(count: number, baseDelay: number) {
-  // Pre-declare 10 opacity shared values
+
   const o0 = useSharedValue(0); const o1 = useSharedValue(0)
   const o2 = useSharedValue(0); const o3 = useSharedValue(0)
   const o4 = useSharedValue(0); const o5 = useSharedValue(0)
   const o6 = useSharedValue(0); const o7 = useSharedValue(0)
   const o8 = useSharedValue(0); const o9 = useSharedValue(0)
 
-  // Pre-declare 10 translateY shared values
+
   const t0 = useSharedValue(20); const t1 = useSharedValue(20)
   const t2 = useSharedValue(20); const t3 = useSharedValue(20)
   const t4 = useSharedValue(20); const t5 = useSharedValue(20)
@@ -142,7 +140,7 @@ export function useStagger(count: number, baseDelay: number) {
     return () => timers.forEach(clearTimeout)
   }, [count, baseDelay])
 
-  // Pre-declare 10 animated styles — all at top level (no hooks in loops)
+
   const s0 = useAnimatedStyle(() => ({ opacity: o0.value, transform: [{ translateY: t0.value }] }))
   const s1 = useAnimatedStyle(() => ({ opacity: o1.value, transform: [{ translateY: t1.value }] }))
   const s2 = useAnimatedStyle(() => ({ opacity: o2.value, transform: [{ translateY: t2.value }] }))
@@ -157,7 +155,7 @@ export function useStagger(count: number, baseDelay: number) {
   return [s0, s1, s2, s3, s4, s5, s6, s7, s8, s9].slice(0, Math.min(count, 10))
 }
 
-// ─── usePressScale ───────────────────────────────────────────────────────────
+
 export function usePressScale(scale = 0.96) {
   const scaleValue = useSharedValue(1)
 
@@ -176,7 +174,7 @@ export function usePressScale(scale = 0.96) {
   return { animatedStyle, handlePressIn, handlePressOut }
 }
 
-// ─── useCartBounce ───────────────────────────────────────────────────────────
+
 export function useCartBounce() {
   const scale = useSharedValue(1)
 
@@ -194,7 +192,7 @@ export function useCartBounce() {
   return { animatedStyle, trigger }
 }
 
-// ─── useShimmer ──────────────────────────────────────────────────────────────
+
 export function useShimmer() {
   const translateX = useSharedValue(-300)
 
@@ -213,7 +211,7 @@ export function useShimmer() {
   return { animatedStyle }
 }
 
-// ─── useParallax ─────────────────────────────────────────────────────────────
+
 export function useParallax(
   scrollY: SharedValue<number>,
   factor = 0.3

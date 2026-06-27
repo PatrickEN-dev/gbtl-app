@@ -1,4 +1,4 @@
-// src/components/product/ProductCard/index.tsx
+
 import Badge from "@/components/ui/Badge";
 import Typography from "@/components/ui/Typography";
 import { useThemeColors } from "@/hooks/useThemeColors";
@@ -11,7 +11,6 @@ import React, { createContext, useContext } from "react";
 import { Pressable, View } from "react-native";
 import Animated from "react-native-reanimated";
 
-// ─── Context ─────────────────────────────────────────────────────────────────
 
 interface ProductCardContextValue {
   product: Product;
@@ -25,7 +24,6 @@ function useProductCardContext() {
   return ctx;
 }
 
-// ─── Root ─────────────────────────────────────────────────────────────────────
 
 interface RootProps {
   product: Product;
@@ -63,8 +61,6 @@ function Root({ product, onPress, staggerIndex = 0, children }: RootProps) {
   );
 }
 
-// ─── WishlistChip (private) ───────────────────────────────────────────────────
-// Extracted so hooks stay at top level — rendered absolutely inside CardImage
 
 interface WishlistChipProps {
   productId: string;
@@ -105,7 +101,6 @@ function WishlistChip({ productId }: WishlistChipProps) {
   );
 }
 
-// ─── Image ────────────────────────────────────────────────────────────────────
 
 function CardImage() {
   const { product } = useProductCardContext();
@@ -125,7 +120,6 @@ function CardImage() {
   );
 }
 
-// ─── Body ─────────────────────────────────────────────────────────────────────
 
 interface BodyProps {
   children: React.ReactNode;
@@ -135,7 +129,6 @@ function Body({ children }: BodyProps) {
   return <View className="px-3 pt-2 pb-1">{children}</View>;
 }
 
-// ─── Name ─────────────────────────────────────────────────────────────────────
 
 function Name() {
   const { product } = useProductCardContext();
@@ -146,7 +139,6 @@ function Name() {
   );
 }
 
-// ─── Price ────────────────────────────────────────────────────────────────────
 
 function Price() {
   const { product } = useProductCardContext();
@@ -174,7 +166,6 @@ function Price() {
   );
 }
 
-// ─── Footer (back-compat export — kept but no longer used in ProductGrid) ─────
 
 interface FooterProps {
   children: React.ReactNode;
@@ -184,7 +175,6 @@ function Footer({ children }: FooterProps) {
   return <View className="flex-row items-center justify-end px-3 pb-3">{children}</View>;
 }
 
-// ─── WishlistButton (back-compat export) ─────────────────────────────────────
 
 function WishlistButton() {
   const { product } = useProductCardContext();
@@ -211,7 +201,6 @@ function WishlistButton() {
   );
 }
 
-// ─── NewBadge ─────────────────────────────────────────────────────────────────
 
 function NewBadge() {
   const { product } = useProductCardContext();
@@ -223,7 +212,6 @@ function NewBadge() {
   );
 }
 
-// ─── SaleBadge ────────────────────────────────────────────────────────────────
 
 function SaleBadge() {
   const { product } = useProductCardContext();
@@ -235,15 +223,14 @@ function SaleBadge() {
   );
 }
 
-// ─── FeaturedLayout ───────────────────────────────────────────────────────────
 
 function FeaturedLayout() {
   const { product } = useProductCardContext();
   return (
     <>
-      {/* Image (full width, 4:5) with the WishlistChip already inside CardImage */}
+
       <CardImage />
-      {/* Footer strip */}
+
       <View className="flex-row items-end justify-between px-4 py-3">
         <Typography variant="heading3" className="flex-1 mr-3" numberOfLines={2}>
           {product.name}
@@ -257,7 +244,6 @@ function FeaturedLayout() {
   );
 }
 
-// ─── Export namespace ─────────────────────────────────────────────────────────
 
 export const ProductCard = {
   Root,

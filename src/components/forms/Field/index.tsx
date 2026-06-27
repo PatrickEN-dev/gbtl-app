@@ -1,4 +1,4 @@
-// src/components/forms/Field/index.tsx
+
 import React, { createContext, useContext, useState } from 'react'
 import { TextInput, View, TextInputProps } from 'react-native'
 import { Controller, Control, FieldValues, Path, RegisterOptions } from 'react-hook-form'
@@ -7,7 +7,6 @@ import Typography from '@/components/ui/Typography'
 import { useThemeColors } from '@/hooks/useThemeColors'
 import { Duration } from '@/lib/animations'
 
-// ─── Context ─────────────────────────────────────────────────────────────────
 
 interface FieldContextValue {
   value: string
@@ -24,7 +23,6 @@ function useFieldContext() {
   return ctx
 }
 
-// ─── Field.Root ──────────────────────────────────────────────────────────────
 
 interface RootProps<T extends FieldValues> {
   control: Control<T>
@@ -52,7 +50,6 @@ function Root<T extends FieldValues>({ control, name, rules, children }: RootPro
   )
 }
 
-// ─── Field.Label ─────────────────────────────────────────────────────────────
 
 interface LabelProps {
   children: React.ReactNode
@@ -66,7 +63,6 @@ function Label({ children }: LabelProps) {
   )
 }
 
-// ─── Field.Input ─────────────────────────────────────────────────────────────
 
 type InputProps = Omit<TextInputProps, 'value' | 'onChangeText' | 'onBlur'>
 
@@ -106,7 +102,6 @@ function Input({ className = '', style, ...rest }: InputProps) {
   )
 }
 
-// ─── Field.Error ─────────────────────────────────────────────────────────────
 
 function FieldError() {
   const { error } = useFieldContext()
@@ -142,7 +137,6 @@ function FieldError() {
   )
 }
 
-// ─── Export ───────────────────────────────────────────────────────────────────
 
 export const Field = {
   Root,

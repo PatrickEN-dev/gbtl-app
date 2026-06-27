@@ -1,4 +1,4 @@
-// src/components/product/ProductGrid.tsx
+
 import { ProductCard } from "@/components/product/ProductCard";
 import EmptyState from "@/components/ui/EmptyState";
 import { ProductCardSkeleton } from "@/components/ui/Skeleton";
@@ -18,9 +18,9 @@ interface ProductGridProps {
   refetch: () => unknown;
   onProductPress?: (product: Product) => void;
   listHeader?: React.ReactElement | null;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
   scrollHandler?: (event: any) => void;
-  variant?: "grid" | "featured"; // default 'grid'
+  variant?: "grid" | "featured";
 }
 
 function SkeletonGrid() {
@@ -83,14 +83,14 @@ export default function ProductGrid({
     }
   }
 
-  // Without a listHeader, render standalone state views (used in collection screen)
+
   if (!listHeader) {
     if (isPending) return <SkeletonGrid />;
     if (isError) return <ErrorState refetch={refetch} />;
     if (products.length === 0) return <EmptyProducts />;
   }
 
-  // With listHeader (home screen), keep FlatList always rendered so header stays visible
+
   const listEmptyComponent = isPending ? (
     <SkeletonGrid />
   ) : isError ? (
@@ -131,7 +131,7 @@ export default function ProductGrid({
     );
   }
 
-  // variant === 'grid' (default) — keep all existing logic exactly
+
   return (
     <AnimatedFlatList
       data={(isPending || isError ? [] : products) as Product[]}

@@ -1,4 +1,4 @@
-// src/components/layout/TabBar.tsx
+
 import React, { useEffect } from 'react'
 import { View, Pressable } from 'react-native'
 import Animated, { useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated'

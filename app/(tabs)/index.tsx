@@ -1,4 +1,4 @@
-// app/(tabs)/index.tsx
+
 import React, { useState } from 'react'
 import { View, FlatList } from 'react-native'
 import { useRouter } from 'expo-router'
@@ -35,7 +35,7 @@ export default function HomeScreen() {
 
   return (
     <View className="flex-1 bg-bg">
-      {/* Top row: wishlist | brand mark | cart */}
+
       <View
         className="px-5 mb-4 flex-row items-center"
         style={{ marginTop: insets.top + 8 }}
@@ -62,13 +62,13 @@ export default function HomeScreen() {
         />
       </View>
 
-      {/* Greeting */}
+
       <View className="px-5 mb-1">
         <Typography variant="heading1">{t('home.greeting', { name: firstName })}</Typography>
         <Typography variant="body-sm" color="muted">{t('home.tagline')}</Typography>
       </View>
 
-      {/* Category pills */}
+
       <View className="px-5 mt-4 mb-2">
         <FlatList
           data={[...CATEGORIES]}
@@ -90,7 +90,7 @@ export default function HomeScreen() {
         />
       </View>
 
-      {/* Product grid — featured 1-column layout */}
+
       <View className="flex-1">
         <ProductGrid
           variant="featured"

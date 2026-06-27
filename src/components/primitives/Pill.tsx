@@ -1,11 +1,10 @@
-// src/components/primitives/Pill.tsx
+
 import React from 'react'
 import { Pressable, View } from 'react-native'
 import Animated from 'react-native-reanimated'
 import Typography from '@/components/ui/Typography'
 import { usePressScale } from '@/lib/animations'
 
-// ─── Types ────────────────────────────────────────────────────────────────────
 
 type PillVariant = 'solid' | 'ghost' | 'outline'
 type PillTone = 'primary' | 'accent' | 'neutral'
@@ -23,7 +22,6 @@ interface PillProps {
   accessibilityLabel?: string
 }
 
-// ─── Style maps ───────────────────────────────────────────────────────────────
 
 const solidBgMap: Record<PillTone, string> = {
   primary: 'bg-primary',
@@ -67,7 +65,6 @@ const textVariantMap: Record<PillSize, 'caption' | 'body-sm' | 'body'> = {
   lg: 'body',
 }
 
-// ─── Component ───────────────────────────────────────────────────────────────
 
 export default function Pill({
   variant = 'solid',

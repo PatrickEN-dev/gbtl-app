@@ -1,8 +1,7 @@
-// src/store/authStore.ts
+
 import { create } from 'zustand'
 import type { AuthUser } from '@/types'
 
-// NEVER store token in Zustand state — token lives in SecureStore only
 
 interface AuthStore {
   user: AuthUser | null

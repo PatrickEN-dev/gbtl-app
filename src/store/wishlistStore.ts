@@ -1,4 +1,4 @@
-// src/store/wishlistStore.ts
+
 import { create } from 'zustand'
 
 interface WishlistStore {

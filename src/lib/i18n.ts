@@ -1,4 +1,4 @@
-// src/lib/i18n.ts
+
 import i18n from 'i18next'
 import { initReactI18next, useTranslation as useTranslationOrig } from 'react-i18next'
 import { getLocales } from 'expo-localization'

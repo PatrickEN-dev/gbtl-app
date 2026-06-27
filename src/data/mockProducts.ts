@@ -1,13 +1,13 @@
-// src/data/mockProducts.ts
+
 
 import type { Product } from '@/types'
 
-// Unsplash CDN — direct photo IDs for clothing/fashion items. 3:4 portrait crop.
+
 const img = (id: string) =>
   `https://images.unsplash.com/photo-${id}?w=600&h=750&fit=crop&q=80&auto=format`
 
 export const mockProducts: Product[] = [
-  // ─── MEN ───────────────────────────────────────────────────────────────────
+
 
   {
     id: 'p001',
@@ -125,7 +125,6 @@ export const mockProducts: Product[] = [
     isNew: true,
   },
 
-  // ─── WOMEN ─────────────────────────────────────────────────────────────────
 
   {
     id: 'p005',
@@ -239,7 +238,6 @@ export const mockProducts: Product[] = [
     reviewCount: 78,
   },
 
-  // ─── KIDS ──────────────────────────────────────────────────────────────────
 
   {
     id: 'p009',

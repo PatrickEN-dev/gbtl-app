@@ -1,4 +1,4 @@
-// src/hooks/useBottomSheet.ts
+
 import { useRef, useCallback } from 'react'
 import { BottomSheetModal } from '@gorhom/bottom-sheet'
 

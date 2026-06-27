@@ -1,4 +1,4 @@
-// src/components/primitives/IconButton.tsx
+
 import React from 'react'
 import { Pressable, View } from 'react-native'
 import Animated from 'react-native-reanimated'
@@ -6,7 +6,6 @@ import Badge from '@/components/ui/Badge'
 import { usePressScale } from '@/lib/animations'
 import { useThemeColors } from '@/hooks/useThemeColors'
 
-// ─── Types ────────────────────────────────────────────────────────────────────
 
 type IconButtonVariant = 'ghost' | 'surface' | 'filled'
 type IconButtonSize = 'sm' | 'md' | 'lg'
@@ -21,7 +20,6 @@ interface IconButtonProps {
   hitSlop?: { top: number; bottom: number; left: number; right: number }
 }
 
-// ─── Style maps ───────────────────────────────────────────────────────────────
 
 const sizeContainerMap: Record<IconButtonSize, string> = {
   sm: 'w-8 h-8',
@@ -35,7 +33,6 @@ const variantContainerMap: Record<IconButtonVariant, string> = {
   filled:  'bg-primary rounded-full',
 }
 
-// ─── Component ───────────────────────────────────────────────────────────────
 
 export default function IconButton({
   icon,

@@ -1,10 +1,9 @@
-// src/components/ui/Typography.tsx
+
 import React from 'react'
 import { Text } from 'react-native'
 import Animated from 'react-native-reanimated'
 import type { StyleProp, TextStyle } from 'react-native'
 
-// ─── Types ────────────────────────────────────────────────────────────────────
 
 type Variant =
   | 'display'
@@ -27,13 +26,12 @@ export interface TypographyProps {
   className?: string
   children: React.ReactNode
   numberOfLines?: number
-  /** When true, renders Animated.Text from react-native-reanimated so
-   *  the parent can pass an animatedStyle via the `style` prop. */
+
+
   animated?: boolean
   style?: StyleProp<TextStyle>
 }
 
-// ─── Maps ────────────────────────────────────────────────────────────────────
 
 const VARIANT_CLASS: Record<Variant, string> = {
   display:   'text-display',
@@ -61,7 +59,6 @@ const COLOR_CLASS: Record<ColorProp, string> = {
   white:   'text-white',
 }
 
-// ─── Component ───────────────────────────────────────────────────────────────
 
 export default function Typography({
   variant,

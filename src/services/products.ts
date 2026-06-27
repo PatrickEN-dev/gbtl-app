@@ -1,4 +1,4 @@
-// src/services/products.ts
+
 
 import type { Product } from '@/types'
 import { mockProducts } from '@/data/mockProducts'

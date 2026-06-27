@@ -1,4 +1,4 @@
-// app/(auth)/login.tsx
+
 import React, { useState } from 'react'
 import { View, Pressable, Alert } from 'react-native'
 import Animated from 'react-native-reanimated'

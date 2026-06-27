@@ -1,4 +1,4 @@
-// src/components/primitives/Card.tsx
+
 import React from 'react'
 import { View, type ViewStyle } from 'react-native'
 import { useThemeColors } from '@/hooks/useThemeColors'

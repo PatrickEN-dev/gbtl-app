@@ -7,6 +7,9 @@ import type { Product } from "@/types";
 import { AlertCircle, Package } from "lucide-react-native";
 import React, { useState } from "react";
 import { FlatList, RefreshControl, View } from "react-native";
+import Animated from "react-native-reanimated";
+
+const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
 interface ProductGridProps {
   products?: Product[];
@@ -15,6 +18,8 @@ interface ProductGridProps {
   refetch: () => unknown;
   onProductPress?: (product: Product) => void;
   listHeader?: React.ReactElement | null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  scrollHandler?: (event: any) => void;
 }
 
 function SkeletonGrid() {
@@ -63,6 +68,7 @@ export default function ProductGrid({
   refetch,
   onProductPress,
   listHeader,
+  scrollHandler,
 }: ProductGridProps) {
   const [isRefreshing, setIsRefreshing] = useState(false);
 
@@ -92,31 +98,31 @@ export default function ProductGrid({
   ) : null;
 
   return (
-    <FlatList
-      data={isPending || isError ? [] : products}
+    <AnimatedFlatList
+      data={(isPending || isError ? [] : products) as Product[]}
       numColumns={2}
-      keyExtractor={(item) => item.id}
+      keyExtractor={(item) => (item as Product).id}
       columnWrapperStyle={{ gap: Spacing.sm, paddingHorizontal: Spacing.md }}
-      contentContainerStyle={{ paddingTop: Spacing.md, paddingBottom: Spacing.xl, gap: Spacing.sm }}
+      contentContainerStyle={{ paddingTop: Spacing.md, paddingBottom: 120, gap: Spacing.sm }}
+      style={{ flex: 1 }}
       showsVerticalScrollIndicator={false}
       refreshControl={<RefreshControl refreshing={isRefreshing} onRefresh={handleRefresh} />}
       ListHeaderComponent={listHeader ?? undefined}
       ListEmptyComponent={listEmptyComponent}
-      renderItem={({ item, index }) => (
+      onScroll={scrollHandler}
+      scrollEventThrottle={16}
+      renderItem={({ item, index }: { item: unknown; index: number }) => (
         <View style={{ flex: 1 }}>
           <ProductCard.Root
-            product={item}
+            product={item as Product}
             staggerIndex={index}
-            onPress={() => onProductPress?.(item)}
+            onPress={() => onProductPress?.(item as Product)}
           >
             <ProductCard.Image />
             <ProductCard.Body>
               <ProductCard.Name />
               <ProductCard.Price />
             </ProductCard.Body>
-            <ProductCard.Footer>
-              <ProductCard.WishlistButton />
-            </ProductCard.Footer>
           </ProductCard.Root>
         </View>
       )}

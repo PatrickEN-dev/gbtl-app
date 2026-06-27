@@ -40,9 +40,3 @@ export interface AuthUser {
   email: string
   avatarUrl?: string
 }
-
-export type RootStackParamList = {
-  '(tabs)': undefined
-  '(auth)/login': undefined
-  'product/[id]': { id: string }
-}

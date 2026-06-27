@@ -49,7 +49,7 @@ export default function CollectionScreen() {
               onPress={() => setSort(item)}
               className={`px-4 py-2 rounded-full border ${
                 sort === item
-                  ? 'bg-accent border-accent'
+                  ? 'bg-primary border-primary'
                   : 'bg-surface border-border'
               }`}
             >

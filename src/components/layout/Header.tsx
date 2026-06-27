@@ -17,6 +17,26 @@ interface HeaderProps {
   showCart?: boolean;
   transparent?: boolean;
   rightElement?: React.ReactNode;
+  roundedIcons?: boolean;
+}
+
+const roundedSlotStyle = {
+  shadowColor: Colors.primary,
+  shadowOffset: { width: 0, height: 1 },
+  shadowOpacity: 0.06,
+  shadowRadius: 4,
+  elevation: 2,
+};
+
+function RoundedSlot({ children }: { children: React.ReactNode }) {
+  return (
+    <View
+      className="w-10 h-10 bg-surface rounded-full items-center justify-center"
+      style={roundedSlotStyle}
+    >
+      {children}
+    </View>
+  );
 }
 
 export default function Header({
@@ -25,6 +45,7 @@ export default function Header({
   showCart = false,
   transparent = false,
   rightElement,
+  roundedIcons = false,
 }: HeaderProps) {
   const insets = useSafeAreaInsets();
   const router = useRouter();
@@ -33,6 +54,43 @@ export default function Header({
   const cartPress = usePressScale(0.9);
 
   const iconColor = transparent ? Colors.surface : Colors.primary;
+
+  const backButton = showBack ? (
+    <Animated.View style={backPress.animatedStyle}>
+      <Pressable
+        onPress={() => router.back()}
+        onPressIn={backPress.handlePressIn}
+        onPressOut={backPress.handlePressOut}
+        hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+        className="p-1"
+      >
+        <ChevronLeft size={24} color={iconColor} />
+      </Pressable>
+    </Animated.View>
+  ) : null;
+
+  const cartButton = showCart ? (
+    <Animated.View style={cartPress.animatedStyle}>
+      <Pressable
+        onPress={() => router.push("/(tabs)/cart")}
+        onPressIn={cartPress.handlePressIn}
+        onPressOut={cartPress.handlePressOut}
+        hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+        className="p-1"
+      >
+        <View className="relative">
+          <ShoppingBag size={24} color={iconColor} />
+          {totalItems > 0 && (
+            <View className="absolute -top-1 -right-2">
+              <Badge variant="accent" size="sm">
+                {totalItems}
+              </Badge>
+            </View>
+          )}
+        </View>
+      </Pressable>
+    </Animated.View>
+  ) : null;
 
   return (
     <View
@@ -54,19 +112,12 @@ export default function Header({
       ]}
     >
       <View className="w-10">
-        {showBack && (
-          <Animated.View style={backPress.animatedStyle}>
-            <Pressable
-              onPress={() => router.back()}
-              onPressIn={backPress.handlePressIn}
-              onPressOut={backPress.handlePressOut}
-              hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-              className="p-1"
-            >
-              <ChevronLeft size={24} color={iconColor} />
-            </Pressable>
-          </Animated.View>
-        )}
+        {showBack &&
+          (roundedIcons ? (
+            <RoundedSlot>{backButton}</RoundedSlot>
+          ) : (
+            backButton
+          ))}
       </View>
 
       <View className="flex-1 items-center">
@@ -77,30 +128,18 @@ export default function Header({
         ) : null}
       </View>
 
-      <View className="w-10 flex-row items-center justify-end gap-2">
-        {rightElement}
-        {showCart && (
-          <Animated.View style={cartPress.animatedStyle}>
-            <Pressable
-              onPress={() => router.push("/(tabs)/cart")}
-              onPressIn={cartPress.handlePressIn}
-              onPressOut={cartPress.handlePressOut}
-              hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-              className="p-1"
-            >
-              <View className="relative">
-                <ShoppingBag size={24} color={iconColor} />
-                {totalItems > 0 && (
-                  <View className="absolute -top-1 -right-2">
-                    <Badge variant="accent" size="sm">
-                      {totalItems}
-                    </Badge>
-                  </View>
-                )}
-              </View>
-            </Pressable>
-          </Animated.View>
+      <View className="flex-row items-center justify-end gap-2" style={{ minWidth: 40 }}>
+        {roundedIcons && rightElement ? (
+          <RoundedSlot>{rightElement}</RoundedSlot>
+        ) : (
+          rightElement
         )}
+        {showCart &&
+          (roundedIcons ? (
+            <RoundedSlot>{cartButton}</RoundedSlot>
+          ) : (
+            cartButton
+          ))}
       </View>
     </View>
   );

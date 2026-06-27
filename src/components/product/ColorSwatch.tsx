@@ -10,6 +10,7 @@ interface ColorSwatchProps {
   colors: ProductColor[];
   selected: ProductColor;
   onSelect: (color: ProductColor) => void;
+  hideLabel?: boolean;
 }
 
 interface SwatchItemProps {
@@ -45,7 +46,7 @@ function SwatchItem({ color, isSelected, onSelect }: SwatchItemProps) {
   );
 }
 
-export default function ColorSwatch({ colors, selected, onSelect }: ColorSwatchProps) {
+export default function ColorSwatch({ colors, selected, onSelect, hideLabel = false }: ColorSwatchProps) {
   return (
     <View>
       <View className="flex-row flex-wrap gap-3">
@@ -58,9 +59,11 @@ export default function ColorSwatch({ colors, selected, onSelect }: ColorSwatchP
           />
         ))}
       </View>
-      <Typography variant="caption" className="text-muted mt-2">
-        {selected.name}
-      </Typography>
+      {!hideLabel && (
+        <Typography variant="caption" color="muted" className="mt-2">
+          {selected.name}
+        </Typography>
+      )}
     </View>
   );
 }

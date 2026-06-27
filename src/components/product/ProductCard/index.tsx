@@ -62,6 +62,47 @@ function Root({ product, onPress, staggerIndex = 0, children }: RootProps) {
   );
 }
 
+// ─── WishlistChip (private) ───────────────────────────────────────────────────
+// Extracted so hooks stay at top level — rendered absolutely inside CardImage
+
+interface WishlistChipProps {
+  productId: string;
+}
+
+function WishlistChip({ productId }: WishlistChipProps) {
+  const { toggle, isWishlisted } = useWishlist();
+  const wishlisted = isWishlisted(productId);
+  const { animatedStyle, trigger } = useCartBounce();
+
+  function handlePress() {
+    trigger();
+    toggle(productId);
+  }
+
+  return (
+    <View
+      className="absolute top-2 right-2 w-8 h-8 bg-surface rounded-full items-center justify-center"
+      style={{
+        shadowColor: Colors.primary,
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.08,
+        shadowRadius: 4,
+        elevation: 2,
+      }}
+    >
+      <Pressable onPress={handlePress} hitSlop={8}>
+        <Animated.View style={animatedStyle}>
+          <Heart
+            size={16}
+            color={wishlisted ? Colors.accent : Colors.muted}
+            fill={wishlisted ? Colors.accent : "transparent"}
+          />
+        </Animated.View>
+      </Pressable>
+    </View>
+  );
+}
+
 // ─── Image ────────────────────────────────────────────────────────────────────
 
 function CardImage() {
@@ -77,6 +118,7 @@ function CardImage() {
         {product.isNew && <NewBadge />}
         {product.isSale && <SaleBadge />}
       </View>
+      <WishlistChip productId={product.id} />
     </View>
   );
 }
@@ -130,7 +172,7 @@ function Price() {
   );
 }
 
-// ─── Footer ───────────────────────────────────────────────────────────────────
+// ─── Footer (back-compat export — kept but no longer used in ProductGrid) ─────
 
 interface FooterProps {
   children: React.ReactNode;
@@ -140,7 +182,7 @@ function Footer({ children }: FooterProps) {
   return <View className="flex-row items-center justify-end px-3 pb-3">{children}</View>;
 }
 
-// ─── WishlistButton ───────────────────────────────────────────────────────────
+// ─── WishlistButton (back-compat export) ─────────────────────────────────────
 
 function WishlistButton() {
   const { product } = useProductCardContext();

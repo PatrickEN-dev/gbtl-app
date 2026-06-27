@@ -26,7 +26,7 @@ class ErrorBoundary extends React.Component<Props, State> {
   render() {
     if (this.state.hasError) {
       return (
-        <View className="flex-1 items-center justify-center bg-background px-6">
+        <View className="flex-1 items-center justify-center bg-bg px-6">
           <Typography variant="heading3" className="text-center mb-4">
             Something went wrong
           </Typography>

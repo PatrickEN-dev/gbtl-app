@@ -14,6 +14,7 @@ type Size = 'sm' | 'md' | 'lg'
 export interface ButtonProps {
   variant?: Variant
   size?: Size
+  rounded?: 'btn' | 'pill'
   leftIcon?: React.ReactNode
   rightIcon?: React.ReactNode
   loading?: boolean
@@ -32,11 +33,11 @@ const CONTAINER_VARIANT: Record<Variant, string> = {
   ghost:   'bg-transparent',
 }
 
-/** Height + horizontal padding + border-radius per size */
+/** Height + horizontal padding per size (radius applied separately via rounded prop) */
 const CONTAINER_SIZE: Record<Size, string> = {
-  sm: 'h-9 px-3 rounded-btn',
-  md: 'h-12 px-5 rounded-btn',
-  lg: 'h-14 px-6 rounded-btn',
+  sm: 'h-9 px-3',
+  md: 'h-12 px-5',
+  lg: 'h-14 px-6',
 }
 
 /** Typography color for each variant */
@@ -70,6 +71,7 @@ const PRIMARY_SHADOW = {
 export default function Button({
   variant = 'primary',
   size = 'md',
+  rounded = 'btn',
   leftIcon,
   rightIcon,
   loading = false,
@@ -82,10 +84,13 @@ export default function Button({
 
   const isDisabled = disabled || loading
 
+  const radiusClass = rounded === 'pill' ? 'rounded-pill' : 'rounded-btn'
+
   const containerClass = [
     'flex-row items-center justify-center',
     CONTAINER_VARIANT[variant],
     CONTAINER_SIZE[size],
+    radiusClass,
     fullWidth ? 'w-full' : 'self-start',
     isDisabled ? 'opacity-50' : '',
   ]

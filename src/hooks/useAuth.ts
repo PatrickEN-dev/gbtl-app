@@ -6,43 +6,47 @@ import { login as authServiceLogin } from '@/services/auth'
 import { getToken, setToken, deleteToken } from '@/lib/secureStore'
 
 export function useAuth() {
-  const store = useAuthStore()
+  // Zustand action selectors: each returns a stable reference that never changes
+  const setUser    = useAuthStore((s) => s.setUser)
+  const clearUser  = useAuthStore((s) => s.clearUser)
+  const setLoading = useAuthStore((s) => s.setLoading)
+  const user           = useAuthStore((s) => s.user)
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated)
+  const isLoading      = useAuthStore((s) => s.isLoading)
+
   const queryClient = useQueryClient()
 
   const login = useCallback(
     async (email: string, password: string) => {
-      store.setLoading(true)
+      setLoading(true)
       try {
-        const { user, token } = await authServiceLogin(email, password)
+        const { user: u, token } = await authServiceLogin(email, password)
         await setToken(token)
-        store.setUser(user)
+        setUser(u)
       } finally {
-        store.setLoading(false)
+        setLoading(false)
       }
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
+    [setLoading, setUser],
   )
 
   const logout = useCallback(async () => {
-    store.clearUser()
+    clearUser()
     await deleteToken()
     queryClient.clear()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [queryClient])
+  }, [clearUser, queryClient])
 
   const restoreSession = useCallback(async () => {
     const token = await getToken()
     if (token) {
-      store.setUser({ id: '1', name: 'Tavorian', email: 'tavorian@gbtl.com' })
+      setUser({ id: '1', name: 'Tavorian', email: 'tavorian@gbtl.com' })
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [setUser])
 
   return {
-    user: store.user,
-    isAuthenticated: store.isAuthenticated,
-    isLoading: store.isLoading,
+    user,
+    isAuthenticated,
+    isLoading,
     login,
     logout,
     restoreSession,

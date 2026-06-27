@@ -37,13 +37,6 @@ function SizeChip({ size, isSelected, onSelect }: SizeChipProps) {
     backgroundColor: interpolateColor(progress.value, [0, 1], [Colors.surface, Colors.primary]),
   }));
 
-  const textClass = [
-    isSelected ? "text-white" : "text-primary",
-    !size.available ? "line-through" : "",
-  ]
-    .filter(Boolean)
-    .join(" ");
-
   return (
     <Pressable
       onPress={size.available ? onSelect : undefined}
@@ -60,7 +53,11 @@ function SizeChip({ size, isSelected, onSelect }: SizeChipProps) {
           .filter(Boolean)
           .join(" ")}
       >
-        <Typography variant="body-sm" className={textClass}>
+        <Typography
+          variant="body-sm"
+          color={isSelected ? 'white' : 'primary'}
+          className={!size.available ? 'line-through' : ''}
+        >
           {size.label}
         </Typography>
       </Animated.View>

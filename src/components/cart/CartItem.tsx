@@ -4,7 +4,7 @@ import { View, Pressable } from 'react-native'
 import Animated from 'react-native-reanimated'
 import { Swipeable } from 'react-native-gesture-handler'
 import { Image } from 'expo-image'
-import { Trash2, Minus, Plus } from 'lucide-react-native'
+import { Trash2, Minus, Plus, X } from 'lucide-react-native'
 import Typography from '@/components/ui/Typography'
 import { useFadeInUp } from '@/lib/animations'
 import { useCart } from '@/hooks/useCart'
@@ -105,6 +105,18 @@ export default function CartItem({ item, onRemove }: Props) {
             elevation: 3,
           }}
         >
+          {/* Close (X) button — absolute top-right */}
+          <Pressable
+            onPress={onRemove}
+            className="absolute top-2 right-2 w-6 h-6 rounded-full bg-bg items-center justify-center"
+            hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+            accessibilityLabel="Remove item"
+            accessibilityRole="button"
+            style={{ zIndex: 1 }}
+          >
+            <X size={14} color={Colors.muted} />
+          </Pressable>
+
           {/* Thumbnail */}
           <Image
             source={{ uri: product.images[0] }}
@@ -149,11 +161,13 @@ export default function CartItem({ item, onRemove }: Props) {
             </View>
           </View>
 
-          {/* Unit price */}
-          <View className="ml-3 items-end justify-start pt-1">
-            <Typography variant="price">
-              ${product.price.toFixed(2)}
-            </Typography>
+          {/* Price pill — dark background, white text */}
+          <View className="ml-3 items-end justify-end pb-1">
+            <View className="bg-primary rounded-pill px-3 py-1.5 items-center justify-center">
+              <Typography variant="body-sm" weight="semibold" color="white">
+                ${product.price.toFixed(2)}
+              </Typography>
+            </View>
           </View>
         </View>
       </Swipeable>

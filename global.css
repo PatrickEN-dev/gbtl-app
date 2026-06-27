@@ -1,3 +1,25 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    --color-bg:      248 248 243;
+    --color-surface: 255 255 255;
+    --color-primary:  26  32  24;
+    --color-accent:   92 124  95;
+    --color-muted:   142 148 139;
+    --color-border:  229 229 224;
+  }
+
+  .dark:root,
+  :root.dark,
+  .dark {
+    --color-bg:       26  31  27;
+    --color-surface:  37  42  38;
+    --color-primary: 245 245 242;
+    --color-accent:  143 176 136;
+    --color-muted:   156 159 149;
+    --color-border:   58  63  59;
+  }
+}

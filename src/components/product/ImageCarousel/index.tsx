@@ -80,7 +80,9 @@ function Root({ images, children }: RootProps) {
 
 // ─── Slide ────────────────────────────────────────────────────────────────────
 
-function Slide() {
+type SlideProps = { aspectRatio?: number };
+
+function Slide({ aspectRatio }: SlideProps) {
   const { activeIndex, images, dragX } = useCarouselContext();
   const { animatedStyle: mountStyle } = useSlideInRight();
 
@@ -93,7 +95,7 @@ function Slide() {
       <Animated.View style={mountStyle}>
         <Image
           source={{ uri: images[activeIndex] }}
-          style={{ width: "100%", height: 400 }}
+          style={{ width: "100%", aspectRatio: aspectRatio ?? 1 }}
           contentFit="cover"
         />
       </Animated.View>
@@ -126,6 +128,27 @@ function Thumbnails() {
       )}
     />
   );
+}
+
+// ─── SideThumbnails ───────────────────────────────────────────────────────────
+
+function SideThumbnails() {
+  const { images, activeIndex, setActiveIndex } = useCarouselContext();
+  return (
+    <View className="gap-2 pl-2 justify-center">
+      {images.slice(0, 4).map((uri, index) => (
+        <Pressable key={index} onPress={() => setActiveIndex(index)}>
+          <View
+            className={`w-14 h-14 rounded-lg overflow-hidden ${
+              index === activeIndex ? 'border-2 border-accent' : 'border border-border'
+            }`}
+          >
+            <Image source={{ uri }} style={{ width: '100%', height: '100%' }} contentFit="cover" />
+          </View>
+        </Pressable>
+      ))}
+    </View>
+  )
 }
 
 // ─── Dots ─────────────────────────────────────────────────────────────────────
@@ -167,4 +190,4 @@ function Dots() {
 
 // ─── Export ───────────────────────────────────────────────────────────────────
 
-export const ImageCarousel = { Root, Slide, Thumbnails, Dots };
+export const ImageCarousel = { Root, Slide, Thumbnails, SideThumbnails, Dots };

@@ -2,16 +2,27 @@
 module.exports = {
   content: ['./app/**/*.{ts,tsx}', './src/**/*.{ts,tsx}'],
   presets: [require('nativewind/preset')],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
-        bg:      '#F5F5F5',
+        // Light theme tokens (defaults)
+        bg:      '#F8F8F3',
         surface: '#FFFFFF',
-        accent:  '#E8401C',
-        primary: '#111111',
-        muted:   '#888888',
-        border:  '#E0E0E0',
-        overlay: 'rgba(0,0,0,0.5)',
+        primary: '#1A2018',
+        accent:  '#5C7C5F',
+        muted:   '#8E948B',
+        border:  '#E5E5E0',
+        overlay: 'rgba(26,32,24,0.5)',
+
+        // Dark theme tokens (used via dark: variant)
+        'dark-bg':      '#1A1F1B',
+        'dark-surface': '#252A26',
+        'dark-primary': '#F5F5F2',
+        'dark-accent':  '#8FB088',
+        'dark-muted':   '#9C9F95',
+        'dark-border':  '#3A3F3B',
+        'dark-overlay': 'rgba(0,0,0,0.6)',
       },
       fontSize: {
         'display':  [40, { lineHeight: '44px', letterSpacing: '-1.5px', fontWeight: '700' }],
@@ -26,7 +37,7 @@ module.exports = {
       borderRadius: { card: '16px', btn: '10px', pill: '999px', input: '10px' },
       boxShadow: {
         card: '0 2px 12px rgba(0,0,0,0.08)',
-        btn:  '0 4px 16px rgba(232,64,28,0.30)',
+        btn:  '0 4px 16px rgba(92,124,95,0.30)',
       },
     },
   },

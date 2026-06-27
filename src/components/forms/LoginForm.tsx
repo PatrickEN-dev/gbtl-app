@@ -1,6 +1,6 @@
 // src/components/forms/LoginForm.tsx
 import React, { useState } from 'react'
-import { View, KeyboardAvoidingView, Platform, Pressable, ScrollView } from 'react-native'
+import { View, Pressable, ScrollView } from 'react-native'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { router } from 'expo-router'
@@ -36,16 +36,12 @@ export default function LoginForm() {
   }
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      className="flex-1"
+    <ScrollView
+      contentContainerStyle={{ flexGrow: 1 }}
+      keyboardShouldPersistTaps="handled"
+      showsVerticalScrollIndicator={false}
     >
-      <ScrollView
-        contentContainerStyle={{ flexGrow: 1 }}
-        keyboardShouldPersistTaps="handled"
-        showsVerticalScrollIndicator={false}
-      >
-        <View className="flex-1 px-6 pt-8 pb-6">
+      <View className="flex-1 px-6 pt-8 pb-6">
           {/* Title */}
           <View className="mb-8">
             <Typography variant="heading1" weight="bold" className="mb-2">
@@ -109,8 +105,7 @@ export default function LoginForm() {
           >
             Sign In
           </Button>
-        </View>
-      </ScrollView>
-    </KeyboardAvoidingView>
+      </View>
+    </ScrollView>
   )
 }

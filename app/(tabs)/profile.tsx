@@ -1,8 +1,7 @@
 // app/(tabs)/profile.tsx
-import React, { useEffect } from 'react'
+import React from 'react'
 import { View, TouchableOpacity, ScrollView } from 'react-native'
 import Animated from 'react-native-reanimated'
-import * as Notifications from 'expo-notifications'
 import { useRouter } from 'expo-router'
 import { ChevronRight, LogOut } from 'lucide-react-native'
 import ScreenWrapper from '@/components/layout/ScreenWrapper'
@@ -37,10 +36,6 @@ export default function ProfileScreen() {
   const router = useRouter()
   const { user, isAuthenticated, logout } = useAuth()
   const { animatedStyle } = useScaleIn()
-
-  useEffect(() => {
-    Notifications.requestPermissionsAsync().catch(() => {})
-  }, [])
 
   const handleLogout = async () => {
     await logout()

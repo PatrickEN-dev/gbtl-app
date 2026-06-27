@@ -2,33 +2,40 @@
 
 import type { Product } from '@/types'
 
+// Unsplash CDN — direct photo IDs for clothing/fashion items. 3:4 portrait crop.
+const img = (id: string) =>
+  `https://images.unsplash.com/photo-${id}?w=600&h=750&fit=crop&q=80&auto=format`
+
 export const mockProducts: Product[] = [
   // ─── MEN ───────────────────────────────────────────────────────────────────
 
   {
     id: 'p001',
-    name: 'Premium Oxford Shirt',
-    price: 120,
+    name: "Men's Pullover Hoodie",
+    price: 199,
     images: [
-      'https://picsum.photos/seed/gbtl-p001/400/500',
-      'https://picsum.photos/seed/gbtl-p001b/400/500',
-      'https://picsum.photos/seed/gbtl-p001c/400/500',
+      img('1556821840-3a63f95609a7'),
+      img('1620799140408-edc6dcb6d633'),
+      img('1583743814966-8936f5b7be1a'),
     ],
     colors: [
       { hex: '#F5F0E8', name: 'Ivory' },
-      { hex: '#2C3E50', name: 'Navy' },
-      { hex: '#4A4A4A', name: 'Charcoal' },
+      { hex: '#1A1A1A', name: 'Black' },
+      { hex: '#7AA3C4', name: 'Sky' },
+      { hex: '#C7DCEA', name: 'Light Sky' },
     ],
     sizes: [
-      { label: 'XS', available: false },
+      { label: 'XS', available: true },
       { label: 'S',  available: true },
       { label: 'M',  available: true },
       { label: 'L',  available: true },
       { label: 'XL', available: true },
+      { label: 'XXL', available: true },
+      { label: '3XL', available: true },
     ],
     category: 'men',
     description:
-      'Crafted from 100% Egyptian cotton with a classic two-button collar, this premium Oxford shirt delivers refined comfort for any occasion. The relaxed tailored fit drapes elegantly without sacrificing ease of movement.',
+      'Crafted with premium materials, these cargo trousers blend comfort and style. The relaxed silhouette with a tapered leg makes them perfect for everyday wear.',
     rating: 4.8,
     reviewCount: 312,
     isFeatured: true,
@@ -36,21 +43,20 @@ export const mockProducts: Product[] = [
 
   {
     id: 'p002',
-    name: 'Tailored Chino Pants',
+    name: 'Classic Oxford Shirt',
     price: 96,
     originalPrice: 128,
     images: [
-      'https://picsum.photos/seed/gbtl-p002/400/500',
-      'https://picsum.photos/seed/gbtl-p002b/400/500',
-      'https://picsum.photos/seed/gbtl-p002c/400/500',
+      img('1620799140408-edc6dcb6d633'),
+      img('1602810318383-e386cc2a3ccf'),
+      img('1618354691373-d851c5c3a990'),
     ],
     colors: [
-      { hex: '#C8B89A', name: 'Camel' },
+      { hex: '#F5F0E8', name: 'Ivory' },
       { hex: '#2C3E50', name: 'Navy' },
       { hex: '#1A1A1A', name: 'Black' },
     ],
     sizes: [
-      { label: 'XS', available: true },
       { label: 'S',  available: true },
       { label: 'M',  available: true },
       { label: 'L',  available: true },
@@ -58,7 +64,7 @@ export const mockProducts: Product[] = [
     ],
     category: 'men',
     description:
-      'Slim-cut chinos tailored from a lightweight stretch-cotton blend that resists creasing throughout the day. A clean silhouette and subtle taper make these trousers equally at home at the office or weekend outings.',
+      'Tailored cotton Oxford with a clean cut and refined finish. Pairs effortlessly with chinos or denim.',
     rating: 4.5,
     reviewCount: 198,
     isSale: true,
@@ -69,9 +75,9 @@ export const mockProducts: Product[] = [
     name: 'Merino Wool Sweater',
     price: 185,
     images: [
-      'https://picsum.photos/seed/gbtl-p003/400/500',
-      'https://picsum.photos/seed/gbtl-p003b/400/500',
-      'https://picsum.photos/seed/gbtl-p003c/400/500',
+      img('1576566588028-4147f3842f27'),
+      img('1521572163474-6864f9cf17ab'),
+      img('1611312449412-6cefac5dc3e4'),
     ],
     colors: [
       { hex: '#8B4513', name: 'Rust' },
@@ -79,7 +85,6 @@ export const mockProducts: Product[] = [
       { hex: '#4A4A4A', name: 'Charcoal' },
     ],
     sizes: [
-      { label: 'XS', available: true },
       { label: 'S',  available: true },
       { label: 'M',  available: false },
       { label: 'L',  available: true },
@@ -87,7 +92,7 @@ export const mockProducts: Product[] = [
     ],
     category: 'men',
     description:
-      'Woven from extra-fine 18.5-micron Merino wool for an incredibly soft hand-feel that regulates body temperature year-round. The classic crew-neck construction pairs seamlessly with casual and smart-casual looks.',
+      'Extra-fine 18.5-micron Merino wool that regulates body temperature year-round. Classic crew-neck construction.',
     rating: 4.6,
     reviewCount: 87,
   },
@@ -97,9 +102,9 @@ export const mockProducts: Product[] = [
     name: 'Classic Denim Jacket',
     price: 210,
     images: [
-      'https://picsum.photos/seed/gbtl-p004/400/500',
-      'https://picsum.photos/seed/gbtl-p004b/400/500',
-      'https://picsum.photos/seed/gbtl-p004c/400/500',
+      img('1542272604-787c3835535d'),
+      img('1551488831-00ddcb6c6bd3'),
+      img('1591047139829-d91aecb6caea'),
     ],
     colors: [
       { hex: '#4A6FA5', name: 'Blue' },
@@ -107,15 +112,14 @@ export const mockProducts: Product[] = [
       { hex: '#1A1A1A', name: 'Black' },
     ],
     sizes: [
-      { label: 'XS', available: true },
-      { label: 'S',  available: false },
-      { label: 'M',  available: true },
-      { label: 'L',  available: true },
+      { label: 'S', available: false },
+      { label: 'M', available: true },
+      { label: 'L', available: true },
       { label: 'XL', available: true },
     ],
     category: 'men',
     description:
-      'An enduring wardrobe staple reimagined with a structured silhouette and premium selvedge denim sourced from a heritage Japanese mill. Vintage-inspired copper rivets and tonal stitching complete the look.',
+      'Structured silhouette in premium selvedge denim from a heritage Japanese mill. Vintage copper rivets and tonal stitching.',
     rating: 4.7,
     reviewCount: 54,
     isNew: true,
@@ -125,12 +129,12 @@ export const mockProducts: Product[] = [
 
   {
     id: 'p005',
-    name: 'Silk Wrap Dress',
+    name: 'Soft Cotton Blouse',
     price: 195,
     images: [
-      'https://picsum.photos/seed/gbtl-p005/400/500',
-      'https://picsum.photos/seed/gbtl-p005b/400/500',
-      'https://picsum.photos/seed/gbtl-p005c/400/500',
+      img('1485518882345-15568b007407'),
+      img('1583744946564-b52ac1c389c8'),
+      img('1551163943-3f6a855d1153'),
     ],
     colors: [
       { hex: '#C4A0A0', name: 'Dusty Rose' },
@@ -142,11 +146,10 @@ export const mockProducts: Product[] = [
       { label: 'S',  available: true },
       { label: 'M',  available: true },
       { label: 'L',  available: true },
-      { label: 'XL', available: true },
     ],
     category: 'women',
     description:
-      'Fluid wrap silhouette cut from pure 19-momme silk charmeuse that drapes beautifully over every curve. Adjustable tie belt and a V-neckline lend effortless elegance to both daytime and evening occasions.',
+      'Lightweight cotton blouse with a fluid silhouette and adjustable tie at the waist. Effortless elegance for any occasion.',
     rating: 4.9,
     reviewCount: 421,
     isFeatured: true,
@@ -154,13 +157,13 @@ export const mockProducts: Product[] = [
 
   {
     id: 'p006',
-    name: 'High-Waist Linen Trousers',
+    name: 'Linen Wrap Top',
     price: 88,
     originalPrice: 110,
     images: [
-      'https://picsum.photos/seed/gbtl-p006/400/500',
-      'https://picsum.photos/seed/gbtl-p006b/400/500',
-      'https://picsum.photos/seed/gbtl-p006c/400/500',
+      img('1602810318383-e386cc2a3ccf'),
+      img('1485518882345-15568b007407'),
+      img('1583744946564-b52ac1c389c8'),
     ],
     colors: [
       { hex: '#C8B89A', name: 'Camel' },
@@ -172,11 +175,10 @@ export const mockProducts: Product[] = [
       { label: 'S',  available: true },
       { label: 'M',  available: true },
       { label: 'L',  available: false },
-      { label: 'XL', available: true },
     ],
     category: 'women',
     description:
-      'Breathable pure-linen wide-leg trousers with a high-rise waistband and elasticated back for all-day comfort. The relaxed drape and cropped length are perfectly on-trend for warm-season dressing.',
+      'Pure linen wrap top with a relaxed drape and cropped length. Perfectly on-trend for warm-season dressing.',
     rating: 4.3,
     reviewCount: 265,
     isSale: true,
@@ -187,9 +189,9 @@ export const mockProducts: Product[] = [
     name: 'Cashmere Turtleneck',
     price: 240,
     images: [
-      'https://picsum.photos/seed/gbtl-p007/400/500',
-      'https://picsum.photos/seed/gbtl-p007b/400/500',
-      'https://picsum.photos/seed/gbtl-p007c/400/500',
+      img('1551488831-00ddcb6c6bd3'),
+      img('1551163943-3f6a855d1153'),
+      img('1576566588028-4147f3842f27'),
     ],
     colors: [
       { hex: '#F5F0E8', name: 'Ivory' },
@@ -201,11 +203,10 @@ export const mockProducts: Product[] = [
       { label: 'S',  available: true },
       { label: 'M',  available: true },
       { label: 'L',  available: true },
-      { label: 'XL', available: false },
     ],
     category: 'women',
     description:
-      'Luxuriously soft Grade-A Mongolian cashmere in a slim ribbed turtleneck construction that provides understated warmth without bulk. An essential cold-weather investment piece that only improves with every wear.',
+      'Grade-A Mongolian cashmere in a slim ribbed turtleneck. Understated warmth without bulk.',
     rating: 4.8,
     reviewCount: 133,
     isNew: true,
@@ -213,12 +214,12 @@ export const mockProducts: Product[] = [
 
   {
     id: 'p008',
-    name: 'Relaxed Linen Blazer',
+    name: 'Relaxed Knit Cardigan',
     price: 280,
     images: [
-      'https://picsum.photos/seed/gbtl-p008/400/500',
-      'https://picsum.photos/seed/gbtl-p008b/400/500',
-      'https://picsum.photos/seed/gbtl-p008c/400/500',
+      img('1583744946564-b52ac1c389c8'),
+      img('1551163943-3f6a855d1153'),
+      img('1485518882345-15568b007407'),
     ],
     colors: [
       { hex: '#4A4A4A', name: 'Charcoal' },
@@ -226,15 +227,14 @@ export const mockProducts: Product[] = [
       { hex: '#F5F0E8', name: 'Ivory' },
     ],
     sizes: [
-      { label: 'XS', available: true },
-      { label: 'S',  available: false },
-      { label: 'M',  available: true },
-      { label: 'L',  available: true },
+      { label: 'S', available: false },
+      { label: 'M', available: true },
+      { label: 'L', available: true },
       { label: 'XL', available: true },
     ],
     category: 'women',
     description:
-      'An oversized single-breasted blazer tailored from a textured linen blend that softens beautifully with wear. The deconstructed interior and patch pockets keep the feel light and modern season after season.',
+      'Oversized single-breasted cardigan in a textured knit that softens beautifully with wear. Patch pockets keep the feel modern.',
     rating: 4.7,
     reviewCount: 78,
   },
@@ -243,12 +243,12 @@ export const mockProducts: Product[] = [
 
   {
     id: 'p009',
-    name: 'Organic Cotton Set',
+    name: 'Organic Cotton Tee',
     price: 85,
     images: [
-      'https://picsum.photos/seed/gbtl-p009/400/500',
-      'https://picsum.photos/seed/gbtl-p009b/400/500',
-      'https://picsum.photos/seed/gbtl-p009c/400/500',
+      img('1503944583220-79d8926ad5e2'),
+      img('1622290319146-7b63df48a635'),
+      img('1565693413579-8a73fcdf3eea'),
     ],
     colors: [
       { hex: '#F5F0E8', name: 'Ivory' },
@@ -256,15 +256,14 @@ export const mockProducts: Product[] = [
       { hex: '#C4A0A0', name: 'Dusty Rose' },
     ],
     sizes: [
-      { label: '2Y',  available: true },
-      { label: '4Y',  available: true },
-      { label: '6Y',  available: false },
-      { label: '8Y',  available: true },
-      { label: '10Y', available: true },
+      { label: 'XS', available: true },
+      { label: 'S', available: true },
+      { label: 'M', available: false },
+      { label: 'L', available: true },
     ],
     category: 'kids',
     description:
-      'A matching top-and-bottom set crafted from 100% GOTS-certified organic cotton that is gentle on sensitive skin. Easy-care fabric and snap closures make dressing little ones effortless and adorable.',
+      'GOTS-certified organic cotton tee, gentle on sensitive skin. Easy-care and adorable.',
     rating: 4.6,
     reviewCount: 189,
     isFeatured: true,
@@ -272,29 +271,28 @@ export const mockProducts: Product[] = [
 
   {
     id: 'p010',
-    name: 'Mini Parka Jacket',
+    name: 'Striped Knit Pullover',
     price: 72,
     originalPrice: 90,
     images: [
-      'https://picsum.photos/seed/gbtl-p010/400/500',
-      'https://picsum.photos/seed/gbtl-p010b/400/500',
-      'https://picsum.photos/seed/gbtl-p010c/400/500',
+      img('1622290319146-7b63df48a635'),
+      img('1565693413579-8a73fcdf3eea'),
+      img('1503944583220-79d8926ad5e2'),
     ],
     colors: [
       { hex: '#2C3E50', name: 'Navy' },
-      { hex: '#8B4513', name: 'Rust' },
+      { hex: '#4A6FA5', name: 'Blue' },
       { hex: '#1A1A1A', name: 'Black' },
     ],
     sizes: [
-      { label: '2Y',  available: true },
-      { label: '4Y',  available: true },
-      { label: '6Y',  available: true },
-      { label: '8Y',  available: true },
-      { label: '10Y', available: false },
+      { label: 'XS', available: true },
+      { label: 'S', available: true },
+      { label: 'M', available: true },
+      { label: 'L', available: false },
     ],
     category: 'kids',
     description:
-      'A water-resistant ripstop parka with a cozy faux-sherpa lining that keeps active kids warm through the coldest days. Elasticated cuffs, an adjustable drawstring hem, and reflective piping make it as practical as it is stylish.',
+      'Soft cotton-acrylic blend pullover with playful stripes. Dropped shoulders for room to move.',
     rating: 4.4,
     reviewCount: 142,
     isSale: true,
@@ -302,12 +300,12 @@ export const mockProducts: Product[] = [
 
   {
     id: 'p011',
-    name: 'Striped Knit Pullover',
+    name: 'Casual Long Sleeve',
     price: 95,
     images: [
-      'https://picsum.photos/seed/gbtl-p011/400/500',
-      'https://picsum.photos/seed/gbtl-p011b/400/500',
-      'https://picsum.photos/seed/gbtl-p011c/400/500',
+      img('1565693413579-8a73fcdf3eea'),
+      img('1503944583220-79d8926ad5e2'),
+      img('1622290319146-7b63df48a635'),
     ],
     colors: [
       { hex: '#4A6FA5', name: 'Blue' },
@@ -315,27 +313,26 @@ export const mockProducts: Product[] = [
       { hex: '#F5F0E8', name: 'Ivory' },
     ],
     sizes: [
-      { label: '2Y',  available: false },
-      { label: '4Y',  available: true },
-      { label: '6Y',  available: true },
-      { label: '8Y',  available: true },
-      { label: '10Y', available: true },
+      { label: 'XS', available: false },
+      { label: 'S', available: true },
+      { label: 'M', available: true },
+      { label: 'L', available: true },
     ],
     category: 'kids',
     description:
-      'A playful engineered-stripe pullover knitted from a soft cotton-acrylic blend that holds its shape wash after wash. Dropped shoulders and a relaxed fit give kids room to move freely all day long.',
+      'Soft long-sleeve cotton tee that layers beautifully under jackets or stands alone.',
     rating: 4.5,
     reviewCount: 67,
   },
 
   {
     id: 'p012',
-    name: 'Classic Denim Shorts',
+    name: 'Classic Denim Overall',
     price: 68,
     images: [
-      'https://picsum.photos/seed/gbtl-p012/400/500',
-      'https://picsum.photos/seed/gbtl-p012b/400/500',
-      'https://picsum.photos/seed/gbtl-p012c/400/500',
+      img('1622290319146-7b63df48a635'),
+      img('1503944583220-79d8926ad5e2'),
+      img('1565693413579-8a73fcdf3eea'),
     ],
     colors: [
       { hex: '#4A6FA5', name: 'Blue' },
@@ -343,15 +340,14 @@ export const mockProducts: Product[] = [
       { hex: '#C8B89A', name: 'Camel' },
     ],
     sizes: [
-      { label: '2Y',  available: true },
-      { label: '4Y',  available: true },
-      { label: '6Y',  available: true },
-      { label: '8Y',  available: false },
-      { label: '10Y', available: true },
+      { label: 'XS', available: true },
+      { label: 'S', available: true },
+      { label: 'M', available: true },
+      { label: 'L', available: false },
     ],
     category: 'kids',
     description:
-      'Durable mid-wash denim shorts with a flexible elasticated waistband and deep side pockets built for non-stop play. Classic five-pocket styling and reinforced knees ensure they hold up to every adventure.',
+      'Durable mid-wash denim overalls with adjustable straps and side pockets. Built for non-stop play.',
     rating: 4.3,
     reviewCount: 93,
     isNew: true,

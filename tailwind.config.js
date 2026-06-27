@@ -6,23 +6,13 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Light theme tokens (defaults)
-        bg:      '#F8F8F3',
-        surface: '#FFFFFF',
-        primary: '#1A2018',
-        accent:  '#5C7C5F',
-        muted:   '#8E948B',
-        border:  '#E5E5E0',
+        bg:      'rgb(var(--color-bg) / <alpha-value>)',
+        surface: 'rgb(var(--color-surface) / <alpha-value>)',
+        primary: 'rgb(var(--color-primary) / <alpha-value>)',
+        accent:  'rgb(var(--color-accent) / <alpha-value>)',
+        muted:   'rgb(var(--color-muted) / <alpha-value>)',
+        border:  'rgb(var(--color-border) / <alpha-value>)',
         overlay: 'rgba(26,32,24,0.5)',
-
-        // Dark theme tokens (used via dark: variant)
-        'dark-bg':      '#1A1F1B',
-        'dark-surface': '#252A26',
-        'dark-primary': '#F5F5F2',
-        'dark-accent':  '#8FB088',
-        'dark-muted':   '#9C9F95',
-        'dark-border':  '#3A3F3B',
-        'dark-overlay': 'rgba(0,0,0,0.6)',
       },
       fontSize: {
         'display':  [40, { lineHeight: '44px', letterSpacing: '-1.5px', fontWeight: '700' }],

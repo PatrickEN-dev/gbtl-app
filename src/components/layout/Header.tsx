@@ -1,14 +1,12 @@
 // src/components/layout/Header.tsx
-import Badge from "@/components/ui/Badge";
 import Typography from "@/components/ui/Typography";
-import { Colors } from "@/constants/tokens";
+import IconButton from "@/components/primitives/IconButton";
+import { useThemeColors } from "@/hooks/useThemeColors";
 import { useCart } from "@/hooks/useCart";
-import { usePressScale } from "@/lib/animations";
 import { useRouter } from "expo-router";
 import { ChevronLeft, ShoppingBag } from "lucide-react-native";
 import React from "react";
-import { Pressable, View } from "react-native";
-import Animated from "react-native-reanimated";
+import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 interface HeaderProps {
@@ -18,25 +16,6 @@ interface HeaderProps {
   transparent?: boolean;
   rightElement?: React.ReactNode;
   roundedIcons?: boolean;
-}
-
-const roundedSlotStyle = {
-  shadowColor: Colors.primary,
-  shadowOffset: { width: 0, height: 1 },
-  shadowOpacity: 0.06,
-  shadowRadius: 4,
-  elevation: 2,
-};
-
-function RoundedSlot({ children }: { children: React.ReactNode }) {
-  return (
-    <View
-      className="w-10 h-10 bg-surface rounded-full items-center justify-center"
-      style={roundedSlotStyle}
-    >
-      {children}
-    </View>
-  );
 }
 
 export default function Header({
@@ -50,47 +29,41 @@ export default function Header({
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const { totalItems } = useCart();
-  const backPress = usePressScale(0.9);
-  const cartPress = usePressScale(0.9);
+  const colors = useThemeColors();
+  const surfaceShadow = {
+    shadowColor: colors.primary,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.06,
+    shadowRadius: 4,
+    elevation: 2,
+  };
 
-  const iconColor = transparent ? Colors.surface : Colors.primary;
+  const iconColor = transparent ? colors.surface : colors.primary;
 
   const backButton = showBack ? (
-    <Animated.View style={backPress.animatedStyle}>
-      <Pressable
-        onPress={() => router.back()}
-        onPressIn={backPress.handlePressIn}
-        onPressOut={backPress.handlePressOut}
-        hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-        className="p-1"
-      >
-        <ChevronLeft size={24} color={iconColor} />
-      </Pressable>
-    </Animated.View>
+    <IconButton
+      icon={<ChevronLeft size={24} color={iconColor} />}
+      variant={roundedIcons ? 'surface' : 'ghost'}
+      onPress={() => router.back()}
+      accessibilityLabel="Go back"
+    />
   ) : null;
 
   const cartButton = showCart ? (
-    <Animated.View style={cartPress.animatedStyle}>
-      <Pressable
-        onPress={() => router.push("/(tabs)/cart")}
-        onPressIn={cartPress.handlePressIn}
-        onPressOut={cartPress.handlePressOut}
-        hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-        className="p-1"
-      >
-        <View className="relative">
-          <ShoppingBag size={24} color={iconColor} />
-          {totalItems > 0 && (
-            <View className="absolute -top-1 -right-2">
-              <Badge variant="accent" size="sm">
-                {totalItems}
-              </Badge>
-            </View>
-          )}
-        </View>
-      </Pressable>
-    </Animated.View>
+    <IconButton
+      icon={<ShoppingBag size={24} color={iconColor} />}
+      variant={roundedIcons ? 'surface' : 'ghost'}
+      badge={totalItems > 0 ? totalItems : undefined}
+      onPress={() => router.push('/(tabs)/cart')}
+      accessibilityLabel="Open cart"
+    />
   ) : null;
+
+  const rightSlot = rightElement
+    ? (roundedIcons
+        ? <View className="w-10 h-10 bg-surface rounded-full items-center justify-center" style={surfaceShadow}>{rightElement}</View>
+        : rightElement)
+    : null;
 
   return (
     <View
@@ -102,7 +75,7 @@ export default function Header({
         { paddingTop: insets.top + 8 },
         !transparent
           ? {
-              shadowColor: Colors.primary,
+              shadowColor: colors.primary,
               shadowOffset: { width: 0, height: 2 },
               shadowOpacity: 0.06,
               shadowRadius: 8,
@@ -112,12 +85,7 @@ export default function Header({
       ]}
     >
       <View className="w-10">
-        {showBack &&
-          (roundedIcons ? (
-            <RoundedSlot>{backButton}</RoundedSlot>
-          ) : (
-            backButton
-          ))}
+        {showBack && backButton}
       </View>
 
       <View className="flex-1 items-center">
@@ -129,17 +97,8 @@ export default function Header({
       </View>
 
       <View className="flex-row items-center justify-end gap-2" style={{ minWidth: 40 }}>
-        {roundedIcons && rightElement ? (
-          <RoundedSlot>{rightElement}</RoundedSlot>
-        ) : (
-          rightElement
-        )}
-        {showCart &&
-          (roundedIcons ? (
-            <RoundedSlot>{cartButton}</RoundedSlot>
-          ) : (
-            cartButton
-          ))}
+        {rightSlot}
+        {showCart && cartButton}
       </View>
     </View>
   );

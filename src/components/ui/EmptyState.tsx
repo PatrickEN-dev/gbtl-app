@@ -6,7 +6,7 @@ import { LucideIcon } from 'lucide-react-native'
 import Typography from '@/components/ui/Typography'
 import Button from '@/components/ui/Button'
 import { useScaleIn } from '@/lib/animations'
-import { Colors } from '@/constants/tokens'
+import { useThemeColors } from '@/hooks/useThemeColors'
 
 interface EmptyStateAction {
   label: string
@@ -27,6 +27,7 @@ export default function EmptyState({
   action,
 }: EmptyStateProps) {
   const { animatedStyle } = useScaleIn(0)
+  const colors = useThemeColors()
 
   return (
     <Animated.View
@@ -34,7 +35,7 @@ export default function EmptyState({
       className="flex-1 items-center justify-center px-8 py-12"
     >
       <View className="items-center gap-4">
-        <Icon size={48} color={Colors.muted} />
+        <Icon size={48} color={colors.muted} />
 
         <View className="items-center gap-2">
           <Typography variant="heading3" color="primary" className="text-center">

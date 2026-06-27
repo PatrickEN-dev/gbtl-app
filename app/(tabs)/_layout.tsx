@@ -12,7 +12,6 @@ export default function TabsLayout() {
       <Tabs.Screen name="index" />
       <Tabs.Screen name="collection" />
       <Tabs.Screen name="cart" />
-      <Tabs.Screen name="profile" />
     </Tabs>
   )
 }

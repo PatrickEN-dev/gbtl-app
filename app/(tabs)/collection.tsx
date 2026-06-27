@@ -64,6 +64,7 @@ export default function CollectionScreen() {
         />
       </View>
       <ProductGrid
+        variant="featured"
         products={sorted}
         isPending={isPending}
         isError={isError}

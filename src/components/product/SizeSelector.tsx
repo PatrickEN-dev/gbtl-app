@@ -1,6 +1,6 @@
 // src/components/product/SizeSelector.tsx
 import Typography from "@/components/ui/Typography";
-import { Colors } from "@/constants/tokens";
+import { useThemeColors } from "@/hooks/useThemeColors";
 import { Duration } from "@/lib/animations";
 import type { ProductSize } from "@/types";
 import React, { useEffect } from "react";
@@ -26,15 +26,15 @@ interface SizeChipProps {
 
 function SizeChip({ size, isSelected, onSelect }: SizeChipProps) {
   const progress = useSharedValue(isSelected ? 1 : 0);
+  const colors = useThemeColors();
 
   useEffect(() => {
     progress.value = withTiming(isSelected ? 1 : 0, { duration: Duration.base });
   }, [isSelected]);
 
   // Background animates between surface (unselected) and primary (selected)
-  // interpolateColor is JS logic — legitimate use of Colors constants from tokens
   const animatedBgStyle = useAnimatedStyle(() => ({
-    backgroundColor: interpolateColor(progress.value, [0, 1], [Colors.surface, Colors.primary]),
+    backgroundColor: interpolateColor(progress.value, [0, 1], [colors.surface, colors.primary]),
   }));
 
   return (

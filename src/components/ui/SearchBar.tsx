@@ -1,11 +1,9 @@
 // src/components/ui/SearchBar.tsx
 import React from 'react'
-import { View, TextInput, Pressable } from 'react-native'
-import Animated from 'react-native-reanimated'
+import { View, TextInput } from 'react-native'
 import { Search, SlidersHorizontal } from 'lucide-react-native'
-import Typography from '@/components/ui/Typography'
-import { Colors } from '@/constants/tokens'
-import { usePressScale } from '@/lib/animations'
+import Pill from '@/components/primitives/Pill'
+import { useThemeColors } from '@/hooks/useThemeColors'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -24,7 +22,7 @@ export default function SearchBar({
   onFilterPress,
   placeholder = 'Search here',
 }: SearchBarProps) {
-  const { animatedStyle, handlePressIn, handlePressOut } = usePressScale(0.95)
+  const colors = useThemeColors()
 
   return (
     <View
@@ -32,7 +30,7 @@ export default function SearchBar({
       style={{
         height: 48,
         // iOS shadow
-        shadowColor: Colors.primary,
+        shadowColor: colors.primary,
         shadowOffset: { width: 0, height: 1 },
         shadowOpacity: 0.04,
         shadowRadius: 4,
@@ -41,7 +39,7 @@ export default function SearchBar({
       }}
     >
       {/* Left — search icon */}
-      <Search size={18} color={Colors.muted} />
+      <Search size={18} color={colors.muted} />
 
       {/* Middle — text input */}
       <TextInput
@@ -49,24 +47,20 @@ export default function SearchBar({
         value={value}
         onChangeText={onChangeText}
         placeholder={placeholder}
-        placeholderTextColor={Colors.muted}
+        placeholderTextColor={colors.muted}
         style={{ paddingVertical: 0 }}
       />
 
-      {/* Right — filter button */}
-      <Animated.View style={animatedStyle}>
-        <Pressable
-          className="rounded-pill bg-primary h-9 px-4 flex-row items-center gap-1.5"
-          onPress={onFilterPress}
-          onPressIn={handlePressIn}
-          onPressOut={handlePressOut}
-        >
-          <SlidersHorizontal size={14} color={Colors.surface} />
-          <Typography variant="body-sm" color="white" weight="semibold">
-            Filter
-          </Typography>
-        </Pressable>
-      </Animated.View>
+      {/* Right — filter pill */}
+      <Pill
+        variant="solid"
+        tone="primary"
+        size="md"
+        leftIcon={<SlidersHorizontal size={14} color={colors.surface} />}
+        onPress={onFilterPress}
+      >
+        Filter
+      </Pill>
     </View>
   )
 }

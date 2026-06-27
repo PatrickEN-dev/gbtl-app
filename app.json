@@ -3,30 +3,64 @@
     "name": "GBTL",
     "slug": "gbtl-app",
     "version": "1.0.0",
+    "runtimeVersion": "1.0.0",
     "scheme": "gbtl",
     "orientation": "portrait",
-    "userInterfaceStyle": "light",
-    "splash": { "backgroundColor": "#E8401C", "resizeMode": "contain" },
+    "userInterfaceStyle": "automatic",
+    "icon": "./assets/images/icon.png",
+    "splash": {
+      "image": "./assets/images/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#FFFFFF",
+      "dark": {
+        "image": "./assets/images/splash-icon.png",
+        "backgroundColor": "#1A1F1B"
+      }
+    },
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "bundleIdentifier": "com.gbtl.app",
+      "buildNumber": "1",
       "supportsTablet": false,
       "infoPlist": {
-        "NSCameraUsageDescription": "Used for profile photo.",
-        "NSUserNotificationUsageDescription": "Stay updated on orders."
-      }
+        "NSUserNotificationUsageDescription": "Stay updated on orders and offers."
+      },
+      "associatedDomains": ["applinks:gbtl.app"]
     },
     "android": {
       "package": "com.gbtl.app",
-      "adaptiveIcon": { "backgroundColor": "#E8401C" },
-      "permissions": ["NOTIFICATIONS", "RECEIVE_BOOT_COMPLETED"]
+      "versionCode": 1,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/android-icon-foreground.png",
+        "backgroundColor": "#FFFFFF",
+        "monochromeImage": "./assets/images/android-icon-monochrome.png"
+      },
+      "permissions": ["NOTIFICATIONS", "RECEIVE_BOOT_COMPLETED"],
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "autoVerify": true,
+          "data": [{ "scheme": "https", "host": "gbtl.app", "pathPrefix": "/product" }],
+          "category": ["BROWSER", "DEFAULT"]
+        }
+      ]
     },
     "plugins": [
       "expo-router",
       "expo-font",
       "expo-secure-store",
-      ["expo-notifications", { "color": "#E8401C" }],
+      "expo-localization",
       ["expo-updates", { "username": "gbtl" }]
     ],
-    "experiments": { "typedRoutes": true }
+    "experiments": { "typedRoutes": false },
+    "extra": {
+      "googleClientIdIos": "PLACEHOLDER_IOS_CLIENT_ID.apps.googleusercontent.com",
+      "googleClientIdAndroid": "PLACEHOLDER_ANDROID_CLIENT_ID.apps.googleusercontent.com",
+      "googleClientIdWeb": "PLACEHOLDER_WEB_CLIENT_ID.apps.googleusercontent.com",
+      "stripePublishableKey": "pk_test_PLACEHOLDER",
+      "stripeMerchantId": "merchant.com.gbtl.app",
+      "stripePaymentEndpoint": "PLACEHOLDER_https://your-domain.vercel.app/api/create-payment-intent",
+      "expoProjectId": "PLACEHOLDER_EXPO_PROJECT_ID"
+    }
   }
 }

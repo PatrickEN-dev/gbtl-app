@@ -20,6 +20,7 @@ interface ProductGridProps {
   listHeader?: React.ReactElement | null;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   scrollHandler?: (event: any) => void;
+  variant?: "grid" | "featured"; // default 'grid'
 }
 
 function SkeletonGrid() {
@@ -69,6 +70,7 @@ export default function ProductGrid({
   onProductPress,
   listHeader,
   scrollHandler,
+  variant = "grid",
 }: ProductGridProps) {
   const [isRefreshing, setIsRefreshing] = useState(false);
 
@@ -97,6 +99,39 @@ export default function ProductGrid({
     <EmptyProducts />
   ) : null;
 
+  if (variant === "featured") {
+    return (
+      <AnimatedFlatList
+        data={(isPending || isError ? [] : products) as Product[]}
+        numColumns={1}
+        keyExtractor={(item) => (item as Product).id}
+        contentContainerStyle={{
+          paddingTop: Spacing.md,
+          paddingBottom: 140,
+          paddingHorizontal: 16,
+          gap: 16,
+        }}
+        style={{ flex: 1 }}
+        showsVerticalScrollIndicator={false}
+        refreshControl={<RefreshControl refreshing={isRefreshing} onRefresh={handleRefresh} />}
+        ListHeaderComponent={listHeader ?? undefined}
+        ListEmptyComponent={listEmptyComponent}
+        onScroll={scrollHandler}
+        scrollEventThrottle={16}
+        renderItem={({ item, index }: { item: unknown; index: number }) => (
+          <ProductCard.Root
+            product={item as Product}
+            staggerIndex={index}
+            onPress={() => onProductPress?.(item as Product)}
+          >
+            <ProductCard.FeaturedLayout />
+          </ProductCard.Root>
+        )}
+      />
+    );
+  }
+
+  // variant === 'grid' (default) — keep all existing logic exactly
   return (
     <AnimatedFlatList
       data={(isPending || isError ? [] : products) as Product[]}

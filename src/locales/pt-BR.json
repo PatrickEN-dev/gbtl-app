@@ -1,0 +1,91 @@
+{
+  "home": {
+    "guest": "Visitante",
+    "greeting": "Olá {{name}}",
+    "tagline": "Moda com confiança e elegância."
+  },
+  "cart": {
+    "title": "Detalhes",
+    "myCart": "Meu Carrinho",
+    "addToCheckout": "Finalizar",
+    "checkout": "Pagar",
+    "empty": "Carrinho vazio",
+    "emptyDescription": "Adicione itens pra começar a comprar",
+    "browseCollection": "Ver Coleção",
+    "subtotal": "Subtotal",
+    "deliveryFee": "Frete",
+    "totalPrice": "Total"
+  },
+  "product": {
+    "title": "Detalhes",
+    "from": "A partir de:",
+    "selectSize": "Selecione o Tamanho",
+    "description": "Descrição",
+    "readMore": "Ler mais",
+    "readLess": "Ler menos",
+    "addToCart": "Adicionar",
+    "buyNow": "Comprar"
+  },
+  "wishlist": {
+    "title": "Favoritos",
+    "empty": "Nenhum favorito ainda",
+    "emptyDescription": "Toque no coração em qualquer produto pra salvar aqui.",
+    "browseCollection": "Ver Coleção"
+  },
+  "collection": {
+    "title": "Coleção",
+    "sort": {
+      "relevance": "Relevância",
+      "priceAsc": "Preço ↑",
+      "priceDesc": "Preço ↓",
+      "newest": "Mais novos"
+    }
+  },
+  "auth": {
+    "welcome": "Bem-vindo",
+    "subtitle": "Entre pra concluir sua compra",
+    "continueWithGoogle": "Continuar com Google",
+    "skip": "Continuar como visitante",
+    "terms": "Ao continuar você concorda com nossos {{terms}} e {{privacy}}.",
+    "termsLink": "Termos",
+    "privacyLink": "Política de Privacidade"
+  },
+  "onboarding": {
+    "skip": "Pular",
+    "next": "Próximo",
+    "getStarted": "Começar",
+    "slides": [
+      {
+        "title": "Moda curada",
+        "body": "Peças selecionadas de designers independentes."
+      },
+      {
+        "title": "Toque, prove, compre",
+        "body": "Adicione ao carrinho e pague com segurança em segundos."
+      },
+      {
+        "title": "Feito pra você",
+        "body": "Seus favoritos ficam salvos entre dispositivos."
+      }
+    ]
+  },
+  "legal": {
+    "privacyTitle": "Política de Privacidade",
+    "termsTitle": "Termos de Uso",
+    "deleteAccountTitle": "Excluir Conta",
+    "deleteAccountConfirm": "Tem certeza? Isso vai apagar permanentemente sua conta e histórico de pedidos.",
+    "deleteAccountAction": "Excluir minha conta",
+    "deleteAccountCancel": "Cancelar"
+  },
+  "a11y": {
+    "openWishlist": "Abrir favoritos",
+    "openCart": "Abrir carrinho",
+    "goBack": "Voltar"
+  },
+  "common": {
+    "loading": "Carregando...",
+    "error": "Algo deu errado",
+    "tryAgain": "Tentar novamente",
+    "close": "Fechar"
+  }
+}

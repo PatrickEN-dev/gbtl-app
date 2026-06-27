@@ -1,6 +1,7 @@
 // app/index.tsx
-import { Redirect } from 'expo-router'
+import { Redirect } from "expo-router";
 
 export default function Index() {
-  return <Redirect href="/(tabs)" />
+  // Onboarding is temporarily disabled while we resolve the storage issue.
+  return <Redirect href="/(tabs)" />;
 }

@@ -8,7 +8,10 @@ import { Trash2, Minus, Plus, X } from 'lucide-react-native'
 import Typography from '@/components/ui/Typography'
 import { useFadeInUp } from '@/lib/animations'
 import { useCart } from '@/hooks/useCart'
-import { Colors } from '@/constants/tokens'
+import { useThemeColors } from '@/hooks/useThemeColors'
+import { Card } from '@/components/primitives/Card'
+import Pill from '@/components/primitives/Pill'
+import IconButton from '@/components/primitives/IconButton'
 import type { CartItem as CartItemType } from '@/types'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -21,6 +24,7 @@ interface Props {
 // ─── Delete action revealed on right swipe ────────────────────────────────────
 
 function DeleteAction({ onPress }: { onPress: () => void }) {
+  const colors = useThemeColors()
   return (
     <Pressable
       onPress={onPress}
@@ -28,7 +32,7 @@ function DeleteAction({ onPress }: { onPress: () => void }) {
       accessibilityLabel="Remove item"
       accessibilityRole="button"
     >
-      <Trash2 size={22} color={Colors.surface} />
+      <Trash2 size={22} color={colors.surface} />
       <Typography variant="caption" color="white" className="mt-1">
         Delete
       </Typography>
@@ -66,6 +70,7 @@ export default function CartItem({ item, onRemove }: Props) {
   const { updateQuantity } = useCart()
   const { animatedStyle } = useFadeInUp()
   const swipeableRef = useRef<Swipeable>(null)
+  const colors = useThemeColors()
 
   const { product, quantity, selectedSize, selectedColor } = item
 
@@ -95,27 +100,17 @@ export default function CartItem({ item, onRemove }: Props) {
         rightThreshold={40}
         friction={2}
       >
-        <View
-          className="flex-row bg-surface rounded-2xl p-3 mb-3"
-          style={{
-            shadowColor: Colors.primary,
-            shadowOffset: { width: 0, height: 2 },
-            shadowOpacity: 0.08,
-            shadowRadius: 8,
-            elevation: 3,
-          }}
-        >
+        <Card.Root variant="elevated" padding="sm" className="flex-row mb-3 relative">
           {/* Close (X) button — absolute top-right */}
-          <Pressable
-            onPress={onRemove}
-            className="absolute top-2 right-2 w-6 h-6 rounded-full bg-bg items-center justify-center"
-            hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-            accessibilityLabel="Remove item"
-            accessibilityRole="button"
-            style={{ zIndex: 1 }}
-          >
-            <X size={14} color={Colors.muted} />
-          </Pressable>
+          <View className="absolute top-2 right-2" style={{ zIndex: 1 }}>
+            <IconButton
+              icon={<X size={14} color={colors.muted} />}
+              variant="surface"
+              size="sm"
+              onPress={onRemove}
+              accessibilityLabel="Remove item"
+            />
+          </View>
 
           {/* Thumbnail */}
           <Image
@@ -147,7 +142,7 @@ export default function CartItem({ item, onRemove }: Props) {
             <View className="flex-row items-center mt-2">
               <QtyButton
                 onPress={handleDecrement}
-                icon={<Minus size={14} color={Colors.primary} />}
+                icon={<Minus size={14} color={colors.primary} />}
                 label="Decrease quantity"
               />
               <Typography variant="body" weight="medium" className="mx-3">
@@ -155,21 +150,19 @@ export default function CartItem({ item, onRemove }: Props) {
               </Typography>
               <QtyButton
                 onPress={handleIncrement}
-                icon={<Plus size={14} color={Colors.primary} />}
+                icon={<Plus size={14} color={colors.primary} />}
                 label="Increase quantity"
               />
             </View>
           </View>
 
-          {/* Price pill — dark background, white text */}
+          {/* Price pill */}
           <View className="ml-3 items-end justify-end pb-1">
-            <View className="bg-primary rounded-pill px-3 py-1.5 items-center justify-center">
-              <Typography variant="body-sm" weight="semibold" color="white">
-                ${product.price.toFixed(2)}
-              </Typography>
-            </View>
+            <Pill variant="solid" tone="primary" size="sm">
+              ${product.price.toFixed(2)}
+            </Pill>
           </View>
-        </View>
+        </Card.Root>
       </Swipeable>
     </Animated.View>
   )

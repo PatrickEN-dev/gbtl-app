@@ -3,7 +3,7 @@ import React from 'react'
 import { Pressable, ActivityIndicator, View } from 'react-native'
 import Animated from 'react-native-reanimated'
 import { usePressScale } from '@/lib/animations'
-import { Colors } from '@/constants/tokens'
+import { useThemeColors } from '@/hooks/useThemeColors'
 import Typography from './Typography'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -58,14 +58,6 @@ const TEXT_VARIANT: Record<Size, 'body-sm' | 'body' | 'heading3'> = {
 // NativeWind's custom boxShadow token doesn't translate to RN shadow props,
 // so we provide explicit RN shadow for primary variant per CLAUDE.md rules.
 
-const PRIMARY_SHADOW = {
-  shadowColor:   Colors.accent,
-  shadowOffset:  { width: 0, height: 4 },
-  shadowOpacity: 0.30,
-  shadowRadius:  8,
-  elevation:     6,
-} as const
-
 // ─── Component ───────────────────────────────────────────────────────────────
 
 export default function Button({
@@ -97,11 +89,20 @@ export default function Button({
     .filter(Boolean)
     .join(' ')
 
+  const colors = useThemeColors()
   // ActivityIndicator color must be a string value (not a className)
-  const spinnerColor = variant === 'primary' ? Colors.surface : Colors.primary
+  const spinnerColor = variant === 'primary' ? colors.surface : colors.primary
 
   // Apply iOS/Android shadow via RN style for primary variant
-  const shadowStyle = variant === 'primary' ? PRIMARY_SHADOW : undefined
+  const shadowStyle = variant === 'primary'
+    ? {
+        shadowColor: colors.accent,
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.30,
+        shadowRadius: 8,
+        elevation: 6,
+      }
+    : undefined
 
   return (
     <Pressable

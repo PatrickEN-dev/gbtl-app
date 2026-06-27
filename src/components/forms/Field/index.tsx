@@ -4,7 +4,7 @@ import { TextInput, View, TextInputProps } from 'react-native'
 import { Controller, Control, FieldValues, Path, RegisterOptions } from 'react-hook-form'
 import Animated, { useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated'
 import Typography from '@/components/ui/Typography'
-import { Colors } from '@/constants/tokens'
+import { useThemeColors } from '@/hooks/useThemeColors'
 import { Duration } from '@/lib/animations'
 
 // ─── Context ─────────────────────────────────────────────────────────────────
@@ -73,6 +73,7 @@ type InputProps = Omit<TextInputProps, 'value' | 'onChangeText' | 'onBlur'>
 function Input({ className = '', style, ...rest }: InputProps) {
   const { value, onChange, onBlur, error } = useFieldContext()
   const [focused, setFocused] = useState(false)
+  const colors = useThemeColors()
 
   const borderClass = error
     ? 'border-red-500'
@@ -98,8 +99,8 @@ function Input({ className = '', style, ...rest }: InputProps) {
         onBlur()
       }}
       onFocus={() => setFocused(true)}
-      placeholderTextColor={Colors.muted}
-      style={[{ fontSize: 15, color: Colors.primary }, style]}
+      placeholderTextColor={colors.muted}
+      style={[{ fontSize: 15, color: colors.primary }, style]}
       {...rest}
     />
   )

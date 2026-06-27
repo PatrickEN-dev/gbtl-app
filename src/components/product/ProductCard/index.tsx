@@ -1,7 +1,7 @@
 // src/components/product/ProductCard/index.tsx
 import Badge from "@/components/ui/Badge";
 import Typography from "@/components/ui/Typography";
-import { Colors } from "@/constants/tokens";
+import { useThemeColors } from "@/hooks/useThemeColors";
 import { useWishlist } from "@/hooks/useWishlist";
 import { useCartBounce, useFadeInUp, usePressScale } from "@/lib/animations";
 import type { Product } from "@/types";
@@ -37,6 +37,7 @@ interface RootProps {
 function Root({ product, onPress, staggerIndex = 0, children }: RootProps) {
   const { animatedStyle: fadeStyle } = useFadeInUp(staggerIndex * 80);
   const { animatedStyle: pressStyle, handlePressIn, handlePressOut } = usePressScale(0.97);
+  const colors = useThemeColors();
 
   return (
     <ProductCardContext.Provider value={{ product }}>
@@ -47,7 +48,7 @@ function Root({ product, onPress, staggerIndex = 0, children }: RootProps) {
             fadeStyle,
             pressStyle,
             {
-              shadowColor: Colors.primary,
+              shadowColor: colors.primary,
               shadowOffset: { width: 0, height: 2 },
               shadowOpacity: 0.08,
               shadowRadius: 8,
@@ -73,6 +74,7 @@ function WishlistChip({ productId }: WishlistChipProps) {
   const { toggle, isWishlisted } = useWishlist();
   const wishlisted = isWishlisted(productId);
   const { animatedStyle, trigger } = useCartBounce();
+  const colors = useThemeColors();
 
   function handlePress() {
     trigger();
@@ -83,7 +85,7 @@ function WishlistChip({ productId }: WishlistChipProps) {
     <View
       className="absolute top-2 right-2 w-8 h-8 bg-surface rounded-full items-center justify-center"
       style={{
-        shadowColor: Colors.primary,
+        shadowColor: colors.primary,
         shadowOffset: { width: 0, height: 1 },
         shadowOpacity: 0.08,
         shadowRadius: 4,
@@ -94,8 +96,8 @@ function WishlistChip({ productId }: WishlistChipProps) {
         <Animated.View style={animatedStyle}>
           <Heart
             size={16}
-            color={wishlisted ? Colors.accent : Colors.muted}
-            fill={wishlisted ? Colors.accent : "transparent"}
+            color={wishlisted ? colors.accent : colors.muted}
+            fill={wishlisted ? colors.accent : "transparent"}
           />
         </Animated.View>
       </Pressable>
@@ -112,7 +114,7 @@ function CardImage() {
       <Image
         source={{ uri: product.images[0] }}
         contentFit="cover"
-        style={{ width: "100%", aspectRatio: 3 / 4, borderRadius: 0 }}
+        style={{ width: "100%", aspectRatio: 4 / 5, borderRadius: 0 }}
       />
       <View className="absolute top-2 left-2 gap-1">
         {product.isNew && <NewBadge />}
@@ -189,6 +191,7 @@ function WishlistButton() {
   const { toggle, isWishlisted } = useWishlist();
   const wishlisted = isWishlisted(product.id);
   const { animatedStyle, trigger } = useCartBounce();
+  const colors = useThemeColors();
 
   function handlePress() {
     trigger();
@@ -200,8 +203,8 @@ function WishlistButton() {
       <Animated.View style={animatedStyle}>
         <Heart
           size={20}
-          color={wishlisted ? Colors.accent : Colors.muted}
-          fill={wishlisted ? Colors.accent : "transparent"}
+          color={wishlisted ? colors.accent : colors.muted}
+          fill={wishlisted ? colors.accent : "transparent"}
         />
       </Animated.View>
     </Pressable>
@@ -232,6 +235,28 @@ function SaleBadge() {
   );
 }
 
+// ─── FeaturedLayout ───────────────────────────────────────────────────────────
+
+function FeaturedLayout() {
+  const { product } = useProductCardContext();
+  return (
+    <>
+      {/* Image (full width, 4:5) with the WishlistChip already inside CardImage */}
+      <CardImage />
+      {/* Footer strip */}
+      <View className="flex-row items-end justify-between px-4 py-3">
+        <Typography variant="heading3" className="flex-1 mr-3" numberOfLines={2}>
+          {product.name}
+        </Typography>
+        <View className="items-end">
+          <Typography variant="caption" color="muted">Price</Typography>
+          <Typography variant="price">{`$${product.price.toFixed(2)}`}</Typography>
+        </View>
+      </View>
+    </>
+  );
+}
+
 // ─── Export namespace ─────────────────────────────────────────────────────────
 
 export const ProductCard = {
@@ -244,4 +269,5 @@ export const ProductCard = {
   WishlistButton,
   NewBadge,
   SaleBadge,
+  FeaturedLayout,
 };

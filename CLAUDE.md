@@ -4,7 +4,12 @@
 React Native fashion e-commerce app. Expo SDK 54. iOS 15+ and Android 12+. Frontend only (mock data).
 
 ## Brand
-Name: GBTL. Accent: #E8401C. Background: #F5F5F5. Surface: #FFFFFF. Text: #111111. Muted: #888888. Border: #E0E0E0.
+Name: GBTL. Theme: moss green + white. Tokens auto-switch via CSS variables defined in `global.css` (light defaults + `.dark` override). Dark mode is opt-in (toggle via NativeWind's `useColorScheme().setColorScheme('dark' | 'light' | 'system')`) — defaults to system.
+
+Light: bg=#F8F8F3, surface=#FFFFFF, primary=#1A2018, accent=#5C7C5F (moss green), muted=#8E948B, border=#E5E5E0.
+Dark:  bg=#1A1F1B, surface=#252A26, primary=#F5F5F2, accent=#8FB088, muted=#9C9F95, border=#3A3F3B.
+
+NEVER hardcode these — always use `bg-bg / bg-surface / text-primary / bg-accent / text-muted / border-border` className tokens; they resolve via CSS vars and swap automatically with dark mode. For JS-side values (lucide `color={}`, RN `shadowColor`), import `useThemeColors()` from `@/hooks/useThemeColors` — it returns the right palette for the current scheme.
 
 ## Stack (never substitute versions)
 - expo ~54.0.34 + react-native 0.81.5 + expo-router ~6.0.23

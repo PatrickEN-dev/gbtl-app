@@ -4,7 +4,7 @@ import { View, Pressable } from 'react-native'
 import Animated from 'react-native-reanimated'
 import { Minus, Plus } from 'lucide-react-native'
 import Typography from '@/components/ui/Typography'
-import { Colors } from '@/constants/tokens'
+import { useThemeColors } from '@/hooks/useThemeColors'
 import { usePressScale } from '@/lib/animations'
 
 // ─── Types ───────────────────────────────────────────────────────────────────
@@ -26,6 +26,7 @@ interface StepButtonProps {
 
 function StepButton({ onPress, disabled, variant }: StepButtonProps) {
   const { animatedStyle, handlePressIn, handlePressOut } = usePressScale(0.9)
+  const colors = useThemeColors()
 
   const isMinus = variant === 'minus'
 
@@ -45,9 +46,9 @@ function StepButton({ onPress, disabled, variant }: StepButtonProps) {
         ].join(' ')}
       >
         {isMinus ? (
-          <Minus size={14} color={Colors.primary} />
+          <Minus size={14} color={colors.primary} />
         ) : (
-          <Plus size={14} color={Colors.surface} />
+          <Plus size={14} color={colors.surface} />
         )}
       </Pressable>
     </Animated.View>

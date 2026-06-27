@@ -1,7 +1,39 @@
 # GBTL Build Status
-Current wave: 7
+Current wave: 9
 Status: COMPLETE
 Wave 5 retries: 1
+
+## Wave 9 — COMPLETE | tsc: PASS
+Spec: sdd/specs/redesign-trendora-v3.md
+Tasks: sdd/tasks/wave9/*.md
+
+### New primitives (composition layer)
+- src/components/primitives/Card.tsx (109) — compound Card.Root/Body/Header/Footer with variants (surface/elevated/flat), padding (none/sm/md/lg), rounded (card/pill/lg/none)
+- src/components/primitives/Pill.tsx (123) — solid/outline/ghost x primary/accent/surface variants with optional left/right icons
+- src/components/primitives/IconButton.tsx (86) — rounded square button with surface/ghost/primary variants, optional badge overlay
+
+### Visual fidelity changes
+- src/components/layout/TabBar.tsx (120) — BlurView frosted-glass pill (intensity=70, tint='light'), uses useThemeColors for icon colors
+- src/components/product/ProductCard/index.tsx (270) — image aspectRatio 4:5; new FeaturedLayout sub-component (image + name/Price/$X footer strip)
+- src/components/product/ProductGrid.tsx (166) — new `variant?: 'grid' | 'featured'` prop (default 'grid' for back-compat); featured = 1-column, paddingBottom 140
+
+### Consumer refactors (use primitives)
+- src/components/cart/CartItem.tsx — Card.Root + Pill (price) + IconButton (X)
+- src/components/cart/CartSummary.tsx — Card.Root wraps the summary
+- src/components/layout/Header.tsx — IconButton for back/cart slots
+- src/components/ui/SearchBar.tsx — Pill for the Filter button
+- app/(tabs)/index.tsx (128) — IconButton for cart; Pill for category chips; ProductGrid variant="featured"
+- app/(tabs)/cart.tsx (97) — Card.Root + Pill for "My Cart" + "Add to Checkout" header
+- app/product/[id].tsx (140) — Card.Root for image + info cards
+
+### Architecture rule added to CLAUDE.md
+When a UI shape repeats in 3+ places, it MUST live in `src/components/primitives/`. Consumers compose primitives instead of redeclaring shapes.
+
+### Verification
+- `npx tsc --noEmit` passes (exit 0)
+- All screen files ≤150 lines
+- No raw `<Text>` outside Typography.tsx
+- No hex literals outside permitted files
 
 ## Wave 7 — COMPLETE | tsc: PASS
 Spec: sdd/specs/redesign-trendora-v2.md

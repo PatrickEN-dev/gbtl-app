@@ -9,6 +9,7 @@ import { useProduct } from '@/hooks/useProduct'
 import { useCart } from '@/hooks/useCart'
 import { useWishlist } from '@/hooks/useWishlist'
 import { useCartBounce, Spring, Duration } from '@/lib/animations'
+import { useThemeColors } from '@/hooks/useThemeColors'
 import { ProductDetailSkeleton } from '@/components/ui/Skeleton'
 import EmptyState from '@/components/ui/EmptyState'
 import Header from '@/components/layout/Header'
@@ -18,10 +19,7 @@ import { ImageCarousel } from '@/components/product/ImageCarousel'
 import ColorSwatch from '@/components/product/ColorSwatch'
 import SizeSelector from '@/components/product/SizeSelector'
 import QuantityStepper from '@/components/ui/QuantityStepper'
-import { Colors } from '@/constants/tokens'
 import type { ProductColor } from '@/types'
-
-const shadow = { shadowColor: Colors.primary, shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.06, shadowRadius: 4, elevation: 2 }
 
 export default function ProductDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>()
@@ -31,6 +29,7 @@ export default function ProductDetailScreen() {
   const { addItem } = useCart()
   const { toggle, isWishlisted } = useWishlist()
   const { trigger } = useCartBounce()
+  const colors = useThemeColors()
   const [qty, setQty] = useState(1)
   const [selectedColor, setSelectedColor] = useState<ProductColor | null>(null)
   const [selectedSize, setSelectedSize] = useState('')
@@ -70,7 +69,7 @@ export default function ProductDetailScreen() {
   const wishlistHeart = (
     <Animated.View style={heartStyle}>
       <Pressable onPress={handleToggleWishlist} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
-        <Heart size={18} color={wishlisted ? Colors.accent : Colors.muted} fill={wishlisted ? Colors.accent : 'transparent'} />
+        <Heart size={18} color={wishlisted ? colors.accent : colors.muted} fill={wishlisted ? colors.accent : 'transparent'} />
       </Pressable>
     </Animated.View>
   )
@@ -79,9 +78,9 @@ export default function ProductDetailScreen() {
     <View className="flex-1 bg-bg">
       <Header showBack roundedIcons title="Details" rightElement={wishlistHeart} />
 
-      <ScrollView showsVerticalScrollIndicator={false} className="flex-1" contentContainerStyle={{ paddingBottom: 120 }}>
-        {/* Image card */}
-        <View className="mx-4 mt-3 bg-surface rounded-card p-3" style={shadow}>
+      <ScrollView showsVerticalScrollIndicator={false} className="flex-1" contentContainerStyle={{ paddingBottom: 140 }}>
+        {/* Image + side thumbnails — no surrounding card, clean white */}
+        <View className="px-4 pt-2">
           <ImageCarousel.Root images={product.images}>
             <View className="flex-row">
               <View className="flex-1"><ImageCarousel.Slide aspectRatio={1} /></View>
@@ -90,14 +89,14 @@ export default function ProductDetailScreen() {
           </ImageCarousel.Root>
         </View>
 
-        {/* Info card */}
-        <View className="mx-4 mt-3 bg-surface rounded-card p-4" style={shadow}>
+        {/* Info — flat, no card */}
+        <View className="px-4 mt-6">
           <View className="flex-row items-center">
             <Typography variant="heading2" className="flex-1 mr-3">{product.name}</Typography>
             <QuantityStepper value={qty} onChange={setQty} />
           </View>
-          <View className="flex-row items-center justify-between mt-3">
-            <View>
+          <View className="flex-row items-center justify-between mt-4">
+            <View className="flex-row items-baseline gap-1.5">
               <Typography variant="body-sm" color="muted">From:</Typography>
               <Typography variant="price">${product.price}</Typography>
             </View>
@@ -108,13 +107,13 @@ export default function ProductDetailScreen() {
         </View>
 
         {/* Size */}
-        <View className="mx-4 mt-4">
-          <Typography variant="heading3" className="mb-2">Select Size</Typography>
+        <View className="px-4 mt-6">
+          <Typography variant="heading3" className="mb-3">Select Size</Typography>
           <SizeSelector sizes={product.sizes} selected={selectedSize} onSelect={setSelectedSize} />
         </View>
 
         {/* Description */}
-        <View className="mx-4 mt-4">
+        <View className="px-4 mt-6">
           <Typography variant="heading3" className="mb-2">Description</Typography>
           <Animated.View style={descStyle}>
             <Typography variant="body" color="muted">{product.description}</Typography>

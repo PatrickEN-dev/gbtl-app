@@ -1,0 +1,91 @@
+{
+  "home": {
+    "guest": "there",
+    "greeting": "Hello {{name}}",
+    "tagline": "Fashion confidence and reveals beauty."
+  },
+  "cart": {
+    "title": "Details",
+    "myCart": "My Cart",
+    "addToCheckout": "Add to Checkout",
+    "checkout": "Checkout",
+    "empty": "Your cart is empty",
+    "emptyDescription": "Add items to start shopping",
+    "browseCollection": "Browse Collection",
+    "subtotal": "Sub-total",
+    "deliveryFee": "Delivery Fee",
+    "totalPrice": "Total Price"
+  },
+  "product": {
+    "title": "Details",
+    "from": "From:",
+    "selectSize": "Select Size",
+    "description": "Description",
+    "readMore": "Read more",
+    "readLess": "Read less",
+    "addToCart": "Add to Cart",
+    "buyNow": "Buy Now"
+  },
+  "wishlist": {
+    "title": "Wishlist",
+    "empty": "No favorites yet",
+    "emptyDescription": "Tap the heart on any product to save it here.",
+    "browseCollection": "Browse Collection"
+  },
+  "collection": {
+    "title": "Collection",
+    "sort": {
+      "relevance": "Relevance",
+      "priceAsc": "Price ↑",
+      "priceDesc": "Price ↓",
+      "newest": "Newest"
+    }
+  },
+  "auth": {
+    "welcome": "Welcome",
+    "subtitle": "Sign in to complete your purchase",
+    "continueWithGoogle": "Continue with Google",
+    "skip": "Continue as guest",
+    "terms": "By continuing you agree to our {{terms}} and {{privacy}}.",
+    "termsLink": "Terms",
+    "privacyLink": "Privacy Policy"
+  },
+  "onboarding": {
+    "skip": "Skip",
+    "next": "Next",
+    "getStarted": "Get Started",
+    "slides": [
+      {
+        "title": "Curated fashion",
+        "body": "Hand-picked pieces from independent designers."
+      },
+      {
+        "title": "Tap, try, buy",
+        "body": "Add to cart and check out securely in seconds."
+      },
+      {
+        "title": "Made for you",
+        "body": "Your favorites stay saved across devices."
+      }
+    ]
+  },
+  "legal": {
+    "privacyTitle": "Privacy Policy",
+    "termsTitle": "Terms of Service",
+    "deleteAccountTitle": "Delete Account",
+    "deleteAccountConfirm": "Are you sure? This will permanently remove your account and order history.",
+    "deleteAccountAction": "Delete my account",
+    "deleteAccountCancel": "Cancel"
+  },
+  "a11y": {
+    "openWishlist": "Open wishlist",
+    "openCart": "Open cart",
+    "goBack": "Go back"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "tryAgain": "Try again",
+    "close": "Close"
+  }
+}

@@ -2,19 +2,19 @@
 import React, { useEffect } from 'react'
 import { View, Pressable } from 'react-native'
 import Animated, { useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated'
+import { BlurView } from 'expo-blur'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { Home, Grid, ShoppingBag, User } from 'lucide-react-native'
+import { Home, Grid, ShoppingBag } from 'lucide-react-native'
 import type { BottomTabBarProps } from '@react-navigation/bottom-tabs'
 import Badge from '@/components/ui/Badge'
 import { usePressScale, Duration } from '@/lib/animations'
 import { useCart } from '@/hooks/useCart'
-import { Colors } from '@/constants/tokens'
+import { useThemeColors } from '@/hooks/useThemeColors'
 
 const ROUTE_CONFIG: Record<string, { Icon: React.ComponentType<{ size: number; color: string }> }> = {
   index:      { Icon: Home },
   collection: { Icon: Grid },
   cart:       { Icon: ShoppingBag },
-  profile:    { Icon: User },
 }
 
 interface TabItemProps {
@@ -22,12 +22,12 @@ interface TabItemProps {
   isFocused: boolean
   onPress: () => void
   badgeCount: number
+  iconColor: string
 }
 
-function TabItem({ routeName, isFocused, onPress, badgeCount }: TabItemProps) {
+function TabItem({ routeName, isFocused, onPress, badgeCount, iconColor }: TabItemProps) {
   const press = usePressScale(0.9)
   const { Icon } = ROUTE_CONFIG[routeName] ?? { Icon: Home }
-  const iconColor = isFocused ? Colors.primary : Colors.muted
   const dotOpacity = useSharedValue(isFocused ? 1 : 0)
 
   useEffect(() => {
@@ -65,6 +65,7 @@ function TabItem({ routeName, isFocused, onPress, badgeCount }: TabItemProps) {
 export default function TabBar({ state, navigation }: BottomTabBarProps) {
   const insets = useSafeAreaInsets()
   const { totalItems } = useCart()
+  const colors = useThemeColors()
 
   const tabs = state.routes.map((route, index) => {
     const isFocused = state.index === index
@@ -81,6 +82,7 @@ export default function TabBar({ state, navigation }: BottomTabBarProps) {
         isFocused={isFocused}
         onPress={onPress}
         badgeCount={route.name === 'cart' ? totalItems : 0}
+        iconColor={isFocused ? colors.primary : colors.muted}
       />
     )
   })
@@ -91,17 +93,26 @@ export default function TabBar({ state, navigation }: BottomTabBarProps) {
       style={{ position: 'absolute', left: 0, right: 0, bottom: 0, paddingHorizontal: 16, paddingBottom: insets.bottom + 8 }}
     >
       <View
-        className="bg-surface rounded-pill flex-row"
         style={{
           height: 64,
-          shadowColor: Colors.primary,
+          borderRadius: 9999,
+          overflow: 'hidden',
+          shadowColor: colors.primary,
           shadowOffset: { width: 0, height: 4 },
           shadowOpacity: 0.12,
           shadowRadius: 12,
           elevation: 8,
+          backgroundColor: 'rgba(255,255,255,0.7)',
         }}
       >
-        {tabs}
+        <BlurView
+          intensity={70}
+          tint="light"
+          style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}
+        />
+        <View className="flex-row flex-1">
+          {tabs}
+        </View>
       </View>
     </View>
   )

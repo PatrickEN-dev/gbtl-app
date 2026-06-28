@@ -1,0 +1,5 @@
+appId: com.gbtl.app
+---
+- launchApp:
+    appId: com.gbtl.app
+    stopApp: true

@@ -1,0 +1,23 @@
+appId: com.gbtl.app
+name: Apply a coupon
+tags:
+  - cart
+  - coupon
+---
+- launchApp:
+    clearState: false
+- tapOn:
+    text: 'My Cart|Meu Carrinho|Carrinho|Cart'
+    regex: true
+    optional: true
+- tapOn:
+    text: 'Coupon|Cupom'
+    regex: true
+    optional: true
+- inputText: 'BEMVINDO10'
+- tapOn:
+    text: 'Apply|Aplicar'
+    regex: true
+- assertVisible:
+    text: 'Discount|Desconto'
+    regex: true

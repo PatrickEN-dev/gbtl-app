@@ -2,7 +2,12 @@
 
 Tudo abaixo é necessário para o app rodar de verdade (Google Sign-In, Stripe, Push) e ser publicado na Play Store. O código já está pronto; só faltam as chaves/IDs externos.
 
-Todas as configurações vivem em **`app.json` → `expo.extra`**. Substitua os valores `PLACEHOLDER_*` pelos reais.
+> **Como funciona a config:** o projeto usa **`app.config.ts`** que lê variáveis de ambiente do `.env` (ou EAS Secrets em produção). Os valores reais ficam no `.env` local (gitignored), enquanto os mocks ficam no `.env.example`.
+>
+> 1. Copie `.env.example` → `.env`
+> 2. Substitua os valores mock pelos reais quando obtidos
+> 3. Em produção, configure via `eas secret:create --name EXPO_PUBLIC_STRIPE_PUBLISHABLE_KEY --value pk_live_…`
+> 4. Rode `npx expo start --clear` após qualquer mudança no `.env`
 
 ---
 
@@ -14,11 +19,11 @@ Todas as configurações vivem em **`app.json` → `expo.extra`**. Substitua os 
 2. Em **APIs & Services → OAuth consent screen**: configure como "External", preencha nome do app, email de suporte, scopes (`openid`, `email`, `profile`).
 3. Em **Credentials → Create Credentials → OAuth client ID**, crie **3 client IDs**:
 
-| Tipo | Para que serve | O que preencher |
-|---|---|---|
-| **Web application** | Required (sempre) | Authorized redirect URIs: `https://auth.expo.io/@SEU_USERNAME/gbtl-app` |
-| **iOS** | Build iOS | Bundle ID: `com.gbtl.app` |
-| **Android** | Build Android | Package name: `com.gbtl.app` + SHA-1 fingerprint do certificado de signing |
+| Tipo                | Para que serve    | O que preencher                                                            |
+| ------------------- | ----------------- | -------------------------------------------------------------------------- |
+| **Web application** | Required (sempre) | Authorized redirect URIs: `https://auth.expo.io/@SEU_USERNAME/gbtl-app`    |
+| **iOS**             | Build iOS         | Bundle ID: `com.gbtl.app`                                                  |
+| **Android**         | Build Android     | Package name: `com.gbtl.app` + SHA-1 fingerprint do certificado de signing |
 
 Para pegar o SHA-1 Android em dev: `npx expo prebuild --platform android && cd android && ./gradlew signingReport`. Para production: pegue o SHA-1 do EAS Build dashboard ou do Google Play Console (Setup → App signing).
 
@@ -63,14 +68,18 @@ Stripe Payment Sheet **precisa** de um endpoint que crie o PaymentIntent com a S
      if (req.method !== 'POST') return res.status(405).end()
      const { amount, currency = 'usd', email, description } = req.body
      const customer = email
-       ? (await stripe.customers.list({ email, limit: 1 })).data[0]
-         ?? (await stripe.customers.create({ email }))
+       ? ((await stripe.customers.list({ email, limit: 1 })).data[0] ??
+         (await stripe.customers.create({ email })))
        : undefined
      const ephemeralKey = customer
-       ? await stripe.ephemeralKeys.create({ customer: customer.id }, { apiVersion: '2024-06-20' })
+       ? await stripe.ephemeralKeys.create(
+           { customer: customer.id },
+           { apiVersion: '2024-06-20' },
+         )
        : undefined
      const paymentIntent = await stripe.paymentIntents.create({
-       amount, currency,
+       amount,
+       currency,
        customer: customer?.id,
        description,
        automatic_payment_methods: { enabled: true },
@@ -152,6 +161,7 @@ Scheme já configurado em `app.json`: `gbtl`. Links válidos:
 - `gbtl://(tabs)/cart` — vai pra aba cart
 
 Para **HTTPS Universal Links** (Android):
+
 - Configure `intentFilters` já feito em app.json (`https://gbtl.app/product/*` → abre o app)
 - Hospede o arquivo `.well-known/assetlinks.json` em `https://gbtl.app/` (gerado pela Play Console depois de uploadar o app).
 
@@ -193,22 +203,22 @@ eas build --platform android --profile production
 
 ## 7. Resumo do que substituir antes de publicar
 
-| Arquivo | Linha | Substituir |
-|---|---|---|
-| `app.json` | `extra.googleClientIdIos` | Real iOS OAuth client ID |
-| `app.json` | `extra.googleClientIdAndroid` | Real Android OAuth client ID |
-| `app.json` | `extra.googleClientIdWeb` | Real Web OAuth client ID |
-| `app.json` | `extra.stripePublishableKey` | `pk_live_...` (produção) |
-| `app.json` | `extra.stripePaymentEndpoint` | URL do seu Vercel/Firebase |
-| `app.json` | `extra.expoProjectId` | UUID do projeto em expo.dev |
-| `app.json` | `extra.stripeMerchantId` | Apple Pay merchant ID (registrado na Apple) |
-| `assets/images/icon.png` | — | Logo 1024×1024 |
-| `assets/images/splash-icon.png` | — | Splash logo |
-| `assets/images/android-icon-foreground.png` | — | Adaptive icon foreground |
-| `app/privacy.tsx` | conteúdo | Texto legal revisado |
-| `app/terms.tsx` | conteúdo | Texto legal revisado |
-| (separado) | — | Hospedar Privacy + Terms HTML em `https://gbtl.app/privacy` e `/terms` |
-| (separado) | — | Hospedar Account Deletion HTML em `https://gbtl.app/delete-account` |
+| Arquivo                                     | Linha                         | Substituir                                                             |
+| ------------------------------------------- | ----------------------------- | ---------------------------------------------------------------------- |
+| `app.json`                                  | `extra.googleClientIdIos`     | Real iOS OAuth client ID                                               |
+| `app.json`                                  | `extra.googleClientIdAndroid` | Real Android OAuth client ID                                           |
+| `app.json`                                  | `extra.googleClientIdWeb`     | Real Web OAuth client ID                                               |
+| `app.json`                                  | `extra.stripePublishableKey`  | `pk_live_...` (produção)                                               |
+| `app.json`                                  | `extra.stripePaymentEndpoint` | URL do seu Vercel/Firebase                                             |
+| `app.json`                                  | `extra.expoProjectId`         | UUID do projeto em expo.dev                                            |
+| `app.json`                                  | `extra.stripeMerchantId`      | Apple Pay merchant ID (registrado na Apple)                            |
+| `assets/images/icon.png`                    | —                             | Logo 1024×1024                                                         |
+| `assets/images/splash-icon.png`             | —                             | Splash logo                                                            |
+| `assets/images/android-icon-foreground.png` | —                             | Adaptive icon foreground                                               |
+| `app/privacy.tsx`                           | conteúdo                      | Texto legal revisado                                                   |
+| `app/terms.tsx`                             | conteúdo                      | Texto legal revisado                                                   |
+| (separado)                                  | —                             | Hospedar Privacy + Terms HTML em `https://gbtl.app/privacy` e `/terms` |
+| (separado)                                  | —                             | Hospedar Account Deletion HTML em `https://gbtl.app/delete-account`    |
 
 ---
 

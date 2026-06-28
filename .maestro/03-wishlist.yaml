@@ -1,0 +1,17 @@
+appId: com.gbtl.app
+name: Add a product to the wishlist
+tags:
+  - smoke
+  - wishlist
+---
+- launchApp:
+    clearState: true
+- tapOn:
+    id: 'wishlist'
+    optional: true
+- assertVisible:
+    text: 'Wishlist|Favoritos'
+    regex: true
+- assertVisible:
+    text: 'No favorites yet|Nenhum favorito ainda'
+    regex: true

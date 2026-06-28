@@ -1,0 +1,19 @@
+appId: com.gbtl.app
+name: Home → Product detail
+tags:
+  - smoke
+---
+- launchApp:
+    clearState: true
+- assertVisible: 'GBTL'
+- assertVisible:
+    text: 'Trending|Em Alta'
+    regex: true
+- tapOn:
+    index: 0
+    text: '.*'
+    optional: true
+- waitForAnimationToEnd
+- assertVisible:
+    text: 'Select Size|Selecione o Tamanho'
+    regex: true

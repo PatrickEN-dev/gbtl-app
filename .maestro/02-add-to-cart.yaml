@@ -1,0 +1,27 @@
+appId: com.gbtl.app
+name: Add a product to the cart
+tags:
+  - smoke
+  - cart
+---
+- launchApp:
+    clearState: true
+- tapOn:
+    text: 'Trending|Em Alta'
+    regex: true
+- waitForAnimationToEnd
+- tapOn:
+    id: 'product-card'
+    optional: true
+- tapOn:
+    text: 'Add to Cart|Adicionar'
+    regex: true
+- assertVisible:
+    text: 'My Cart|Meu Carrinho'
+    regex: true
+- assertVisible:
+    text: 'Sub-total|Subtotal'
+    regex: true
+- assertVisible:
+    text: 'Checkout|Pagar'
+    regex: true

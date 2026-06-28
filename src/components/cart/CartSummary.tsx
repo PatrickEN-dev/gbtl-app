@@ -1,30 +1,29 @@
-
 import React from 'react'
 import { View } from 'react-native'
 import Typography from '@/components/ui/Typography'
 import { useCart } from '@/hooks/useCart'
-
-function formatCurrency(value: number): string {
-  return `$${value.toFixed(2)}`
-}
+import { useTranslation } from '@/lib/i18n'
+import { formatCurrency } from '@/lib/format'
 
 function SummaryRow({
   label,
   value,
   bold = false,
+  tone = 'muted',
 }: {
   label: string
   value: string
   bold?: boolean
+  tone?: 'muted' | 'accent'
 }) {
   return (
     <View className="flex-row justify-between items-center">
-      <Typography variant="body" color="muted" weight={bold ? 'bold' : 'regular'}>
+      <Typography variant="body" color={tone} weight={bold ? 'bold' : 'regular'}>
         {label}
       </Typography>
       <Typography
         variant={bold ? 'price' : 'body'}
-        color="primary"
+        color={tone === 'accent' ? 'accent' : 'primary'}
         weight={bold ? 'bold' : 'medium'}
       >
         {value}
@@ -34,14 +33,22 @@ function SummaryRow({
 }
 
 export default function CartSummary() {
-  const { subtotal, deliveryFee, total } = useCart()
+  const { subtotal, deliveryFee, discount, total, coupon } = useCart()
+  const { t } = useTranslation()
 
   return (
     <View className="gap-3">
-      <SummaryRow label="Sub-total" value={formatCurrency(subtotal)} />
-      <SummaryRow label="Delivery Fee" value={formatCurrency(deliveryFee)} />
+      <SummaryRow label={t('cart.subtotal')} value={formatCurrency(subtotal)} />
+      <SummaryRow label={t('cart.deliveryFee')} value={formatCurrency(deliveryFee)} />
+      {discount > 0 ? (
+        <SummaryRow
+          label={`${t('cart.discount')}${coupon ? ` (${coupon.code})` : ''}`}
+          value={`- ${formatCurrency(discount)}`}
+          tone="accent"
+        />
+      ) : null}
       <View className="h-px bg-border" />
-      <SummaryRow label="Total Price" value={formatCurrency(total)} bold />
+      <SummaryRow label={t('cart.totalPrice')} value={formatCurrency(total)} bold />
     </View>
   )
 }

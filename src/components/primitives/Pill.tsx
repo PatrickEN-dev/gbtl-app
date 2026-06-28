@@ -1,10 +1,8 @@
-
 import React from 'react'
 import { Pressable, View } from 'react-native'
 import Animated from 'react-native-reanimated'
 import Typography from '@/components/ui/Typography'
 import { usePressScale } from '@/lib/animations'
-
 
 type PillVariant = 'solid' | 'ghost' | 'outline'
 type PillTone = 'primary' | 'accent' | 'neutral'
@@ -22,34 +20,33 @@ interface PillProps {
   accessibilityLabel?: string
 }
 
-
 const solidBgMap: Record<PillTone, string> = {
   primary: 'bg-primary',
-  accent:  'bg-accent',
+  accent: 'bg-accent',
   neutral: 'bg-border',
 }
 
 const ghostBgMap: Record<PillTone, string> = {
   primary: 'bg-transparent',
-  accent:  'bg-transparent',
+  accent: 'bg-transparent',
   neutral: 'bg-transparent',
 }
 
 const outlineBgMap: Record<PillTone, string> = {
   primary: 'bg-transparent border border-primary',
-  accent:  'bg-transparent border border-accent',
+  accent: 'bg-transparent border border-accent',
   neutral: 'bg-transparent border border-border',
 }
 
-const solidTextMap: Record<PillTone, 'white' | 'primary' | 'muted'> = {
-  primary: 'white',
-  accent:  'white',
+const solidTextMap: Record<PillTone, 'surface' | 'primary' | 'muted'> = {
+  primary: 'surface',
+  accent: 'surface',
   neutral: 'primary',
 }
 
 const ghostTextMap: Record<PillTone, 'primary' | 'accent' | 'muted'> = {
   primary: 'primary',
-  accent:  'accent',
+  accent: 'accent',
   neutral: 'muted',
 }
 
@@ -65,7 +62,6 @@ const textVariantMap: Record<PillSize, 'caption' | 'body-sm' | 'body'> = {
   lg: 'body',
 }
 
-
 export default function Pill({
   variant = 'solid',
   tone = 'primary',
@@ -79,7 +75,7 @@ export default function Pill({
   const { animatedStyle, handlePressIn, handlePressOut } = usePressScale(0.95)
 
   let bgClass = solidBgMap[tone]
-  let textColor: 'white' | 'primary' | 'accent' | 'muted' = solidTextMap[tone]
+  let textColor: 'surface' | 'primary' | 'accent' | 'muted' = solidTextMap[tone]
 
   if (variant === 'ghost') {
     bgClass = ghostBgMap[tone]
@@ -95,7 +91,7 @@ export default function Pill({
   const content = (
     <View className={containerClass}>
       {leftIcon}
-      <Typography variant={textVariant} weight="semibold" color={textColor as 'white' | 'primary' | 'muted' | 'accent'}>
+      <Typography variant={textVariant} weight="semibold" color={textColor}>
         {children}
       </Typography>
       {rightIcon}

@@ -1,4 +1,3 @@
-
 import React from 'react'
 import { View } from 'react-native'
 import { useRouter } from 'expo-router'
@@ -7,7 +6,6 @@ import ScreenWrapper from '@/components/layout/ScreenWrapper'
 import Header from '@/components/layout/Header'
 import EmptyState from '@/components/ui/EmptyState'
 import ProductGrid from '@/components/product/ProductGrid'
-import { useWishlist } from '@/hooks/useWishlist'
 import { useWishlistStore } from '@/store/wishlistStore'
 import { useProducts } from '@/hooks/useProducts'
 import { useTranslation } from '@/lib/i18n'

@@ -1,34 +1,34 @@
+import { ProductCard } from '@/components/product/ProductCard'
+import EmptyState from '@/components/ui/EmptyState'
+import { ProductCardSkeleton } from '@/components/ui/Skeleton'
+import { Spacing } from '@/constants/tokens'
+import { useTranslation } from '@/lib/i18n'
+import type { Product } from '@/types'
+import { AlertCircle, Package } from 'lucide-react-native'
+import React, { useState } from 'react'
+import { FlatList, RefreshControl, View } from 'react-native'
+import Animated from 'react-native-reanimated'
 
-import { ProductCard } from "@/components/product/ProductCard";
-import EmptyState from "@/components/ui/EmptyState";
-import { ProductCardSkeleton } from "@/components/ui/Skeleton";
-import { Spacing } from "@/constants/tokens";
-import type { Product } from "@/types";
-import { AlertCircle, Package } from "lucide-react-native";
-import React, { useState } from "react";
-import { FlatList, RefreshControl, View } from "react-native";
-import Animated from "react-native-reanimated";
-
-const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
+const AnimatedFlatList = Animated.createAnimatedComponent(FlatList)
 
 interface ProductGridProps {
-  products?: Product[];
-  isPending: boolean;
-  isError: boolean;
-  refetch: () => unknown;
-  onProductPress?: (product: Product) => void;
-  listHeader?: React.ReactElement | null;
+  products?: Product[]
+  isPending: boolean
+  isError: boolean
+  refetch: () => unknown
+  onProductPress?: (product: Product) => void
+  listHeader?: React.ReactElement | null
 
-  scrollHandler?: (event: any) => void;
-  variant?: "grid" | "featured";
+  scrollHandler?: (event: any) => void
+  variant?: 'grid' | 'featured'
 }
 
 function SkeletonGrid() {
-  const rows = [0, 1, 2];
+  const rows = [0, 1, 2]
   return (
     <View className="px-4 pt-4" style={{ gap: Spacing.sm }}>
       {rows.map((row) => (
-        <View key={row} style={{ flexDirection: "row", gap: Spacing.sm }}>
+        <View key={row} style={{ flexDirection: 'row', gap: Spacing.sm }}>
           <View style={{ flex: 1 }}>
             <ProductCardSkeleton />
           </View>
@@ -38,28 +38,35 @@ function SkeletonGrid() {
         </View>
       ))}
     </View>
-  );
+  )
 }
 
 function ErrorState({ refetch }: { refetch: () => unknown }) {
+  const { t } = useTranslation()
   return (
     <EmptyState
       icon={AlertCircle}
-      title="Something went wrong"
-      description="Failed to load products. Please try again."
-      action={{ label: "Try Again", onPress: () => { refetch(); } }}
+      title={t('common.error')}
+      description={t('common.errorDescription')}
+      action={{
+        label: t('common.tryAgain'),
+        onPress: () => {
+          refetch()
+        },
+      }}
     />
-  );
+  )
 }
 
 function EmptyProducts() {
+  const { t } = useTranslation()
   return (
     <EmptyState
       icon={Package}
-      title="No products found"
-      description="Check back later for new arrivals."
+      title={t('common.noProducts')}
+      description={t('common.noProductsDescription')}
     />
-  );
+  )
 }
 
 export default function ProductGrid({
@@ -70,26 +77,24 @@ export default function ProductGrid({
   onProductPress,
   listHeader,
   scrollHandler,
-  variant = "grid",
+  variant = 'grid',
 }: ProductGridProps) {
-  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false)
 
   async function handleRefresh() {
-    setIsRefreshing(true);
+    setIsRefreshing(true)
     try {
-      await Promise.resolve(refetch());
+      await Promise.resolve(refetch())
     } finally {
-      setIsRefreshing(false);
+      setIsRefreshing(false)
     }
   }
 
-
   if (!listHeader) {
-    if (isPending) return <SkeletonGrid />;
-    if (isError) return <ErrorState refetch={refetch} />;
-    if (products.length === 0) return <EmptyProducts />;
+    if (isPending) return <SkeletonGrid />
+    if (isError) return <ErrorState refetch={refetch} />
+    if (products.length === 0) return <EmptyProducts />
   }
-
 
   const listEmptyComponent = isPending ? (
     <SkeletonGrid />
@@ -97,9 +102,9 @@ export default function ProductGrid({
     <ErrorState refetch={refetch} />
   ) : products.length === 0 ? (
     <EmptyProducts />
-  ) : null;
+  ) : null
 
-  if (variant === "featured") {
+  if (variant === 'featured') {
     return (
       <AnimatedFlatList
         data={(isPending || isError ? [] : products) as Product[]}
@@ -113,7 +118,9 @@ export default function ProductGrid({
         }}
         style={{ flex: 1 }}
         showsVerticalScrollIndicator={false}
-        refreshControl={<RefreshControl refreshing={isRefreshing} onRefresh={handleRefresh} />}
+        refreshControl={
+          <RefreshControl refreshing={isRefreshing} onRefresh={handleRefresh} />
+        }
         ListHeaderComponent={listHeader ?? undefined}
         ListEmptyComponent={listEmptyComponent}
         onScroll={scrollHandler}
@@ -128,9 +135,8 @@ export default function ProductGrid({
           </ProductCard.Root>
         )}
       />
-    );
+    )
   }
-
 
   return (
     <AnimatedFlatList
@@ -138,10 +144,16 @@ export default function ProductGrid({
       numColumns={2}
       keyExtractor={(item) => (item as Product).id}
       columnWrapperStyle={{ gap: Spacing.sm, paddingHorizontal: Spacing.md }}
-      contentContainerStyle={{ paddingTop: Spacing.md, paddingBottom: 120, gap: Spacing.sm }}
+      contentContainerStyle={{
+        paddingTop: Spacing.md,
+        paddingBottom: 120,
+        gap: Spacing.sm,
+      }}
       style={{ flex: 1 }}
       showsVerticalScrollIndicator={false}
-      refreshControl={<RefreshControl refreshing={isRefreshing} onRefresh={handleRefresh} />}
+      refreshControl={
+        <RefreshControl refreshing={isRefreshing} onRefresh={handleRefresh} />
+      }
       ListHeaderComponent={listHeader ?? undefined}
       ListEmptyComponent={listEmptyComponent}
       onScroll={scrollHandler}
@@ -162,5 +174,5 @@ export default function ProductGrid({
         </View>
       )}
     />
-  );
+  )
 }

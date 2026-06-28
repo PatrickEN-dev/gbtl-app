@@ -2,7 +2,14 @@
   "home": {
     "guest": "there",
     "greeting": "Hello {{name}}",
-    "tagline": "Fashion confidence and reveals beauty."
+    "tagline": "Fashion confidence and reveals beauty.",
+    "searchPlaceholder": "Search here",
+    "categories": {
+      "trending": "Trending",
+      "men": "Men",
+      "women": "Women",
+      "kids": "Kids"
+    }
   },
   "cart": {
     "title": "Details",
@@ -14,7 +21,15 @@
     "browseCollection": "Browse Collection",
     "subtotal": "Sub-total",
     "deliveryFee": "Delivery Fee",
-    "totalPrice": "Total Price"
+    "totalPrice": "Total Price",
+    "discount": "Discount",
+    "couponPlaceholder": "Coupon code",
+    "couponApply": "Apply",
+    "couponRemove": "Remove",
+    "couponInvalid": "Invalid coupon",
+    "checkoutSuccessTitle": "Thanks for your purchase!",
+    "checkoutSuccessBody": "Your order has been placed.",
+    "checkoutFailedTitle": "Checkout failed"
   },
   "product": {
     "title": "Details",
@@ -24,7 +39,10 @@
     "readMore": "Read more",
     "readLess": "Read less",
     "addToCart": "Add to Cart",
-    "buyNow": "Buy Now"
+    "buyNow": "Buy Now",
+    "reviews": "Reviews",
+    "noReviews": "No reviews yet",
+    "writeReview": "Write a review"
   },
   "wishlist": {
     "title": "Wishlist",
@@ -34,11 +52,19 @@
   },
   "collection": {
     "title": "Collection",
+    "filters": "Filters",
     "sort": {
       "relevance": "Relevance",
       "priceAsc": "Price ↑",
       "priceDesc": "Price ↓",
       "newest": "Newest"
+    },
+    "filter": {
+      "category": "Category",
+      "priceRange": "Price range",
+      "onSale": "On sale",
+      "clear": "Clear all",
+      "apply": "Apply"
     }
   },
   "auth": {
@@ -63,10 +89,7 @@
         "title": "Tap, try, buy",
         "body": "Add to cart and check out securely in seconds."
       },
-      {
-        "title": "Made for you",
-        "body": "Your favorites stay saved across devices."
-      }
+      { "title": "Made for you", "body": "Your favorites stay saved across devices." }
     ]
   },
   "legal": {
@@ -77,15 +100,93 @@
     "deleteAccountAction": "Delete my account",
     "deleteAccountCancel": "Cancel"
   },
+  "settings": {
+    "title": "Settings",
+    "account": "Account",
+    "loggedInAs": "Signed in as {{email}}",
+    "guest": "You are browsing as guest",
+    "signIn": "Sign in",
+    "signOut": "Sign out",
+    "orders": "My orders",
+    "addresses": "Addresses",
+    "wishlist": "Wishlist",
+    "preferences": "Preferences",
+    "theme": "Theme",
+    "themeLight": "Light",
+    "themeDark": "Dark",
+    "themeSystem": "System",
+    "language": "Language",
+    "notifications": "Push notifications",
+    "notificationsOn": "Enabled",
+    "notificationsOff": "Disabled — tap to enable",
+    "about": "About",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "deleteAccount": "Delete account",
+    "version": "Version {{version}}",
+    "trackingOptOut": "Don't track my usage"
+  },
+  "orders": {
+    "title": "My orders",
+    "empty": "No orders yet",
+    "emptyDescription": "When you place an order it shows up here.",
+    "browse": "Start shopping",
+    "status": {
+      "pending": "Pending",
+      "paid": "Paid",
+      "shipped": "Shipped",
+      "delivered": "Delivered",
+      "canceled": "Canceled",
+      "refunded": "Refunded"
+    },
+    "orderId": "Order #{{id}}",
+    "placedOn": "Placed on {{date}}",
+    "total": "Total: {{value}}",
+    "items": "{{count}} items",
+    "details": "Order details",
+    "estimatedDelivery": "Estimated delivery"
+  },
+  "addresses": {
+    "title": "Addresses",
+    "empty": "No addresses saved",
+    "emptyDescription": "Add a delivery address for faster checkout.",
+    "add": "Add address",
+    "edit": "Edit",
+    "delete": "Delete",
+    "default": "Default",
+    "setDefault": "Set as default",
+    "label": "Label (e.g. Home, Work)",
+    "recipient": "Recipient",
+    "zip": "ZIP / CEP",
+    "zipLookup": "Lookup",
+    "zipLookupFailed": "ZIP not found",
+    "street": "Street",
+    "number": "Number",
+    "complement": "Complement",
+    "neighborhood": "Neighborhood",
+    "city": "City",
+    "state": "State",
+    "country": "Country",
+    "phone": "Phone (optional)",
+    "save": "Save"
+  },
   "a11y": {
     "openWishlist": "Open wishlist",
     "openCart": "Open cart",
+    "openSettings": "Open settings",
     "goBack": "Go back"
   },
   "common": {
     "loading": "Loading...",
     "error": "Something went wrong",
+    "errorDescription": "Failed to load products. Please try again.",
     "tryAgain": "Try again",
-    "close": "Close"
+    "close": "Close",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "noProducts": "No products found",
+    "noProductsDescription": "Check back later for new arrivals."
   }
 }

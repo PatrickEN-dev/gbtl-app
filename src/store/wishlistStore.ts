@@ -1,5 +1,6 @@
-
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { create } from 'zustand'
+import { createJSONStorage, persist } from 'zustand/middleware'
 
 interface WishlistStore {
   ids: string[]
@@ -9,19 +10,29 @@ interface WishlistStore {
   selectCount: () => number
 }
 
-export const useWishlistStore = create<WishlistStore>()((set, get) => ({
-  ids: [],
+export const useWishlistStore = create<WishlistStore>()(
+  persist(
+    (set, get) => ({
+      ids: [],
 
-  toggle: (productId) =>
-    set((state) => ({
-      ids: state.ids.includes(productId)
-        ? state.ids.filter((id) => id !== productId)
-        : [...state.ids, productId],
-    })),
+      toggle: (productId) =>
+        set((state) => ({
+          ids: state.ids.includes(productId)
+            ? state.ids.filter((id) => id !== productId)
+            : [...state.ids, productId],
+        })),
 
-  clear: () => set({ ids: [] }),
+      clear: () => set({ ids: [] }),
 
-  isWishlisted: (productId) => get().ids.includes(productId),
+      isWishlisted: (productId) => get().ids.includes(productId),
 
-  selectCount: () => get().ids.length,
-}))
+      selectCount: () => get().ids.length,
+    }),
+    {
+      name: 'gbtl:wishlist',
+      storage: createJSONStorage(() => AsyncStorage),
+      version: 1,
+      partialize: (state) => ({ ids: state.ids }),
+    },
+  ),
+)

@@ -1,352 +1,246 @@
-
-
 import type { Product } from '@/types'
 
-
+/**
+ * Catálogo de polos lisas (sem estampa).
+ * Preços em BRL — faixa R$ 69 a R$ 89.
+ * Imagens hospedadas no Unsplash (substituir por CDN próprio em produção,
+ * ver [assets/images/products/README.md]).
+ */
 const img = (id: string) =>
   `https://images.unsplash.com/photo-${id}?w=600&h=750&fit=crop&q=80&auto=format`
 
+// Pool de fotos de polos lisas verificadas
+const POLO = {
+  greenOnWhite: img('1586363129094-d7a38564fae1'),
+  black: img('1625910513413-c23b8bb81cba'),
+  grayOnBlue: img('1625910513394-ea511bed44ca'),
+  grayOnWhite: img('1586363090844-099253d6a1cb'),
+  plainNeutral: img('1581655353564-df123a1eb820'),
+  plainStudio: img('1671438118097-479e63198629'),
+  whiteFlat: img('1622622016645-7b7065e7c129'),
+  purpleDetail: img('1619792423784-6c298b30299a'),
+  lightBlueModel: img('1775306413232-fecd45367613'),
+} as const
+
+// Paletas de cores padrão para polos lisas
+const PALETTE = {
+  white: { hex: '#F5F5F2', name: 'Branco' },
+  ivory: { hex: '#F0EBE0', name: 'Off-white' },
+  black: { hex: '#1A1A1A', name: 'Preto' },
+  navy: { hex: '#22324A', name: 'Marinho' },
+  gray: { hex: '#7C8385', name: 'Cinza' },
+  charcoal: { hex: '#3A3F42', name: 'Grafite' },
+  sage: { hex: '#8FB088', name: 'Verde Sálvia' },
+  sky: { hex: '#9CC0DD', name: 'Azul Céu' },
+  burgundy: { hex: '#7A2E2A', name: 'Vinho' },
+  beige: { hex: '#C8B89A', name: 'Bege' },
+  rose: { hex: '#C49797', name: 'Rosa Antigo' },
+  forest: { hex: '#2F4F2F', name: 'Verde Floresta' },
+} as const
+
+const ADULT_SIZES = [
+  { label: 'PP', available: true },
+  { label: 'P', available: true },
+  { label: 'M', available: true },
+  { label: 'G', available: true },
+  { label: 'GG', available: true },
+] as const
+
+const KIDS_SIZES = [
+  { label: '4', available: true },
+  { label: '6', available: true },
+  { label: '8', available: true },
+  { label: '10', available: true },
+  { label: '12', available: true },
+] as const
+
 export const mockProducts: Product[] = [
-
-
+  // ============ MASCULINO (5 polos) ============
   {
     id: 'p001',
-    name: "Men's Pullover Hoodie",
-    price: 199,
-    images: [
-      img('1556821840-3a63f95609a7'),
-      img('1620799140408-edc6dcb6d633'),
-      img('1583743814966-8936f5b7be1a'),
-    ],
-    colors: [
-      { hex: '#F5F0E8', name: 'Ivory' },
-      { hex: '#1A1A1A', name: 'Black' },
-      { hex: '#7AA3C4', name: 'Sky' },
-      { hex: '#C7DCEA', name: 'Light Sky' },
-    ],
-    sizes: [
-      { label: 'XS', available: true },
-      { label: 'S',  available: true },
-      { label: 'M',  available: true },
-      { label: 'L',  available: true },
-      { label: 'XL', available: true },
-      { label: 'XXL', available: true },
-      { label: '3XL', available: true },
-    ],
+    name: 'Polo Piquet Premium',
+    price: 89,
+    images: [POLO.whiteFlat, POLO.plainNeutral, POLO.greenOnWhite],
+    colors: [PALETTE.white, PALETTE.navy, PALETTE.black, PALETTE.sage],
+    sizes: [...ADULT_SIZES],
     category: 'men',
     description:
-      'Crafted with premium materials, these cargo trousers blend comfort and style. The relaxed silhouette with a tapered leg makes them perfect for everyday wear.',
+      'Polo lisa em piquet de algodão 100%, gramatura 220 g/m², com gola tradicional canelada e abertura com dois botões em madrepérola. Caimento clássico com leve folga no busto, manga curta ajustada e barra reta. Peça atemporal feita para durar — lavagem na máquina libera, sem perda de cor.',
     rating: 4.8,
     reviewCount: 312,
     isFeatured: true,
   },
-
   {
     id: 'p002',
-    name: 'Classic Oxford Shirt',
-    price: 96,
-    originalPrice: 128,
-    images: [
-      img('1620799140408-edc6dcb6d633'),
-      img('1602810318383-e386cc2a3ccf'),
-      img('1618354691373-d851c5c3a990'),
-    ],
-    colors: [
-      { hex: '#F5F0E8', name: 'Ivory' },
-      { hex: '#2C3E50', name: 'Navy' },
-      { hex: '#1A1A1A', name: 'Black' },
-    ],
-    sizes: [
-      { label: 'S',  available: true },
-      { label: 'M',  available: true },
-      { label: 'L',  available: true },
-      { label: 'XL', available: false },
-    ],
+    name: 'Polo Algodão Pima',
+    price: 85,
+    images: [POLO.greenOnWhite, POLO.plainStudio, POLO.whiteFlat],
+    colors: [PALETTE.sage, PALETTE.ivory, PALETTE.navy, PALETTE.forest],
+    sizes: [...ADULT_SIZES],
     category: 'men',
     description:
-      'Tailored cotton Oxford with a clean cut and refined finish. Pairs effortlessly with chinos or denim.',
-    rating: 4.5,
+      'Polo lisa confeccionada em algodão Pima peruano, conhecido pela fibra extra-longa que entrega toque acetinado e cor durável. Modelagem regular, gola canelada com punho contrastante discreto e fenda lateral na barra. Peça de elevada respirabilidade — ideal para o dia inteiro.',
+    rating: 4.7,
     reviewCount: 198,
-    isSale: true,
   },
-
   {
     id: 'p003',
-    name: 'Merino Wool Sweater',
-    price: 185,
-    images: [
-      img('1576566588028-4147f3842f27'),
-      img('1521572163474-6864f9cf17ab'),
-      img('1611312449412-6cefac5dc3e4'),
-    ],
-    colors: [
-      { hex: '#8B4513', name: 'Rust' },
-      { hex: '#2F4F2F', name: 'Forest' },
-      { hex: '#4A4A4A', name: 'Charcoal' },
-    ],
+    name: 'Polo Slim Marinho',
+    price: 79,
+    originalPrice: 99,
+    images: [POLO.plainNeutral, POLO.grayOnBlue, POLO.black],
+    colors: [PALETTE.navy, PALETTE.black, PALETTE.charcoal, PALETTE.white],
     sizes: [
-      { label: 'S',  available: true },
-      { label: 'M',  available: false },
-      { label: 'L',  available: true },
-      { label: 'XL', available: true },
+      { label: 'PP', available: true },
+      { label: 'P', available: true },
+      { label: 'M', available: true },
+      { label: 'G', available: false },
+      { label: 'GG', available: true },
     ],
     category: 'men',
     description:
-      'Extra-fine 18.5-micron Merino wool that regulates body temperature year-round. Classic crew-neck construction.',
+      'Polo lisa com corte slim e tecido piquet stretch (96% algodão + 4% elastano) que acompanha o movimento sem amassar. Gola e punhos canelados com acabamento contrastante. Marinho profundo que combina com qualquer alfaiataria casual.',
     rating: 4.6,
-    reviewCount: 87,
+    reviewCount: 246,
+    isSale: true,
   },
-
   {
     id: 'p004',
-    name: 'Classic Denim Jacket',
-    price: 210,
-    images: [
-      img('1542272604-787c3835535d'),
-      img('1551488831-00ddcb6c6bd3'),
-      img('1591047139829-d91aecb6caea'),
-    ],
-    colors: [
-      { hex: '#4A6FA5', name: 'Blue' },
-      { hex: '#2C3E50', name: 'Dark Navy' },
-      { hex: '#1A1A1A', name: 'Black' },
-    ],
-    sizes: [
-      { label: 'S', available: false },
-      { label: 'M', available: true },
-      { label: 'L', available: true },
-      { label: 'XL', available: true },
-    ],
+    name: 'Polo Clássica Preta',
+    price: 89,
+    images: [POLO.black, POLO.plainStudio, POLO.grayOnBlue],
+    colors: [PALETTE.black, PALETTE.charcoal, PALETTE.navy],
+    sizes: [...ADULT_SIZES],
     category: 'men',
     description:
-      'Structured silhouette in premium selvedge denim from a heritage Japanese mill. Vintage copper rivets and tonal stitching.',
-    rating: 4.7,
-    reviewCount: 54,
-    isNew: true,
-  },
-
-
-  {
-    id: 'p005',
-    name: 'Soft Cotton Blouse',
-    price: 195,
-    images: [
-      img('1485518882345-15568b007407'),
-      img('1583744946564-b52ac1c389c8'),
-      img('1551163943-3f6a855d1153'),
-    ],
-    colors: [
-      { hex: '#C4A0A0', name: 'Dusty Rose' },
-      { hex: '#F5F0E8', name: 'Ivory' },
-      { hex: '#1A1A1A', name: 'Black' },
-    ],
-    sizes: [
-      { label: 'XS', available: false },
-      { label: 'S',  available: true },
-      { label: 'M',  available: true },
-      { label: 'L',  available: true },
-    ],
-    category: 'women',
-    description:
-      'Lightweight cotton blouse with a fluid silhouette and adjustable tie at the waist. Effortless elegance for any occasion.',
+      'Polo lisa preta em piquet pesado (250 g/m²) que mantém o caimento mesmo após muitas lavagens. Gola estruturada com entretela, fenda lateral discreta e identificação interna em jacquard. Versátil para uso com jeans, alfaiataria leve ou bermuda chino.',
     rating: 4.9,
     reviewCount: 421,
     isFeatured: true,
   },
+  {
+    id: 'p005',
+    name: 'Polo Mescla Cinza',
+    price: 75,
+    images: [POLO.grayOnWhite, POLO.plainNeutral, POLO.greenOnWhite],
+    colors: [PALETTE.gray, PALETTE.charcoal, PALETTE.navy, PALETTE.ivory],
+    sizes: [...ADULT_SIZES],
+    category: 'men',
+    description:
+      'Polo lisa em malha mesclada que dá um aspecto sofisticado ao visual. Algodão penteado com toque macio, gola e mangas com acabamento ribana fino. Corte reto, ideal para quem prefere conforto sem perder o caimento estruturado.',
+    rating: 4.5,
+    reviewCount: 132,
+  },
 
+  // ============ FEMININO (4 polos) ============
   {
     id: 'p006',
-    name: 'Linen Wrap Top',
-    price: 88,
-    originalPrice: 110,
-    images: [
-      img('1602810318383-e386cc2a3ccf'),
-      img('1485518882345-15568b007407'),
-      img('1583744946564-b52ac1c389c8'),
-    ],
-    colors: [
-      { hex: '#C8B89A', name: 'Camel' },
-      { hex: '#F5F0E8', name: 'Ivory' },
-      { hex: '#2F4F2F', name: 'Forest' },
-    ],
-    sizes: [
-      { label: 'XS', available: true },
-      { label: 'S',  available: true },
-      { label: 'M',  available: true },
-      { label: 'L',  available: false },
-    ],
+    name: 'Polo Feminina Manga Curta',
+    price: 79,
+    images: [POLO.whiteFlat, POLO.greenOnWhite, POLO.purpleDetail],
+    colors: [PALETTE.white, PALETTE.rose, PALETTE.sage, PALETTE.navy],
+    sizes: [...ADULT_SIZES],
     category: 'women',
     description:
-      'Pure linen wrap top with a relaxed drape and cropped length. Perfectly on-trend for warm-season dressing.',
-    rating: 4.3,
-    reviewCount: 265,
-    isSale: true,
+      'Polo lisa feminina em piquet de algodão leve (190 g/m²), com modelagem que valoriza a silhueta sem apertar. Gola canelada com abertura de três botões em madrepérola, manga curta com leve estreitamento e barra arredondada. Caimento elegante.',
+    rating: 4.8,
+    reviewCount: 287,
+    isFeatured: true,
   },
-
   {
     id: 'p007',
-    name: 'Cashmere Turtleneck',
-    price: 240,
-    images: [
-      img('1551488831-00ddcb6c6bd3'),
-      img('1551163943-3f6a855d1153'),
-      img('1576566588028-4147f3842f27'),
-    ],
-    colors: [
-      { hex: '#F5F0E8', name: 'Ivory' },
-      { hex: '#C4A0A0', name: 'Dusty Rose' },
-      { hex: '#4A4A4A', name: 'Charcoal' },
-    ],
-    sizes: [
-      { label: 'XS', available: true },
-      { label: 'S',  available: true },
-      { label: 'M',  available: true },
-      { label: 'L',  available: true },
-    ],
+    name: 'Polo Slim Feminina',
+    price: 85,
+    images: [POLO.purpleDetail, POLO.plainStudio, POLO.black],
+    colors: [PALETTE.black, PALETTE.burgundy, PALETTE.navy, PALETTE.gray],
+    sizes: [...ADULT_SIZES],
     category: 'women',
     description:
-      'Grade-A Mongolian cashmere in a slim ribbed turtleneck. Understated warmth without bulk.',
-    rating: 4.8,
-    reviewCount: 133,
+      'Polo lisa com pences discretas na frente e nas costas para um caimento ajustado no corpo. Tecido piquet stretch garante elasticidade e bom retorno. Punhos canelados com elástico interno. Ideal para o trabalho com um blazer ou casualmente com jeans.',
+    rating: 4.7,
+    reviewCount: 154,
     isNew: true,
   },
-
   {
     id: 'p008',
-    name: 'Relaxed Knit Cardigan',
-    price: 280,
-    images: [
-      img('1583744946564-b52ac1c389c8'),
-      img('1551163943-3f6a855d1153'),
-      img('1485518882345-15568b007407'),
-    ],
-    colors: [
-      { hex: '#4A4A4A', name: 'Charcoal' },
-      { hex: '#C8B89A', name: 'Camel' },
-      { hex: '#F5F0E8', name: 'Ivory' },
-    ],
+    name: 'Polo Rosa Antigo',
+    price: 69,
+    originalPrice: 89,
+    images: [POLO.purpleDetail, POLO.whiteFlat, POLO.plainNeutral],
+    colors: [PALETTE.rose, PALETTE.ivory, PALETTE.sage],
     sizes: [
-      { label: 'S', available: false },
-      { label: 'M', available: true },
-      { label: 'L', available: true },
-      { label: 'XL', available: true },
+      { label: 'PP', available: true },
+      { label: 'P', available: true },
+      { label: 'M', available: false },
+      { label: 'G', available: true },
+      { label: 'GG', available: true },
     ],
     category: 'women',
     description:
-      'Oversized single-breasted cardigan in a textured knit that softens beautifully with wear. Patch pockets keep the feel modern.',
-    rating: 4.7,
-    reviewCount: 78,
+      'Polo lisa em tom rosa antigo, cor exclusiva tingida com pigmentos low-impact. Algodão penteado fino, gola canelada bicolor sutil e manga curta com bainha rolada. Perfeita para combinar com saias plissadas ou alfaiataria off-white.',
+    rating: 4.6,
+    reviewCount: 198,
+    isSale: true,
   },
-
-
   {
     id: 'p009',
-    name: 'Organic Cotton Tee',
-    price: 85,
-    images: [
-      img('1503944583220-79d8926ad5e2'),
-      img('1622290319146-7b63df48a635'),
-      img('1565693413579-8a73fcdf3eea'),
-    ],
-    colors: [
-      { hex: '#F5F0E8', name: 'Ivory' },
-      { hex: '#A8C5A0', name: 'Sage' },
-      { hex: '#C4A0A0', name: 'Dusty Rose' },
-    ],
-    sizes: [
-      { label: 'XS', available: true },
-      { label: 'S', available: true },
-      { label: 'M', available: false },
-      { label: 'L', available: true },
-    ],
+    name: 'Polo Verde Sálvia',
+    price: 75,
+    images: [POLO.greenOnWhite, POLO.plainStudio, POLO.whiteFlat],
+    colors: [PALETTE.sage, PALETTE.forest, PALETTE.ivory, PALETTE.beige],
+    sizes: [...ADULT_SIZES],
+    category: 'women',
+    description:
+      'Polo lisa em verde sálvia — tendência da temporada — com caimento solto e barra ligeiramente cropped. Piquet leve (180 g/m²) ideal para o calor. Gola e abertura tradicionais, sem detalhes contrastantes para uma estética minimalista.',
+    rating: 4.7,
+    reviewCount: 102,
+  },
+
+  // ============ INFANTIL (3 polos) ============
+  {
+    id: 'p010',
+    name: 'Polo Infantil Branca',
+    price: 69,
+    images: [POLO.whiteFlat, POLO.greenOnWhite, POLO.plainNeutral],
+    colors: [PALETTE.white, PALETTE.sky, PALETTE.sage],
+    sizes: [...KIDS_SIZES],
     category: 'kids',
     description:
-      'GOTS-certified organic cotton tee, gentle on sensitive skin. Easy-care and adorable.',
-    rating: 4.6,
+      'Polo lisa infantil em algodão penteado macio, com gola canelada reforçada para aguentar o uso pesado da rotina escolar. Reforço duplo na costura dos ombros, fácil de lavar e de passar. Ótimo encaixe entre 4 e 12 anos.',
+    rating: 4.7,
     reviewCount: 189,
     isFeatured: true,
   },
-
-  {
-    id: 'p010',
-    name: 'Striped Knit Pullover',
-    price: 72,
-    originalPrice: 90,
-    images: [
-      img('1622290319146-7b63df48a635'),
-      img('1565693413579-8a73fcdf3eea'),
-      img('1503944583220-79d8926ad5e2'),
-    ],
-    colors: [
-      { hex: '#2C3E50', name: 'Navy' },
-      { hex: '#4A6FA5', name: 'Blue' },
-      { hex: '#1A1A1A', name: 'Black' },
-    ],
-    sizes: [
-      { label: 'XS', available: true },
-      { label: 'S', available: true },
-      { label: 'M', available: true },
-      { label: 'L', available: false },
-    ],
-    category: 'kids',
-    description:
-      'Soft cotton-acrylic blend pullover with playful stripes. Dropped shoulders for room to move.',
-    rating: 4.4,
-    reviewCount: 142,
-    isSale: true,
-  },
-
   {
     id: 'p011',
-    name: 'Casual Long Sleeve',
-    price: 95,
-    images: [
-      img('1565693413579-8a73fcdf3eea'),
-      img('1503944583220-79d8926ad5e2'),
-      img('1622290319146-7b63df48a635'),
-    ],
-    colors: [
-      { hex: '#4A6FA5', name: 'Blue' },
-      { hex: '#C4A0A0', name: 'Dusty Rose' },
-      { hex: '#F5F0E8', name: 'Ivory' },
-    ],
+    name: 'Polo Infantil Marinho',
+    price: 72,
+    images: [POLO.plainNeutral, POLO.grayOnBlue, POLO.greenOnWhite],
+    colors: [PALETTE.navy, PALETTE.white, PALETTE.gray],
     sizes: [
-      { label: 'XS', available: false },
-      { label: 'S', available: true },
-      { label: 'M', available: true },
-      { label: 'L', available: true },
+      { label: '4', available: true },
+      { label: '6', available: true },
+      { label: '8', available: true },
+      { label: '10', available: false },
+      { label: '12', available: true },
     ],
     category: 'kids',
     description:
-      'Soft long-sleeve cotton tee that layers beautifully under jackets or stands alone.',
+      'Polo lisa infantil marinho, peça curinga para uniforme escolar ou look casual. Piquet de algodão com tingimento color-fast (não desbota nas primeiras lavagens). Punhos discretos, sem aplicações que incomodam o movimento.',
     rating: 4.5,
-    reviewCount: 67,
+    reviewCount: 142,
   },
-
   {
     id: 'p012',
-    name: 'Classic Denim Overall',
-    price: 68,
-    images: [
-      img('1622290319146-7b63df48a635'),
-      img('1503944583220-79d8926ad5e2'),
-      img('1565693413579-8a73fcdf3eea'),
-    ],
-    colors: [
-      { hex: '#4A6FA5', name: 'Blue' },
-      { hex: '#1A1A1A', name: 'Black' },
-      { hex: '#C8B89A', name: 'Camel' },
-    ],
-    sizes: [
-      { label: 'XS', available: true },
-      { label: 'S', available: true },
-      { label: 'M', available: true },
-      { label: 'L', available: false },
-    ],
+    name: 'Polo Infantil Cinza',
+    price: 75,
+    images: [POLO.grayOnWhite, POLO.plainStudio, POLO.whiteFlat],
+    colors: [PALETTE.gray, PALETTE.navy, PALETTE.white],
+    sizes: [...KIDS_SIZES],
     category: 'kids',
     description:
-      'Durable mid-wash denim overalls with adjustable straps and side pockets. Built for non-stop play.',
-    rating: 4.3,
+      'Polo lisa infantil em cinza mesclado com toque ultrasoft, ideal para peles sensíveis. Modelagem com leve folga para acomodar o crescimento. Costuras planas internas para evitar atrito, gola canelada que mantém o formato.',
+    rating: 4.6,
     reviewCount: 93,
     isNew: true,
   },

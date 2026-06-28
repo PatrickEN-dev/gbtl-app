@@ -1,41 +1,43 @@
-
-import Typography from "@/components/ui/Typography";
-import { useThemeColors } from "@/hooks/useThemeColors";
-import { Duration } from "@/lib/animations";
-import type { ProductSize } from "@/types";
-import React, { useEffect } from "react";
-import { Pressable, View } from "react-native";
+import Typography from '@/components/ui/Typography'
+import { useThemeColors } from '@/hooks/useThemeColors'
+import { Duration } from '@/lib/animations'
+import type { ProductSize } from '@/types'
+import React, { useEffect } from 'react'
+import { Pressable, View } from 'react-native'
 import Animated, {
   interpolateColor,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
-} from "react-native-reanimated";
+} from 'react-native-reanimated'
 
 interface SizeSelectorProps {
-  sizes: ProductSize[];
-  selected: string;
-  onSelect: (size: string) => void;
+  sizes: ProductSize[]
+  selected: string
+  onSelect: (size: string) => void
 }
 
 interface SizeChipProps {
-  size: ProductSize;
-  isSelected: boolean;
-  onSelect: () => void;
+  size: ProductSize
+  isSelected: boolean
+  onSelect: () => void
 }
 
 function SizeChip({ size, isSelected, onSelect }: SizeChipProps) {
-  const progress = useSharedValue(isSelected ? 1 : 0);
-  const colors = useThemeColors();
+  const progress = useSharedValue(isSelected ? 1 : 0)
+  const colors = useThemeColors()
 
   useEffect(() => {
-    progress.value = withTiming(isSelected ? 1 : 0, { duration: Duration.base });
-  }, [isSelected]);
-
+    progress.value = withTiming(isSelected ? 1 : 0, { duration: Duration.base })
+  }, [isSelected])
 
   const animatedBgStyle = useAnimatedStyle(() => ({
-    backgroundColor: interpolateColor(progress.value, [0, 1], [colors.surface, colors.primary]),
-  }));
+    backgroundColor: interpolateColor(
+      progress.value,
+      [0, 1],
+      [colors.surface, colors.primary],
+    ),
+  }))
 
   return (
     <Pressable
@@ -47,22 +49,22 @@ function SizeChip({ size, isSelected, onSelect }: SizeChipProps) {
       <Animated.View
         style={animatedBgStyle}
         className={[
-          "min-w-[44px] h-11 px-3 rounded-full border border-border items-center justify-center",
-          !size.available ? "opacity-40" : "",
+          'min-w-[44px] h-11 px-3 rounded-full border border-border items-center justify-center',
+          !size.available ? 'opacity-40' : '',
         ]
           .filter(Boolean)
-          .join(" ")}
+          .join(' ')}
       >
         <Typography
           variant="body-sm"
-          color={isSelected ? 'white' : 'primary'}
+          color={isSelected ? 'surface' : 'primary'}
           className={!size.available ? 'line-through' : ''}
         >
           {size.label}
         </Typography>
       </Animated.View>
     </Pressable>
-  );
+  )
 }
 
 export default function SizeSelector({ sizes, selected, onSelect }: SizeSelectorProps) {
@@ -77,5 +79,5 @@ export default function SizeSelector({ sizes, selected, onSelect }: SizeSelector
         />
       ))}
     </View>
-  );
+  )
 }

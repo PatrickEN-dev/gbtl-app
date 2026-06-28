@@ -2,7 +2,14 @@
   "home": {
     "guest": "Visitante",
     "greeting": "Olá {{name}}",
-    "tagline": "Moda com confiança e elegância."
+    "tagline": "Moda com confiança e elegância.",
+    "searchPlaceholder": "Buscar aqui",
+    "categories": {
+      "trending": "Em Alta",
+      "men": "Masculino",
+      "women": "Feminino",
+      "kids": "Infantil"
+    }
   },
   "cart": {
     "title": "Detalhes",
@@ -14,7 +21,15 @@
     "browseCollection": "Ver Coleção",
     "subtotal": "Subtotal",
     "deliveryFee": "Frete",
-    "totalPrice": "Total"
+    "totalPrice": "Total",
+    "discount": "Desconto",
+    "couponPlaceholder": "Código do cupom",
+    "couponApply": "Aplicar",
+    "couponRemove": "Remover",
+    "couponInvalid": "Cupom inválido",
+    "checkoutSuccessTitle": "Obrigado pela compra!",
+    "checkoutSuccessBody": "Seu pedido foi realizado com sucesso.",
+    "checkoutFailedTitle": "Falha no pagamento"
   },
   "product": {
     "title": "Detalhes",
@@ -24,7 +39,10 @@
     "readMore": "Ler mais",
     "readLess": "Ler menos",
     "addToCart": "Adicionar",
-    "buyNow": "Comprar"
+    "buyNow": "Comprar",
+    "reviews": "Avaliações",
+    "noReviews": "Sem avaliações ainda",
+    "writeReview": "Escrever avaliação"
   },
   "wishlist": {
     "title": "Favoritos",
@@ -34,11 +52,19 @@
   },
   "collection": {
     "title": "Coleção",
+    "filters": "Filtros",
     "sort": {
       "relevance": "Relevância",
       "priceAsc": "Preço ↑",
       "priceDesc": "Preço ↓",
       "newest": "Mais novos"
+    },
+    "filter": {
+      "category": "Categoria",
+      "priceRange": "Faixa de preço",
+      "onSale": "Em promoção",
+      "clear": "Limpar tudo",
+      "apply": "Aplicar"
     }
   },
   "auth": {
@@ -77,15 +103,93 @@
     "deleteAccountAction": "Excluir minha conta",
     "deleteAccountCancel": "Cancelar"
   },
+  "settings": {
+    "title": "Configurações",
+    "account": "Conta",
+    "loggedInAs": "Conectado como {{email}}",
+    "guest": "Você está navegando como visitante",
+    "signIn": "Entrar",
+    "signOut": "Sair",
+    "orders": "Meus pedidos",
+    "addresses": "Endereços",
+    "wishlist": "Favoritos",
+    "preferences": "Preferências",
+    "theme": "Tema",
+    "themeLight": "Claro",
+    "themeDark": "Escuro",
+    "themeSystem": "Sistema",
+    "language": "Idioma",
+    "notifications": "Notificações",
+    "notificationsOn": "Ativadas",
+    "notificationsOff": "Desativadas — toque para ativar",
+    "about": "Sobre",
+    "privacy": "Privacidade",
+    "terms": "Termos",
+    "deleteAccount": "Excluir conta",
+    "version": "Versão {{version}}",
+    "trackingOptOut": "Não rastrear meu uso"
+  },
+  "orders": {
+    "title": "Meus pedidos",
+    "empty": "Nenhum pedido ainda",
+    "emptyDescription": "Seus pedidos aparecem aqui depois de finalizados.",
+    "browse": "Ver produtos",
+    "status": {
+      "pending": "Pendente",
+      "paid": "Pago",
+      "shipped": "Enviado",
+      "delivered": "Entregue",
+      "canceled": "Cancelado",
+      "refunded": "Reembolsado"
+    },
+    "orderId": "Pedido #{{id}}",
+    "placedOn": "Realizado em {{date}}",
+    "total": "Total: {{value}}",
+    "items": "{{count}} itens",
+    "details": "Detalhes do pedido",
+    "estimatedDelivery": "Entrega estimada"
+  },
+  "addresses": {
+    "title": "Endereços",
+    "empty": "Nenhum endereço cadastrado",
+    "emptyDescription": "Adicione um endereço pra agilizar o checkout.",
+    "add": "Adicionar endereço",
+    "edit": "Editar",
+    "delete": "Excluir",
+    "default": "Padrão",
+    "setDefault": "Tornar padrão",
+    "label": "Identificação (ex: Casa, Trabalho)",
+    "recipient": "Destinatário",
+    "zip": "CEP",
+    "zipLookup": "Buscar",
+    "zipLookupFailed": "CEP não encontrado",
+    "street": "Rua",
+    "number": "Número",
+    "complement": "Complemento",
+    "neighborhood": "Bairro",
+    "city": "Cidade",
+    "state": "Estado",
+    "country": "País",
+    "phone": "Telefone (opcional)",
+    "save": "Salvar"
+  },
   "a11y": {
     "openWishlist": "Abrir favoritos",
     "openCart": "Abrir carrinho",
+    "openSettings": "Abrir configurações",
     "goBack": "Voltar"
   },
   "common": {
     "loading": "Carregando...",
     "error": "Algo deu errado",
+    "errorDescription": "Não conseguimos carregar os produtos. Tente de novo.",
     "tryAgain": "Tentar novamente",
-    "close": "Fechar"
+    "close": "Fechar",
+    "cancel": "Cancelar",
+    "save": "Salvar",
+    "delete": "Excluir",
+    "edit": "Editar",
+    "noProducts": "Nenhum produto encontrado",
+    "noProductsDescription": "Volte mais tarde pra ver novidades."
   }
 }

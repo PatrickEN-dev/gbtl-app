@@ -1,41 +1,39 @@
-
-import Badge from "@/components/ui/Badge";
-import Typography from "@/components/ui/Typography";
-import { useThemeColors } from "@/hooks/useThemeColors";
-import { useWishlist } from "@/hooks/useWishlist";
-import { useCartBounce, useFadeInUp, usePressScale } from "@/lib/animations";
-import type { Product } from "@/types";
-import { Image } from "expo-image";
-import { Heart } from "lucide-react-native";
-import React, { createContext, useContext } from "react";
-import { Pressable, View } from "react-native";
-import Animated from "react-native-reanimated";
-
+import Badge from '@/components/ui/Badge'
+import Typography from '@/components/ui/Typography'
+import { useThemeColors } from '@/hooks/useThemeColors'
+import { useWishlist } from '@/hooks/useWishlist'
+import { useCartBounce, useFadeInUp, usePressScale } from '@/lib/animations'
+import { formatCurrency } from '@/lib/format'
+import type { Product } from '@/types'
+import { Image } from 'expo-image'
+import { Heart } from 'lucide-react-native'
+import React, { createContext, useContext } from 'react'
+import { Pressable, View } from 'react-native'
+import Animated from 'react-native-reanimated'
 
 interface ProductCardContextValue {
-  product: Product;
+  product: Product
 }
 
-const ProductCardContext = createContext<ProductCardContextValue | null>(null);
+const ProductCardContext = createContext<ProductCardContextValue | null>(null)
 
 function useProductCardContext() {
-  const ctx = useContext(ProductCardContext);
-  if (!ctx) throw new Error("Must be used inside ProductCard.Root");
-  return ctx;
+  const ctx = useContext(ProductCardContext)
+  if (!ctx) throw new Error('Must be used inside ProductCard.Root')
+  return ctx
 }
 
-
 interface RootProps {
-  product: Product;
-  onPress?: () => void;
-  staggerIndex?: number;
-  children: React.ReactNode;
+  product: Product
+  onPress?: () => void
+  staggerIndex?: number
+  children: React.ReactNode
 }
 
 function Root({ product, onPress, staggerIndex = 0, children }: RootProps) {
-  const { animatedStyle: fadeStyle } = useFadeInUp(staggerIndex * 80);
-  const { animatedStyle: pressStyle, handlePressIn, handlePressOut } = usePressScale(0.97);
-  const colors = useThemeColors();
+  const { animatedStyle: fadeStyle } = useFadeInUp(staggerIndex * 80)
+  const { animatedStyle: pressStyle, handlePressIn, handlePressOut } = usePressScale(0.97)
+  const colors = useThemeColors()
 
   return (
     <ProductCardContext.Provider value={{ product }}>
@@ -58,23 +56,22 @@ function Root({ product, onPress, staggerIndex = 0, children }: RootProps) {
         </Animated.View>
       </Pressable>
     </ProductCardContext.Provider>
-  );
+  )
 }
 
-
 interface WishlistChipProps {
-  productId: string;
+  productId: string
 }
 
 function WishlistChip({ productId }: WishlistChipProps) {
-  const { toggle, isWishlisted } = useWishlist();
-  const wishlisted = isWishlisted(productId);
-  const { animatedStyle, trigger } = useCartBounce();
-  const colors = useThemeColors();
+  const { toggle, isWishlisted } = useWishlist()
+  const wishlisted = isWishlisted(productId)
+  const { animatedStyle, trigger } = useCartBounce()
+  const colors = useThemeColors()
 
   function handlePress() {
-    trigger();
-    toggle(productId);
+    trigger()
+    toggle(productId)
   }
 
   return (
@@ -93,23 +90,22 @@ function WishlistChip({ productId }: WishlistChipProps) {
           <Heart
             size={16}
             color={wishlisted ? colors.accent : colors.muted}
-            fill={wishlisted ? colors.accent : "transparent"}
+            fill={wishlisted ? colors.accent : 'transparent'}
           />
         </Animated.View>
       </Pressable>
     </View>
-  );
+  )
 }
 
-
 function CardImage() {
-  const { product } = useProductCardContext();
+  const { product } = useProductCardContext()
   return (
     <View className="relative">
       <Image
         source={{ uri: product.images[0] }}
         contentFit="cover"
-        style={{ width: "100%", aspectRatio: 4 / 5, borderRadius: 0 }}
+        style={{ width: '100%', aspectRatio: 4 / 5, borderRadius: 0 }}
       />
       <View className="absolute top-2 left-2 gap-1">
         {product.isNew && <NewBadge />}
@@ -117,75 +113,74 @@ function CardImage() {
       </View>
       <WishlistChip productId={product.id} />
     </View>
-  );
+  )
 }
 
-
 interface BodyProps {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 
 function Body({ children }: BodyProps) {
-  return <View className="px-3 pt-2 pb-1">{children}</View>;
+  return <View className="px-3 pt-2 pb-1">{children}</View>
 }
 
-
 function Name() {
-  const { product } = useProductCardContext();
+  const { product } = useProductCardContext()
   return (
     <Typography variant="body-sm" color="primary" numberOfLines={2}>
       {product.name}
     </Typography>
-  );
+  )
 }
 
-
 function Price() {
-  const { product } = useProductCardContext();
-  const hasSale = product.isSale && product.originalPrice != null;
+  const { product } = useProductCardContext()
+  const hasSale = product.isSale && product.originalPrice != null
 
   if (hasSale) {
     return (
       <View className="flex-row items-center gap-2 mt-0.5">
         <Typography variant="price" color="accent">
-          ${product.price.toFixed(2)}
+          {formatCurrency(product.price)}
         </Typography>
-        <Typography variant="body-sm" color="muted" style={{ textDecorationLine: "line-through" }}>
-          ${product.originalPrice!.toFixed(2)}
+        <Typography
+          variant="body-sm"
+          color="muted"
+          style={{ textDecorationLine: 'line-through' }}
+        >
+          {formatCurrency(product.originalPrice!)}
         </Typography>
       </View>
-    );
+    )
   }
 
   return (
     <View className="mt-0.5">
       <Typography variant="price" color="primary">
-        ${product.price.toFixed(2)}
+        {formatCurrency(product.price)}
       </Typography>
     </View>
-  );
+  )
 }
 
-
 interface FooterProps {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 
 function Footer({ children }: FooterProps) {
-  return <View className="flex-row items-center justify-end px-3 pb-3">{children}</View>;
+  return <View className="flex-row items-center justify-end px-3 pb-3">{children}</View>
 }
 
-
 function WishlistButton() {
-  const { product } = useProductCardContext();
-  const { toggle, isWishlisted } = useWishlist();
-  const wishlisted = isWishlisted(product.id);
-  const { animatedStyle, trigger } = useCartBounce();
-  const colors = useThemeColors();
+  const { product } = useProductCardContext()
+  const { toggle, isWishlisted } = useWishlist()
+  const wishlisted = isWishlisted(product.id)
+  const { animatedStyle, trigger } = useCartBounce()
+  const colors = useThemeColors()
 
   function handlePress() {
-    trigger();
-    toggle(product.id);
+    trigger()
+    toggle(product.id)
   }
 
   return (
@@ -194,41 +189,37 @@ function WishlistButton() {
         <Heart
           size={20}
           color={wishlisted ? colors.accent : colors.muted}
-          fill={wishlisted ? colors.accent : "transparent"}
+          fill={wishlisted ? colors.accent : 'transparent'}
         />
       </Animated.View>
     </Pressable>
-  );
+  )
 }
 
-
 function NewBadge() {
-  const { product } = useProductCardContext();
-  if (!product.isNew) return null;
+  const { product } = useProductCardContext()
+  if (!product.isNew) return null
   return (
     <Badge variant="accent" size="sm">
       NEW
     </Badge>
-  );
+  )
 }
 
-
 function SaleBadge() {
-  const { product } = useProductCardContext();
-  if (!product.isSale) return null;
+  const { product } = useProductCardContext()
+  if (!product.isSale) return null
   return (
     <Badge variant="error" size="sm">
       SALE
     </Badge>
-  );
+  )
 }
 
-
 function FeaturedLayout() {
-  const { product } = useProductCardContext();
+  const { product } = useProductCardContext()
   return (
     <>
-
       <CardImage />
 
       <View className="flex-row items-end justify-between px-4 py-3">
@@ -236,14 +227,15 @@ function FeaturedLayout() {
           {product.name}
         </Typography>
         <View className="items-end">
-          <Typography variant="caption" color="muted">Price</Typography>
-          <Typography variant="price">{`$${product.price.toFixed(2)}`}</Typography>
+          <Typography variant="caption" color="muted">
+            Preço
+          </Typography>
+          <Typography variant="price">{formatCurrency(product.price)}</Typography>
         </View>
       </View>
     </>
-  );
+  )
 }
-
 
 export const ProductCard = {
   Root,
@@ -256,4 +248,4 @@ export const ProductCard = {
   NewBadge,
   SaleBadge,
   FeaturedLayout,
-};
+}

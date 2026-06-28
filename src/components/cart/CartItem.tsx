@@ -1,4 +1,3 @@
-
 import React, { useRef } from 'react'
 import { View, Pressable } from 'react-native'
 import Animated from 'react-native-reanimated'
@@ -12,14 +11,13 @@ import { useThemeColors } from '@/hooks/useThemeColors'
 import { Card } from '@/components/primitives/Card'
 import Pill from '@/components/primitives/Pill'
 import IconButton from '@/components/primitives/IconButton'
+import { formatCurrency } from '@/lib/format'
 import type { CartItem as CartItemType } from '@/types'
-
 
 interface Props {
   item: CartItemType
   onRemove: () => void
 }
-
 
 function DeleteAction({ onPress }: { onPress: () => void }) {
   const colors = useThemeColors()
@@ -37,7 +35,6 @@ function DeleteAction({ onPress }: { onPress: () => void }) {
     </Pressable>
   )
 }
-
 
 function QtyButton({
   onPress,
@@ -60,7 +57,6 @@ function QtyButton({
     </Pressable>
   )
 }
-
 
 export default function CartItem({ item, onRemove }: Props) {
   const { updateQuantity } = useCart()
@@ -97,7 +93,6 @@ export default function CartItem({ item, onRemove }: Props) {
         friction={2}
       >
         <Card.Root variant="elevated" padding="sm" className="flex-row mb-3 relative">
-
           <View className="absolute top-2 right-2" style={{ zIndex: 1 }}>
             <IconButton
               icon={<X size={14} color={colors.muted} />}
@@ -108,7 +103,6 @@ export default function CartItem({ item, onRemove }: Props) {
             />
           </View>
 
-
           <Image
             source={{ uri: product.images[0] }}
             style={{ width: 60, height: 80, borderRadius: 10 }}
@@ -116,14 +110,9 @@ export default function CartItem({ item, onRemove }: Props) {
             accessibilityLabel={product.name}
           />
 
-
           <View className="flex-1 ml-3 justify-between">
             <View>
-              <Typography
-                variant="body"
-                weight="semibold"
-                numberOfLines={1}
-              >
+              <Typography variant="body" weight="semibold" numberOfLines={1}>
                 {product.name}
               </Typography>
               <Typography variant="body-sm" color="muted" className="mt-0.5">
@@ -133,7 +122,6 @@ export default function CartItem({ item, onRemove }: Props) {
                 Color: {selectedColor.name}
               </Typography>
             </View>
-
 
             <View className="flex-row items-center mt-2">
               <QtyButton
@@ -152,10 +140,9 @@ export default function CartItem({ item, onRemove }: Props) {
             </View>
           </View>
 
-
           <View className="ml-3 items-end justify-end pb-1">
             <Pill variant="solid" tone="primary" size="sm">
-              ${product.price.toFixed(2)}
+              {formatCurrency(product.price)}
             </Pill>
           </View>
         </Card.Root>

@@ -1,6 +1,8 @@
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 
 import CartBottomSheet from '@/components/cart/CartBottomSheet'
+import ConfirmDialog from '@/components/ui/ConfirmDialog'
+import ToastHost from '@/components/ui/Toast'
 import ErrorBoundary from '@/components/layout/ErrorBoundary'
 import { useAuth } from '@/hooks/useAuth'
 import { initAnalytics, track } from '@/lib/analytics'
@@ -84,6 +86,8 @@ export default function RootLayout() {
                   <Stack.Screen name="+not-found" />
                 </Stack>
                 <CartBottomSheet />
+                <ConfirmDialog />
+                <ToastHost />
                 <StatusBar style="auto" />
               </BottomSheetModalProvider>
             </StripeProvider>

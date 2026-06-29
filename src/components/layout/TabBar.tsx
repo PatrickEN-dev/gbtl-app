@@ -7,35 +7,38 @@ import Animated, {
 } from 'react-native-reanimated'
 import { BlurView } from 'expo-blur'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { Home, Grid, ShoppingBag } from 'lucide-react-native'
+import { Home, Grid, Heart, ShoppingBag } from 'lucide-react-native'
 import type { BottomTabBarProps } from '@react-navigation/bottom-tabs'
 import { useColorScheme } from 'nativewind'
+import { useRouter } from 'expo-router'
 import Badge from '@/components/ui/Badge'
 import { usePressScale, Duration } from '@/lib/animations'
 import { useCart } from '@/hooks/useCart'
 import { useCartUI } from '@/store/cartUIStore'
 import { useThemeColors } from '@/hooks/useThemeColors'
 
-const ROUTE_CONFIG: Record<
-  string,
-  { Icon: React.ComponentType<{ size: number; color: string }> }
-> = {
-  index: { Icon: Home },
-  collection: { Icon: Grid },
-  cart: { Icon: ShoppingBag },
-}
+type TabKey = 'index' | 'collection' | 'wishlist' | 'cart'
+
+const TAB_ITEMS: {
+  key: TabKey
+  Icon: React.ComponentType<{ size: number; color: string }>
+}[] = [
+  { key: 'index', Icon: Home },
+  { key: 'collection', Icon: Grid },
+  { key: 'wishlist', Icon: Heart },
+  { key: 'cart', Icon: ShoppingBag },
+]
 
 interface TabItemProps {
-  routeName: string
+  Icon: React.ComponentType<{ size: number; color: string }>
   isFocused: boolean
   onPress: () => void
   badgeCount: number
   iconColor: string
 }
 
-function TabItem({ routeName, isFocused, onPress, badgeCount, iconColor }: TabItemProps) {
+function TabItem({ Icon, isFocused, onPress, badgeCount, iconColor }: TabItemProps) {
   const press = usePressScale(0.9)
-  const { Icon } = ROUTE_CONFIG[routeName] ?? { Icon: Home }
   const dotOpacity = useSharedValue(isFocused ? 1 : 0)
 
   useEffect(() => {
@@ -76,6 +79,7 @@ function TabItem({ routeName, isFocused, onPress, badgeCount, iconColor }: TabIt
 }
 
 export default function TabBar({ state, navigation }: BottomTabBarProps) {
+  const router = useRouter()
   const insets = useSafeAreaInsets()
   const { totalItems } = useCart()
   const openCart = useCartUI((s) => s.open)
@@ -83,33 +87,20 @@ export default function TabBar({ state, navigation }: BottomTabBarProps) {
   const { colorScheme } = useColorScheme()
   const isDark = colorScheme === 'dark'
 
-  const tabs = state.routes.map((route, index) => {
-    const isFocused = state.index === index
-    const onPress = () => {
-      if (route.name === 'cart') {
-        openCart()
-        return
-      }
-      const event = navigation.emit({
-        type: 'tabPress',
-        target: route.key,
-        canPreventDefault: true,
-      })
-      if (!isFocused && !event.defaultPrevented) {
-        navigation.navigate(route.name as never)
-      }
+  const currentRouteName = state.routes[state.index]?.name
+
+  function handlePress(tabKey: TabKey) {
+    if (tabKey === 'cart') {
+      openCart()
+      return
     }
-    return (
-      <TabItem
-        key={route.key}
-        routeName={route.name}
-        isFocused={isFocused && route.name !== 'cart'}
-        onPress={onPress}
-        badgeCount={route.name === 'cart' ? totalItems : 0}
-        iconColor={isFocused && route.name !== 'cart' ? colors.primary : colors.muted}
-      />
-    )
-  })
+    if (tabKey === 'wishlist') {
+      router.push('/wishlist')
+      return
+    }
+    if (currentRouteName === tabKey) return
+    navigation.navigate(tabKey as never)
+  }
 
   return (
     <View
@@ -130,23 +121,38 @@ export default function TabBar({ state, navigation }: BottomTabBarProps) {
           overflow: 'hidden',
           shadowColor: colors.primary,
           shadowOffset: { width: 0, height: 4 },
-          shadowOpacity: isDark ? 0.35 : 0.12,
-          shadowRadius: 12,
+          shadowOpacity: isDark ? 0.28 : 0.1,
+          shadowRadius: 14,
           elevation: 8,
           backgroundColor: Platform.select({
-            ios: isDark ? 'rgba(37,42,38,0.75)' : 'rgba(255,255,255,0.7)',
-            default: colors.surface,
+            ios: isDark ? 'rgba(37,42,38,0.45)' : 'rgba(255,255,255,0.4)',
+            default: isDark ? 'rgba(37,42,38,0.78)' : 'rgba(255,255,255,0.78)',
           }),
         }}
       >
         {Platform.OS === 'ios' && (
           <BlurView
-            intensity={70}
+            intensity={90}
             tint={isDark ? 'dark' : 'light'}
             style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}
           />
         )}
-        <View className="flex-row flex-1">{tabs}</View>
+        <View className="flex-row flex-1">
+          {TAB_ITEMS.map(({ key, Icon }) => {
+            const isRouteFocused =
+              key === currentRouteName && key !== 'cart' && key !== 'wishlist'
+            return (
+              <TabItem
+                key={key}
+                Icon={Icon}
+                isFocused={isRouteFocused}
+                onPress={() => handlePress(key)}
+                badgeCount={key === 'cart' ? totalItems : 0}
+                iconColor={isRouteFocused ? colors.primary : colors.muted}
+              />
+            )
+          })}
+        </View>
       </View>
     </View>
   )

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { ScrollView, View, Pressable, Switch, Alert } from 'react-native'
+import { ScrollView, View, Pressable, Switch } from 'react-native'
 import { useRouter } from 'expo-router'
 import {
   ChevronRight,
@@ -23,6 +23,8 @@ import { useThemeStore } from '@/store/themeStore'
 import i18n, { useTranslation } from '@/lib/i18n'
 import { registerForPushNotificationsAsync } from '@/services/notifications'
 import { optIn, optOut, track } from '@/lib/analytics'
+import { showToast } from '@/store/toastStore'
+import { confirm } from '@/store/confirmStore'
 
 function Row({
   icon,
@@ -91,7 +93,11 @@ export default function SettingsScreen() {
     const token = await registerForPushNotificationsAsync()
     setPushEnabled(!!token)
     if (!token) {
-      Alert.alert(t('settings.notifications'), t('settings.notificationsOff'))
+      showToast({
+        type: 'warning',
+        title: t('settings.notifications'),
+        message: t('settings.notificationsOff'),
+      })
     }
   }
 
@@ -110,18 +116,16 @@ export default function SettingsScreen() {
     }
   }
 
-  function handleLogout() {
-    Alert.alert(t('settings.signOut'), '', [
-      { text: t('common.cancel'), style: 'cancel' },
-      {
-        text: t('settings.signOut'),
-        style: 'destructive',
-        onPress: async () => {
-          await logout()
-          router.replace('/(tabs)')
-        },
-      },
-    ])
+  async function handleLogout() {
+    const ok = await confirm({
+      title: t('settings.signOut'),
+      confirmLabel: t('settings.signOut'),
+      cancelLabel: t('common.cancel'),
+      destructive: true,
+    })
+    if (!ok) return
+    await logout()
+    router.replace('/(tabs)')
   }
 
   function cycleTheme() {

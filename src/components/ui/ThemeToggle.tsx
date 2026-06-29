@@ -10,6 +10,7 @@ import Animated, {
 import { useColorScheme } from 'nativewind'
 import { Moon, Sun } from 'lucide-react-native'
 import { useThemeColors } from '@/hooks/useThemeColors'
+import { useThemeStore } from '@/store/themeStore'
 import { Duration, Spring } from '@/lib/animations'
 
 interface ThemeToggleProps {
@@ -17,7 +18,8 @@ interface ThemeToggleProps {
 }
 
 export default function ThemeToggle({ size = 18 }: ThemeToggleProps) {
-  const { colorScheme, setColorScheme } = useColorScheme()
+  const { colorScheme } = useColorScheme()
+  const setPreference = useThemeStore((s) => s.setPreference)
   const colors = useThemeColors()
   const isDark = colorScheme === 'dark'
 
@@ -34,7 +36,7 @@ export default function ThemeToggle({ size = 18 }: ThemeToggleProps) {
       withSpring(0.85, Spring.snappy),
       withSpring(1, Spring.gentle),
     )
-    setColorScheme(isDark ? 'light' : 'dark')
+    setPreference(isDark ? 'light' : 'dark')
   }
 
   return (

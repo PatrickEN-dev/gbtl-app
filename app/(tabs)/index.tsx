@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { View, FlatList } from 'react-native'
 import { useRouter } from 'expo-router'
 import Animated, { FadeIn } from 'react-native-reanimated'
-import { ShoppingBag, Heart, Settings as SettingsIcon } from 'lucide-react-native'
+import { ShoppingBag, Settings as SettingsIcon } from 'lucide-react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import Typography from '@/components/ui/Typography'
 import SearchBar from '@/components/ui/SearchBar'
@@ -48,39 +48,38 @@ export default function HomeScreen() {
     <View className="flex-1 bg-bg">
       <Animated.View
         entering={FadeIn.duration(560)}
-        className="px-5 flex-row items-center"
+        className="px-5"
         style={{ marginTop: insets.top + 8, marginBottom: 12 }}
       >
-        <ThemeToggle />
-        <IconButton
-          icon={<SettingsIcon size={20} color={colors.primary} />}
-          variant="ghost"
-          size="md"
-          onPress={() => router.push('/settings')}
-          accessibilityLabel={t('a11y.openSettings')}
-        />
-        <IconButton
-          icon={<Heart size={20} color={colors.primary} />}
-          variant="ghost"
-          size="md"
-          onPress={() => router.push('/wishlist')}
-          accessibilityLabel={t('a11y.openWishlist')}
-        />
+        <View className="h-12 justify-center">
+          <View pointerEvents="none" className="absolute left-0 right-0 items-center">
+            <Typography variant="heading3" italic style={{ letterSpacing: 3 }}>
+              GBTL
+            </Typography>
+          </View>
 
-        <View className="flex-1 items-center">
-          <Typography variant="heading3" weight="bold" style={{ letterSpacing: 4 }}>
-            GBTL
-          </Typography>
+          <View className="flex-row items-center">
+            <ThemeToggle />
+            <IconButton
+              icon={<SettingsIcon size={20} color={colors.primary} />}
+              variant="ghost"
+              size="md"
+              onPress={() => router.push('/settings')}
+              accessibilityLabel={t('a11y.openSettings')}
+            />
+
+            <View className="flex-1" />
+
+            <IconButton
+              icon={<ShoppingBag size={20} color={colors.primary} />}
+              variant="ghost"
+              size="md"
+              badge={totalItems > 0 ? totalItems : undefined}
+              onPress={openCart}
+              accessibilityLabel={t('a11y.openCart')}
+            />
+          </View>
         </View>
-
-        <IconButton
-          icon={<ShoppingBag size={20} color={colors.primary} />}
-          variant="ghost"
-          size="md"
-          badge={totalItems > 0 ? totalItems : undefined}
-          onPress={openCart}
-          accessibilityLabel={t('a11y.openCart')}
-        />
       </Animated.View>
 
       <View className="px-5 mb-1">

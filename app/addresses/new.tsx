@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { ScrollView, View, Alert } from 'react-native'
+import { ScrollView, View } from 'react-native'
 import { useRouter, useLocalSearchParams } from 'expo-router'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -13,6 +13,7 @@ import { useAddressesStore } from '@/store/addressesStore'
 import { lookupZip, normalizeZip } from '@/services/addresses'
 import { useTranslation } from '@/lib/i18n'
 import { track } from '@/lib/analytics'
+import { showToast } from '@/store/toastStore'
 
 export default function NewAddressScreen() {
   const router = useRouter()
@@ -56,7 +57,7 @@ export default function NewAddressScreen() {
       .then((result) => {
         if (canceled) return
         if (!result) {
-          Alert.alert(t('addresses.zipLookupFailed'))
+          showToast({ type: 'error', title: t('addresses.zipLookupFailed') })
           return
         }
         setValue('zip', result.zip)

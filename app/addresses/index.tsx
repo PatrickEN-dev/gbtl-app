@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, FlatList, Pressable, Alert } from 'react-native'
+import { View, FlatList, Pressable } from 'react-native'
 import { useRouter } from 'expo-router'
 import { MapPin, Plus } from 'lucide-react-native'
 import ScreenWrapper from '@/components/layout/ScreenWrapper'
@@ -11,6 +11,7 @@ import EmptyState from '@/components/ui/EmptyState'
 import { useAddressesStore } from '@/store/addressesStore'
 import { useTranslation } from '@/lib/i18n'
 import { useThemeColors } from '@/hooks/useThemeColors'
+import { confirm } from '@/store/confirmStore'
 import type { Address } from '@/types'
 
 function AddressCard({
@@ -81,11 +82,14 @@ export default function AddressesScreen() {
   const colors = useThemeColors()
   const { addresses, setDefault, remove } = useAddressesStore()
 
-  function confirmDelete(id: string) {
-    Alert.alert(t('addresses.delete'), '', [
-      { text: t('common.cancel'), style: 'cancel' },
-      { text: t('common.delete'), style: 'destructive', onPress: () => remove(id) },
-    ])
+  async function confirmDelete(id: string) {
+    const ok = await confirm({
+      title: t('addresses.delete'),
+      confirmLabel: t('common.delete'),
+      cancelLabel: t('common.cancel'),
+      destructive: true,
+    })
+    if (ok) remove(id)
   }
 
   return (

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text } from 'react-native'
+import { Platform, Text } from 'react-native'
 import Animated from 'react-native-reanimated'
 import type { StyleProp, TextStyle } from 'react-native'
 
@@ -17,6 +17,8 @@ type Weight = 'regular' | 'medium' | 'semibold' | 'bold'
 
 type ColorProp = 'primary' | 'muted' | 'accent' | 'surface' | 'white'
 
+type FontKind = 'serif' | 'sans'
+
 export interface TypographyProps {
   variant?: Variant
   weight?: Weight
@@ -24,6 +26,8 @@ export interface TypographyProps {
   className?: string
   children: React.ReactNode
   numberOfLines?: number
+  font?: FontKind
+  italic?: boolean
 
   animated?: boolean
   style?: StyleProp<TextStyle>
@@ -55,6 +59,23 @@ const COLOR_CLASS: Record<ColorProp, string> = {
   white: 'text-white',
 }
 
+const VARIANT_FONT: Record<Variant, FontKind> = {
+  display: 'serif',
+  heading1: 'serif',
+  heading2: 'serif',
+  heading3: 'serif',
+  price: 'serif',
+  body: 'sans',
+  'body-sm': 'sans',
+  caption: 'sans',
+}
+
+const SERIF_FAMILY = Platform.select({
+  ios: 'Didot',
+  android: 'serif',
+  default: 'serif',
+})
+
 export default function Typography({
   variant = 'body',
   weight,
@@ -62,6 +83,8 @@ export default function Typography({
   className = '',
   children,
   numberOfLines,
+  font,
+  italic = false,
   animated = false,
   style,
 }: TypographyProps) {
@@ -74,16 +97,28 @@ export default function Typography({
     .filter(Boolean)
     .join(' ')
 
+  const resolvedFont = font ?? VARIANT_FONT[variant]
+  const familyStyle: TextStyle | null =
+    resolvedFont === 'serif' ? { fontFamily: SERIF_FAMILY } : null
+  const italicStyle: TextStyle | null = italic ? { fontStyle: 'italic' } : null
+  const composedStyle = [familyStyle, italicStyle, style].filter(
+    Boolean,
+  ) as StyleProp<TextStyle>
+
   if (animated) {
     return (
-      <Animated.Text className={classes} numberOfLines={numberOfLines} style={style}>
+      <Animated.Text
+        className={classes}
+        numberOfLines={numberOfLines}
+        style={composedStyle}
+      >
         {children}
       </Animated.Text>
     )
   }
 
   return (
-    <Text className={classes} numberOfLines={numberOfLines} style={style}>
+    <Text className={classes} numberOfLines={numberOfLines} style={composedStyle}>
       {children}
     </Text>
   )

@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useState } from 'react'
-import { Alert, View, TextInput } from 'react-native'
+import { View, TextInput } from 'react-native'
 import { Easing } from 'react-native-reanimated'
 import {
   BottomSheetModal,
@@ -30,6 +30,7 @@ import { useTranslation } from '@/lib/i18n'
 import { track } from '@/lib/analytics'
 import { logger } from '@/lib/logger'
 import { rateLimit } from '@/lib/rateLimit'
+import { showToast } from '@/store/toastStore'
 import type { CartItem as CartItemType } from '@/types'
 
 const Backdrop = (props: BottomSheetBackdropProps) => (
@@ -74,7 +75,7 @@ export default function CartBottomSheet() {
       setCouponInput('')
     } else {
       track('coupon_invalid', { code: couponInput })
-      Alert.alert(t('cart.couponInvalid'), result.reason)
+      showToast({ type: 'error', title: t('cart.couponInvalid'), message: result.reason })
     }
   }
 
@@ -87,7 +88,11 @@ export default function CartBottomSheet() {
     if (total <= 0) return
     // Local rate-limit: máx 4 tentativas/min para evitar criação massiva de PaymentIntent
     if (!rateLimit('checkout:start', { perMinute: 4, burst: 2 })) {
-      Alert.alert(t('cart.checkoutFailedTitle'), 'Aguarde antes de tentar novamente.')
+      showToast({
+        type: 'warning',
+        title: t('cart.checkoutFailedTitle'),
+        message: 'Aguarde antes de tentar novamente.',
+      })
       return
     }
     setBusy(true)
@@ -121,9 +126,17 @@ export default function CartBottomSheet() {
       clearCart()
       clearCoupon()
       cartUI.close()
-      Alert.alert(t('cart.checkoutSuccessTitle'), t('cart.checkoutSuccessBody'))
+      showToast({
+        type: 'success',
+        title: t('cart.checkoutSuccessTitle'),
+        message: t('cart.checkoutSuccessBody'),
+      })
     } else if (!result.canceled && result.error) {
-      Alert.alert(t('cart.checkoutFailedTitle'), result.error)
+      showToast({
+        type: 'error',
+        title: t('cart.checkoutFailedTitle'),
+        message: result.error,
+      })
     }
   }
 

@@ -1,113 +1,67 @@
-import React, { useRef, useState } from 'react'
-import { View, Dimensions, FlatList, Pressable } from 'react-native'
-import Animated, { FadeIn } from 'react-native-reanimated'
+import React from 'react'
+import { View } from 'react-native'
+import Animated, { FadeIn, FadeInDown } from 'react-native-reanimated'
 import { useRouter } from 'expo-router'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { Image } from 'expo-image'
 import Typography from '@/components/ui/Typography'
 import Button from '@/components/ui/Button'
-import ThemeToggle from '@/components/ui/ThemeToggle'
 import { useOnboarding } from '@/hooks/useOnboarding'
 import { useTranslation } from '@/lib/i18n'
 
-const { width: SCREEN_WIDTH } = Dimensions.get('window')
-
-interface Slide {
-  title: string
-  body: string
-}
+const HERO_IMAGE =
+  'https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1200&q=80'
 
 export default function OnboardingScreen() {
   const router = useRouter()
   const insets = useSafeAreaInsets()
   const { complete } = useOnboarding()
   const { t } = useTranslation()
-  const slides = t('onboarding.slides', { returnObjects: true }) as Slide[]
-  const [index, setIndex] = useState(0)
-  const listRef = useRef<FlatList<Slide>>(null)
 
-  const isLast = index === slides.length - 1
-
-  async function handleFinish() {
+  async function handleStart() {
     await complete()
     router.replace('/(tabs)')
-  }
-
-  function handleNext() {
-    if (isLast) {
-      handleFinish()
-      return
-    }
-    const next = index + 1
-    listRef.current?.scrollToOffset({ offset: next * SCREEN_WIDTH, animated: true })
-    setIndex(next)
   }
 
   return (
     <View
       className="flex-1 bg-bg"
-      style={{ paddingTop: insets.top, paddingBottom: insets.bottom }}
+      style={{ paddingTop: insets.top + 12, paddingBottom: insets.bottom + 16 }}
     >
-      <View className="flex-row items-center justify-between px-5 pt-2">
-        <ThemeToggle />
-        <Pressable
-          onPress={handleFinish}
-          hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+      <Animated.View entering={FadeIn.duration(720)} className="px-8">
+        <Typography
+          variant="display"
+          italic
+          className="text-center"
+          style={{ letterSpacing: 0.5 }}
         >
-          <Typography variant="body-sm" color="muted">
-            {t('onboarding.skip')}
-          </Typography>
-        </Pressable>
-      </View>
-
-      <Animated.View entering={FadeIn.duration(720)} className="items-center mt-10">
-        <Typography variant="display" weight="bold" style={{ letterSpacing: 6 }}>
           GBTL
         </Typography>
+        <View className="h-px bg-border mt-3" />
       </Animated.View>
 
-      <FlatList
-        ref={listRef}
-        data={slides}
-        keyExtractor={(_, i) => String(i)}
-        horizontal
-        pagingEnabled
-        showsHorizontalScrollIndicator={false}
-        scrollEventThrottle={16}
-        onMomentumScrollEnd={(e) => {
-          const i = Math.round(e.nativeEvent.contentOffset.x / SCREEN_WIDTH)
-          setIndex(i)
-        }}
-        renderItem={({ item }) => (
-          <View
-            style={{ width: SCREEN_WIDTH }}
-            className="px-8 items-center justify-center"
-          >
-            <Typography variant="heading1" className="text-center mb-3">
-              {item.title}
-            </Typography>
-            <Typography variant="body" color="muted" className="text-center">
-              {item.body}
-            </Typography>
-          </View>
-        )}
-        className="flex-1"
-      />
-
-      <View className="flex-row items-center justify-center gap-2 mb-6">
-        {slides.map((_, i) => (
-          <View
-            key={i}
-            className={`h-1.5 rounded-full ${i === index ? 'bg-primary' : 'bg-muted'}`}
-            style={{ width: i === index ? 24 : 6, opacity: i === index ? 1 : 0.4 }}
+      <Animated.View
+        entering={FadeInDown.duration(820).delay(120)}
+        className="flex-1 mt-8 px-6"
+      >
+        <View
+          className="flex-1 overflow-hidden rounded-card bg-surface"
+          style={{ borderWidth: 1, borderColor: 'rgba(0,0,0,0.04)' }}
+        >
+          <Image
+            source={{ uri: HERO_IMAGE }}
+            style={{ width: '100%', height: '100%' }}
+            contentFit="cover"
+            transition={400}
           />
-        ))}
-      </View>
+        </View>
+      </Animated.View>
 
-      <View className="px-6 pb-4">
-        <Button variant="primary" fullWidth rounded="pill" size="lg" onPress={handleNext}>
-          {isLast ? t('onboarding.getStarted') : t('onboarding.next')}
+      <Animated.View entering={FadeInDown.duration(720).delay(280)} className="px-6 mt-8">
+        <Button variant="primary" fullWidth rounded="btn" size="lg" onPress={handleStart}>
+          {t('onboarding.getStarted')}
         </Button>
-      </View>
+      </Animated.View>
     </View>
   )
 }
